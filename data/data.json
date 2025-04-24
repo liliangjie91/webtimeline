@@ -1,0 +1,243 @@
+{
+  "events": [
+    {
+      "id": 1682471900001,
+      "start": "2025-04-23",
+      "group": "主角团",
+      "title": "秘密花园的初遇",
+      "location": "皇宫后花园",
+      "characters": [
+        "李青鸾",
+        "萧逸辰"
+      ],
+      "story": "李青鸾在皇宫后花园邂逅神秘少年萧逸辰，因一本古籍结缘。",
+      "category": [
+        "邂逅"
+      ],
+      "chapter": 3,
+      "key_character": [
+        "李青鸾"
+      ],
+      "season": "春季",
+      "special_day": "上巳节",
+      "weather": "细雨蒙蒙"
+    },
+    {
+      "id": 1682471900002,
+      "start": "2025-04-25",
+      "group": "反派势力",
+      "title": "密谋政变",
+      "location": "东厂密室",
+      "characters": [
+        "曹玉",
+        "白无常"
+      ],
+      "story": "曹玉与白无常在密室中策划颠覆皇权，暗中布置刺杀计划。",
+      "category": [
+        "阴谋"
+      ],
+      "chapter": 4,
+      "key_character": [
+        "曹玉"
+      ],
+      "season": "春季",
+      "special_day": "",
+      "weather": "阴"
+    },
+    {
+      "id": 1682471900003,
+      "start": "2025-04-27",
+      "group": "主角团",
+      "title": "月下练剑",
+      "location": "梅花林",
+      "characters": [
+        "萧逸辰"
+      ],
+      "story": "萧逸辰在梅花林月夜独自练剑，回忆起年少丧母之痛。",
+      "category": [
+        "修炼"
+      ],
+      "chapter": 5,
+      "key_character": [
+        "萧逸辰"
+      ],
+      "season": "春季",
+      "special_day": "",
+      "weather": "晴"
+    },
+    {
+      "category": [
+        "武斗"
+      ],
+      "chapter": "6",
+      "characters": [
+        "秦烟儿",
+        "各大江湖俊杰"
+      ],
+      "content": "比武招亲",
+      "group": "江湖门派",
+      "id": 1682471900004,
+      "keyCharacter": [
+        ""
+      ],
+      "key_character": [
+        "秦烟儿"
+      ],
+      "location": "天香楼",
+      "note": "",
+      "season": "夏季",
+      "specialDay": "",
+      "special_day": "",
+      "start": "2025-05-02",
+      "story": "秦烟儿主办比武招亲，众多江湖俊杰前来挑战。",
+      "tags": [
+        "战斗",
+        "江湖",
+        "1",
+        "2",
+        "3"
+      ],
+      "title": "比武招亲",
+      "weather": "炎热"
+    },
+    {
+      "category": [
+        "死亡"
+      ],
+      "chapter": "7",
+      "characters": [
+        "赵守义"
+      ],
+      "group": "主角团",
+      "id": 1682471900005,
+      "key_character": [
+        "赵守义"
+      ],
+      "location": "医馆",
+      "season": "夏季",
+      "special_day": "端午节",
+      "start": "2025-05-05",
+      "story": "赵守义因服毒太晚，临终前托付青鸾调查真相。",
+      "title": "毒发身亡",
+      "weather": "闷热",
+      "content": "毒发身亡",
+      "keyCharacter": [
+        ""
+      ],
+      "tags": [
+        ""
+      ],
+      "specialDay": "",
+      "note": ""
+    },
+    {
+      "id": 1682471900006,
+      "start": "2025-05-10",
+      "group": "主角团",
+      "title": "夜探敌营",
+      "location": "黑风寨",
+      "characters": [
+        "李青鸾",
+        "萧逸辰"
+      ],
+      "story": "李青鸾与萧逸辰夜探黑风寨，意外发现敌方首领真实身份。",
+      "category": [
+        "潜入"
+      ],
+      "chapter": 8,
+      "key_character": [
+        "萧逸辰"
+      ],
+      "season": "夏季",
+      "special_day": "",
+      "weather": "雷雨"
+    },
+    {
+      "id": 1682471900007,
+      "start": "2025-05-15",
+      "group": "朝廷",
+      "title": "御前对质",
+      "location": "金銮殿",
+      "characters": [
+        "李青鸾",
+        "曹玉",
+        "皇帝"
+      ],
+      "story": "李青鸾揭发曹玉阴谋，当朝对质，局势一触即发。",
+      "category": [
+        "朝堂"
+      ],
+      "chapter": 9,
+      "key_character": [
+        "皇帝"
+      ],
+      "season": "夏季",
+      "special_day": "",
+      "weather": "晴"
+    },
+    {
+      "id": 1682471900008,
+      "start": "2025-05-18",
+      "group": "主角团",
+      "title": "旧信之谜",
+      "location": "藏书阁",
+      "characters": [
+        "李青鸾"
+      ],
+      "story": "李青鸾发现一封尘封已久的旧信，揭开父亲当年的秘密。",
+      "category": [
+        "发现"
+      ],
+      "chapter": 10,
+      "key_character": [
+        "李青鸾"
+      ],
+      "season": "夏季",
+      "special_day": "",
+      "weather": "阴转晴"
+    },
+    {
+      "id": 1682471900009,
+      "start": "2025-05-21",
+      "group": "主角团",
+      "title": "逃出牢笼",
+      "location": "东厂地牢",
+      "characters": [
+        "萧逸辰"
+      ],
+      "story": "萧逸辰被捕入狱，凭智慧与身法逃出牢笼。",
+      "category": [
+        "脱困"
+      ],
+      "chapter": 11,
+      "key_character": [
+        "萧逸辰"
+      ],
+      "season": "夏季",
+      "special_day": "",
+      "weather": "大风"
+    },
+    {
+      "id": 1682471900010,
+      "start": "2025-05-25",
+      "group": "主角团",
+      "title": "誓言并肩",
+      "location": "桃花崖",
+      "characters": [
+        "李青鸾",
+        "萧逸辰"
+      ],
+      "story": "两人在桃花崖立誓今后共闯天涯，感情进一步升温。",
+      "category": [
+        "誓约"
+      ],
+      "chapter": 12,
+      "key_character": [
+        "李青鸾"
+      ],
+      "season": "夏末",
+      "special_day": "",
+      "weather": "霞光万丈"
+    }
+  ]
+}

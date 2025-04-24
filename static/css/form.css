@@ -1,0 +1,27 @@
+/* 标签与输入框 */
+.modal-content label {
+    /* display: block;          让 label 独占一行 */
+    margin-bottom: 1px;      /* 与下方输入框拉开距离 */
+    font-weight: 400;        /* 设置字体中等加粗 */
+  }
+  
+
+  
+.modal-content input,
+.modal-content textarea {
+    width: 50%;                 /* 宽度撑满父容器 */
+    padding: 2px;                /* 内边距让内容不贴边 */
+    margin-top: 1px;             /* 与上方元素间距 */
+    margin-bottom: 1px;         /* 与下方元素间距 */
+    box-sizing: border-box;      /* 宽度包含 padding 和 border，不会超出容器 */
+    border: 1px solid #ccc;      /* 浅灰边框 */
+    background-color: #c9cfc6;     /* 白色背景 */
+    border-radius: 4px;          /* 圆角边框 */
+  }
+
+  /* 文本区域高度控制 */
+  .modal-content textarea {
+    width: 60%;                 /* 宽度撑满父容器 */
+    resize: vertical;        /* 允许垂直方向拉伸 textarea */
+    min-height: 30px;         /* 设置最小高度为 1px（一般设大些更合理） */
+  }
