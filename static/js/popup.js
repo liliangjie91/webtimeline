@@ -7,10 +7,12 @@ export function bindPopupHandlers() {
   };
 
   document.getElementById('edit-btn').onclick = () => {
+    // document.querySelector('.modal-content').classList.add('editing');
     toggleEditable(true);
   };
 
   document.getElementById('save-btn').onclick = () => {
+    // document.querySelector('.modal-content').classList.remove('editing');
     const sep = /[,，、;；\s]+/
     const updated = { ...selectedItem };
     updated.content = document.getElementById('popup-title').innerText;
@@ -22,7 +24,7 @@ export function bindPopupHandlers() {
     updated.story = document.getElementById('popup-story').innerText;
     updated.category = document.getElementById('popup-category').innerText.split(sep).map(s => s.trim());
     updated.tags = document.getElementById('popup-tags').innerText.split(sep).map(s => s.trim());
-    console.log(document.getElementById('popup-tags').innerText.split(sep).map(s => s.trim()));
+    // console.log(document.getElementById('popup-tags').innerText.split(sep).map(s => s.trim()));
     updated.chapter = document.getElementById('popup-chapter').innerText;
     updated.season = document.getElementById('popup-season').innerText;
     updated.specialDay = document.getElementById('popup-special-day').innerText;

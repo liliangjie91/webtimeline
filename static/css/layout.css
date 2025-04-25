@@ -19,3 +19,16 @@ body {
 #visualization-selected {
     height: 300px; /* 筛选时间线容器高度设置为300px */
 }
+
+.checkbox-group {
+    display: flex;
+    flex-wrap: wrap;            /* 自动换行 */
+    gap: 10px 20px;             /* 上下 10px，左右 20px 的间距 */
+    margin-top: 6px;
+  }
+  
+  .checkbox-group label {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+  }

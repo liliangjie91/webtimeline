@@ -45,24 +45,33 @@
       "weather": "阴"
     },
     {
-      "id": 1682471900003,
-      "start": "2025-04-27",
-      "group": "主角团",
-      "title": "月下练剑",
-      "location": "梅花林",
-      "characters": [
-        "萧逸辰"
-      ],
-      "story": "萧逸辰在梅花林月夜独自练剑，回忆起年少丧母之痛。",
       "category": [
         "修炼"
       ],
-      "chapter": 5,
+      "chapter": "5",
+      "characters": [
+        "萧逸辰"
+      ],
+      "content": "月下练剑",
+      "group": "主角团",
+      "id": 1682471900003,
+      "keyCharacter": [
+        ""
+      ],
       "key_character": [
         "萧逸辰"
       ],
+      "location": "梅花林",
+      "note": "",
       "season": "春季",
+      "specialDay": "",
       "special_day": "",
+      "start": "2025-04-27",
+      "story": "萧逸辰在梅花林月夜独自练剑，回忆起年少丧母之痛。",
+      "tags": [
+        ""
+      ],
+      "title": "月下练剑",
       "weather": "晴"
     },
     {
@@ -86,16 +95,13 @@
       "location": "天香楼",
       "note": "",
       "season": "夏季",
-      "specialDay": "",
+      "specialDay": "中秋节",
       "special_day": "",
       "start": "2025-05-02",
-      "story": "秦烟儿主办比武招亲，众多江湖俊杰前来挑战。",
+      "story": "秦烟儿主办比武招亲，\n\n\n众多江湖俊杰前来挑战。",
       "tags": [
         "战斗",
-        "江湖",
-        "1",
-        "2",
-        "3"
+        "江湖"
       ],
       "title": "比武招亲",
       "weather": "炎热"
@@ -108,49 +114,58 @@
       "characters": [
         "赵守义"
       ],
+      "content": "毒发身亡",
       "group": "主角团",
       "id": 1682471900005,
+      "keyCharacter": [
+        "老挝"
+      ],
       "key_character": [
         "赵守义"
       ],
       "location": "医馆",
+      "note": "",
       "season": "夏季",
+      "specialDay": "元旦节",
       "special_day": "端午节",
       "start": "2025-05-05",
       "story": "赵守义因服毒太晚，临终前托付青鸾调查真相。",
-      "title": "毒发身亡",
-      "weather": "闷热",
-      "content": "毒发身亡",
-      "keyCharacter": [
-        ""
-      ],
       "tags": [
         ""
       ],
-      "specialDay": "",
-      "note": ""
+      "title": "毒发身亡",
+      "weather": "闷热"
     },
     {
-      "id": 1682471900006,
-      "start": "2025-05-10",
-      "group": "主角团",
-      "title": "夜探敌营",
-      "location": "黑风寨",
+      "category": [
+        "潜入"
+      ],
+      "chapter": "8",
       "characters": [
         "李青鸾",
         "萧逸辰"
       ],
-      "story": "李青鸾与萧逸辰夜探黑风寨，意外发现敌方首领真实身份。",
-      "category": [
-        "潜入"
-      ],
-      "chapter": 8,
+      "group": "主角团",
+      "id": 1682471900006,
       "key_character": [
         "萧逸辰"
       ],
+      "location": "黑风寨",
       "season": "夏季",
       "special_day": "",
-      "weather": "雷雨"
+      "start": "2025-05-10",
+      "story": "李青鸾与萧逸辰夜探黑风寨，意外发现敌方首领真实身份。1234\n1234\n2134\n213\n42\n34\n1234\n12\n34\n123\n4",
+      "title": "夜探敌营1234",
+      "weather": "雷雨",
+      "content": "夜探敌营1234",
+      "keyCharacter": [
+        "1234"
+      ],
+      "tags": [
+        "1234"
+      ],
+      "specialDay": "",
+      "note": "1234"
     },
     {
       "id": 1682471900007,
@@ -197,25 +212,34 @@
       "weather": "阴转晴"
     },
     {
-      "id": 1682471900009,
-      "start": "2025-05-21",
-      "group": "主角团",
-      "title": "逃出牢笼",
-      "location": "东厂地牢",
-      "characters": [
-        "萧逸辰"
-      ],
-      "story": "萧逸辰被捕入狱，凭智慧与身法逃出牢笼。",
       "category": [
         "脱困"
       ],
-      "chapter": 11,
+      "chapter": "11",
+      "characters": [
+        "萧逸辰"
+      ],
+      "group": "主角团",
+      "id": 1682471900009,
       "key_character": [
         "萧逸辰"
       ],
+      "location": "东厂地牢",
       "season": "夏季",
       "special_day": "",
-      "weather": "大风"
+      "start": "2025-05-21",
+      "story": "萧逸辰被捕入狱，凭智慧与身法逃出牢笼。",
+      "title": "逃出牢笼",
+      "weather": "大风",
+      "content": "逃出牢笼",
+      "keyCharacter": [
+        ""
+      ],
+      "tags": [
+        ""
+      ],
+      "specialDay": "",
+      "note": ""
     },
     {
       "id": 1682471900010,

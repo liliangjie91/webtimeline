@@ -1,21 +1,18 @@
-/* 标签与输入框 */
-.modal-content label {
+  /* 标签与输入框 */
+  .modal-content label {
     /* display: block;          让 label 独占一行 */
     margin-bottom: 1px;      /* 与下方输入框拉开距离 */
     font-weight: 400;        /* 设置字体中等加粗 */
   }
-  
-
-  
-.modal-content input,
-.modal-content textarea {
+  .modal-content input,
+  .modal-content textarea {
+    outline: none;
     width: 50%;                 /* 宽度撑满父容器 */
     padding: 2px;                /* 内边距让内容不贴边 */
     margin-top: 1px;             /* 与上方元素间距 */
     margin-bottom: 1px;         /* 与下方元素间距 */
     box-sizing: border-box;      /* 宽度包含 padding 和 border，不会超出容器 */
     border: 1px solid #ccc;      /* 浅灰边框 */
-    background-color: #c9cfc6;     /* 白色背景 */
     border-radius: 4px;          /* 圆角边框 */
   }
 
@@ -24,4 +21,80 @@
     width: 60%;                 /* 宽度撑满父容器 */
     resize: vertical;        /* 允许垂直方向拉伸 textarea */
     min-height: 30px;         /* 设置最小高度为 1px（一般设大些更合理） */
+  }  
+
+  .field-label {
+    display: inline-block;  /* 保证文字和字段值能横向排列 */
+    width: 80px;            /* 固定宽度，方便右对齐字段名 */
+    font-weight: 500;       /* 字体粗细（可调成 400、600） */
+    font-size: 14px;        /* 字体大小（可调成 12px ~ 18px） */
+    color: #555;            /* 柔和一点的文字颜色 */
+    vertical-align: top;    /* 和多行 textarea 顶对齐（可选） */
+  }
+
+  .form-row span {
+    display: inline-block;
+    box-sizing: border-box;       /* padding 不再撑宽 */
+    min-height: 34px;            /* 保持一定高度，不因内容为空塌陷 */
+    width: 100%;
+    padding: 6px;
+    /* background: #f9f9f9; */
+    border: 1px solid #ccc;
+    background-color: #c9cfc6;     /* 白色背景 */
+    border-radius: 4px;
+    font-size: 15px;
+    line-height: 1.4;
+    white-space: pre-wrap;       /* 支持换行，但保留空行格式 */
+  }
+
+
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* 两列平分 */
+    gap: 12px 20px;                /* 行间距、列间距 */
+  }
+  
+  .form-row {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-row.full-width {
+    grid-column: span 2;          /* 占据两列空间 */
+  }
+  
+  .form-row label {
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+  
+  .form-row input,
+  .form-row textarea {
+    width: 100%;
+    padding: 6px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    background-color: #c9cfc6;     /* 白色背景 */
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+
+  @media (max-width: 600px) {
+    .form-row {
+      width: 100%; /* 小屏幕时每项独占一行 */
+    }
+  }
+
+  /* .modal-content.editing input,
+  .modal-content.editing textarea,
+  .modal-content.editing .field-display[contenteditable="true"] {
+    background-color: #fffbe6;
+    border-color: #999;
+  } */
+
+  #popup-title[contenteditable="true"] {
+    outline: none;            /* 去除浏览器默认蓝框 */
+    background-color: #fff7e6;/* 淡黄色背景，提示可编辑（可选） */
+    border: 1px dashed #aaa;  /* 可视化边框（可选） */
   }

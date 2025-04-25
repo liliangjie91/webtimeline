@@ -4,8 +4,10 @@
 <head>
   <meta charset="utf-8" />
   <title>小说故事线</title>
-  <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" />
-  <script src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script>
+  <!-- <link href="https://unpkg.com/vis-timeline@latest/styles/vis-timeline-graph2d.min.css" rel="stylesheet" />
+  <script src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script> -->
+  <link rel="stylesheet" href="/static/lib/vis-timeline/vis-timeline-graph2d.min.css" />
+  <script src="/static/lib/vis-timeline/vis-timeline-graph2d.min.js"></script> 
   <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" /> -->
   <link rel="stylesheet" href="/static/css/layout.css" />
   <link rel="stylesheet" href="/static/css/modal.css" />
@@ -20,8 +22,8 @@
   
   <div id="visualization"></div>
 
-  <label for="filter-group">筛选角色：</label>
-    <div id="filter-group">
+  <label for="filter-group">故事线：</label>
+    <div id="filter-group"  class="checkbox-group">
     <!-- 复选框选项将通过 JavaScript 动态生成 -->
     </div>
   <div id="visualization-selected"></div>
@@ -30,24 +32,23 @@
   <div id="add-popup" class="modal hidden">
     <div class="modal-content">
       <span id="add-popup-close" class="close">&times;</span>
-      <h2>新事件</h2>
-      <form id="add-event-form">
-        <label>标题：<input type="text" id="new-title" required></label><br />
-        <label>日期：<input type="date" id="new-start" required></label><br />
-        <label>地点：<input type="text" id="new-location"></label><br />
-        <label>主角：<input type="text" id="new-key-character"></label><br />
-        <label>人物：<input type="text" id="new-people"></label><br />
-        <label>故事：</label>
-        <br /><textarea id="new-story" rows="3" style="width: 100%"></textarea><br />
-        <label>类别：<input type="text" id="new-category"></label><br />
-        <label>标签：<input type="text" id="new-tags"></label><br />
-        <label>节日：<input type="text" id="new-special-day" value="无" ></label><br />
-        <label>季节：<input type="text" id="new-season" value="无" ></label><br />
-        <label>天气：<input type="text" id="new-weather" value="无" ></label><br />
-        <label>章节：<input type="number" id="new-chapter"></label><br />
-        <label>备注：<input type="text" id="new-note"></label><br />
-        <label>故事线：<input type="text" id="new-group" value="主线故事" required></label><br />
-        <button type="submit"  class="btn btn-success">保存</button>
+      <h2>添加新事件</h2>
+      <form id="add-event-form" class="form-grid">
+        <div class="form-row full-width"><label for="new-title">标题:</label><input type="text" id="new-title" required></div>
+        <div class="form-row"><label for="new-start">日期:</label><input type="date" id="new-start" required></div>
+        <div class="form-row"><label for="new-location">地点:</label><input type="text" id="new-location"></div>
+        <div class="form-row"><label for="new-key-character">主角:</label><input type="text" id="new-key-character"></div>
+        <div class="form-row"><label for="new-people">人物:</label><input type="text" id="new-people"></div>
+        <div class="form-row"><label for="new-special-day">节日:</label><input type="text" id="new-special-day" value="(无)"></div>
+        <div class="form-row"><label for="new-season">季节:</label><input type="text" id="new-season" value="(无)"></div>
+        <div class="form-row"><label for="new-weather">天气:</label><input type="text" id="new-weather" value="(无)"></div>
+        <div class="form-row"><label for="new-chapter">章节:</label><input type="number" id="new-chapter"></div>
+        <div class="form-row"><label for="new-category">类别:</label><input type="text" id="new-category"></div>
+        <div class="form-row"><label for="new-tags">标签:</label><input type="text" id="new-tags"></div>
+        <div class="form-row full-width"><label for="new-note">备注:</label><input type="text" id="new-note"></div>
+        <div class="form-row full-width"><label for="new-group">故事线:</label><input type="text" id="new-group" value="主线" required></div>    
+        <div class="form-row full-width"><label for="new-story">故事内容:</label><textarea id="new-story" rows="4"></textarea></div>
+        <div class="form-row full-width" style="text-align: right;"><button type="submit" class="btn btn-success">保存</button></div>
       </form>
     </div>
   </div>
@@ -56,23 +57,31 @@
   <div id="popup" class="modal hidden">
     <div class="modal-content">
       <span id="popup-close" class="close">&times;</span>
-      <h2 id="popup-title"></h2>
-      <p><strong>时间:</strong> <span id="popup-start"></span></p>
-      <p><strong>地点:</strong> <span id="popup-location"></span></p>
-      <p><strong>主角:</strong> <span id="popup-key-character"></span></p>
-      <p><strong>人物:</strong> <span id="popup-characters"></span></p>
-      <p><strong>故事:</strong> <span id="popup-story"></span></p>
-      <p><strong>类别:</strong> <span id="popup-category"></span></p>
-      <p><strong>标签:</strong> <span id="popup-tags"></span></p>
-      <p><strong>季节:</strong> <span id="popup-season"></span></p>
-      <p><strong>节日:</strong> <span id="popup-special-day"></span></p>
-      <p><strong>天气:</strong> <span id="popup-weather"></span></p>
-      <p><strong>章节:</strong> <span id="popup-chapter"></span></p>
-      <p><strong>备注:</strong> <span id="popup-note"></span></p>
-      <p><strong>故事线:</strong> <span id="popup-group"></span></p>
-      <button id="edit-btn"  class="btn btn-success">编辑</button>
-      <button id="save-btn"  class="btn btn-success" style="margin-left: 10px;">保存</button>
-      <button id="delete-btn" class="btn btn-danger" style="float: right;">删除</button>
+      <!-- <h2 id="popup-title"></h2> -->
+      <div class="form-grid">
+        <div class="form-row full-width"><label>标题:</label> <span id="popup-title"></span></div>
+        <div class="form-row"><label>时间:</label> <span id="popup-start"></span></div>
+        <div class="form-row"><label>地点:</label> <span id="popup-location"></span></div>
+        <div class="form-row"><label>主角:</label> <span id="popup-key-character"></span></div>
+        <div class="form-row"><label>人物:</label> <span id="popup-characters"></span></div>
+        <div class="form-row"><label>季节:</label> <span id="popup-season"></span></div>
+        <div class="form-row"><label>节日:</label> <span id="popup-special-day"></span></div>
+        <div class="form-row"><label>天气:</label> <span id="popup-weather"></span></div>
+        <div class="form-row"><label>章节:</label> <span id="popup-chapter"></span></div>
+        <div class="form-row"><label>类别:</label> <span id="popup-category"></span></div>
+        <div class="form-row"><label>标签:</label> <span id="popup-tags"></span></div>
+        <div class="form-row full-width"><label>备注:</label> <span id="popup-note"></span></div>
+        <div class="form-row full-width"><label>故事线:</label> <span id="popup-group"></span></div>
+        <div class="form-row full-width"><label>故事内容:</label> <span id="popup-story"></span></div>
+        <!-- 按钮区域 -->
+        <div class="form-row full-width" style="margin-top: 10px; display: flex; justify-content: space-between;">
+          <div>
+            <button id="edit-btn" class="btn btn-success">编辑</button>
+            <button id="save-btn" class="btn btn-success" style="margin-left: 10px;">保存</button>
+            <button id="delete-btn" class="btn btn-danger" style="margin-right: 10px; float: right">删除</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
