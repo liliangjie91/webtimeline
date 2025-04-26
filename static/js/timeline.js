@@ -71,7 +71,9 @@ export function initTimeline(events, isFiltered = false) {
   timelineInstance.on('doubleClick', props => {
     if (props.item) {
         const item = timelineData.get(props.item);
-        showPopup(item, timelineData);
+        if (props.event.target.closest('#visualization')) {
+            showPopup(item, timelineData);
+        }
     } else {
         handleAddEventFromDoubleClick(props);
     }

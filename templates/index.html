@@ -47,7 +47,8 @@
         <div class="form-row"><label for="new-tags">标签:</label><input type="text" id="new-tags"></div>
         <div class="form-row full-width"><label for="new-note">备注:</label><input type="text" id="new-note"></div>
         <div class="form-row full-width"><label for="new-group">故事线:</label><input type="text" id="new-group" value="主线" required></div>    
-        <div class="form-row full-width"><label for="new-story">故事内容:</label><textarea id="new-story" rows="4"></textarea></div>
+        <div class="form-row full-width"><label for="new-story">故事内容:</label><textarea id="new-story" rows="5"></textarea></div>
+        <!-- <div class="form-row full-width"><label>故事内容：</label><textarea id="new-story" rows="7"></textarea></div> -->
         <div class="form-row full-width" style="text-align: right;"><button type="submit" class="btn btn-success">保存</button></div>
       </form>
     </div>
@@ -57,10 +58,10 @@
   <div id="popup" class="modal hidden">
     <div class="modal-content">
       <span id="popup-close" class="close">&times;</span>
-      <!-- <h2 id="popup-title"></h2> -->
+      <h2 id="popup-title"></h2>
       <div class="form-grid">
-        <div class="form-row full-width"><label>标题:</label> <span id="popup-title"></span></div>
-        <div class="form-row"><label>时间:</label> <span id="popup-start"></span></div>
+        <!-- <div class="form-row full-width"><label>标题:</label> <span id="popup-title"></span></div> -->
+        <div class="form-row"><label>日期:</label> <span id="popup-start"></span></div>
         <div class="form-row"><label>地点:</label> <span id="popup-location"></span></div>
         <div class="form-row"><label>主角:</label> <span id="popup-key-character"></span></div>
         <div class="form-row"><label>人物:</label> <span id="popup-characters"></span></div>

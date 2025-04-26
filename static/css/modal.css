@@ -1,6 +1,7 @@
 /* 弹窗外部覆盖层 */
 .modal {
-    position: fixed; /* 固定定位，使覆盖层停留在页面上 */
+    display: flex;
+    position: fixed;  /*固定定位，使覆盖层停留在页面上 */
     top: 0; /* 距离页面顶部0px */
     left: 0; /* 距离页面左侧0px */
     width: 100%; /* 宽度占满整个页面 */
@@ -8,11 +9,12 @@
     padding: 40px 0; /* 上下内边距40px，左右0px */
     background-color: rgba(0, 0, 0, 0.4); /* 半透明黑色背景 */
     z-index: 100; /* 设置在其他元素之上 */
-    overflow-y: auto; /* 当内容溢出时，垂直方向出现滚动条 */
+    overflow-y: auto;  /*当内容溢出时，垂直方向出现滚动条 */
    /* overflow: auto;  允许滚动，但我们自己控制 */
-    display: flex; /* 使用弹性布局 */
-    justify-content: center; /* 水平居中对齐 */
-    align-items: flex-start; /* 垂直方向顶部对齐 */
+   /* 水平居中对齐 */
+    justify-content: center; 
+    /*垂直方向顶部对齐 */
+    align-items: flex-start; 
 }
   
 /* 隐藏状态 */
@@ -20,7 +22,7 @@
     display: none; /* 隐藏弹窗 */
 }
   
-/* 弹窗内容 */
+  /* ========== 弹窗布局核心 ========== */
 .modal-content {
     position: relative; /* 相对定位，便于子元素定位 */
     background-color: rgb(159, 167, 153); /* 背景色为白色 */
@@ -29,15 +31,16 @@
     max-height: 90vh;        /* 不超过可视区 */
     width: 500px; /* 固定宽度为500px */
     max-width: 90vw; /* 最大宽度为父元素的90% */
-    scroll-margin-top: 60px; /* 当内部 textarea 聚焦时，至少保留上边距 */
+    scroll-margin-top: 160px; /* 当内部 textarea 聚焦时，至少保留上边距 */
    /* overflow-y: auto;         内容多时滚动 modal-content 自己，而不是整个页面 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
+    z-index: 100;
 }
   
 /* 弹窗标题 */
 .modal-content h2 {
-    margin-top: 0;  /*去掉标题顶部的外边距 */
-    font-size: 20px; /*设置标题字体大小 */
+    margin-top: 5;  /*去掉标题顶部的外边距 */
+    font-size: 18px; /*设置标题字体大小 */
 }
   
 /* 弹窗内按钮样式 */

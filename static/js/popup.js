@@ -84,7 +84,16 @@ export function showPopup(item, dataSet) {
 }
 
 function toggleEditable(editing) {
-  const toggle = val => document.getElementById(val).contentEditable = editing;
+  // const toggle = val => document.getElementById(val).contentEditable = editing;
+  const toggle = val => {
+    const element = document.getElementById(val);
+    element.contentEditable = editing;
+
+    // 禁用自动滚动行为
+    element.addEventListener('focus', (e) => {
+      e.preventDefault(); // 阻止默认滚动行为
+    });
+  };
   ['popup-title', 'popup-start', 'popup-location', 'popup-key-character', 'popup-characters', 'popup-story','popup-category','popup-tags'].forEach(toggle);
   ['popup-chapter','popup-season','popup-special-day','popup-weather','popup-group','popup-note'].forEach(toggle);
   document.getElementById('edit-btn').classList.toggle('hidden', editing);
