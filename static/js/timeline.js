@@ -44,7 +44,7 @@ export function initTimeline(events, isFiltered = false) {
             add: false, // 禁用默认添加行为
             updateTime: true,  // drag items horizontally
             updateGroup: true, // drag items from one group to another
-            remove: true,       // delete an item by tapping the delete button top right
+            remove: false,       // delete an item by tapping the delete button top right
             overrideItems: false  // allow these options to override item.editable
         }
     };

@@ -46,7 +46,7 @@
   min-height: 60px;
   max-height: 300px;          /* ✅ 设置最大高度，避免超出弹窗 */
   overflow-y: auto;           /* 超出后内部滚动，而不是撑大整个弹窗 */
-  scroll-margin-top: 60px;    /* 聚焦时避免顶到上面 */
+  scroll-margin-top: 0px;    /* 聚焦时避免顶到上面 */
 }
 
 /* 展示框（span）专用 */
@@ -75,4 +75,8 @@
 .form-row textarea:focus {
   outline: none;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.2); /* 可选：添加自定义的聚焦样式 */
+}
+
+#monica-writing-entry-btn-root {
+  display: none !important;
 }
