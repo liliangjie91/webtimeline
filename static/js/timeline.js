@@ -21,6 +21,7 @@ export function initTimeline(events, isFiltered = false) {
   const groups = [...new Set(events.map(e => e.group))].map(g => ({ id: g, content: g }));
   const eventsWithContent = events.map(item => ({
   ...item,
+  end: (item.end && item.end.trim()) ? item.end : null,
   content: item.title
 }));
   const timelineData = new vis.DataSet(eventsWithContent);
@@ -39,14 +40,18 @@ export function initTimeline(events, isFiltered = false) {
 //   }
 
     const options = {
-        groupOrder: 'content',
-        editable: {
-            add: false, // 禁用默认添加行为
-            updateTime: true,  // drag items horizontally
-            updateGroup: true, // drag items from one group to another
-            remove: false,       // delete an item by tapping the delete button top right
-            overrideItems: false  // allow these options to override item.editable
-        }
+      locale: 'zh',  // 这行很重要，让vis-timeline识别中文
+      moment: function (date) {
+        return moment(date); // 用中文moment处理日期
+      },
+      groupOrder: 'content',
+      editable: {
+        add: false, // 禁用默认添加行为
+        updateTime: true,  // drag items horizontally
+        updateGroup: true, // drag items from one group to another
+        remove: false,       // delete an item by tapping the delete button top right
+        overrideItems: false  // allow these options to override item.editable
+      }
     };
   const timelineInstance = new vis.Timeline(container, timelineData, isFiltered ? {} : options);
 

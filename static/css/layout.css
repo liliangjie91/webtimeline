@@ -13,7 +13,7 @@ body {
 }
   
 #visualization {
-    height: 600px; /* 主时间线容器高度设置为600px */
+    height: 800px; /* 主时间线容器高度设置为600px */
 }
   
 #visualization-selected {

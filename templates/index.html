@@ -8,6 +8,9 @@
   <script src="https://unpkg.com/vis-timeline@latest/standalone/umd/vis-timeline-graph2d.min.js"></script> -->
   <link rel="stylesheet" href="/static/lib/vis-timeline/vis-timeline-graph2d.min.css" />
   <script src="/static/lib/vis-timeline/vis-timeline-graph2d.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/zh-cn.min.js"></script>
+
   <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" /> -->
   <link rel="stylesheet" href="/static/css/layout.css" />
   <link rel="stylesheet" href="/static/css/modal.css" />
@@ -34,19 +37,20 @@
       <span id="add-popup-close" class="close">&times;</span>
       <h2>添加新事件</h2>
       <form id="add-event-form" class="form-grid">
-        <div class="form-row full-width"><label for="new-title">标题:</label><input type="text" id="new-title" required></div>
-        <div class="form-row"><label for="new-start">日期:</label><input type="date" id="new-start" required></div>
-        <div class="form-row"><label for="new-location">地点:</label><input type="text" id="new-location"></div>
-        <div class="form-row"><label for="new-key-character">主角:</label><input type="text" id="new-key-character"></div>
-        <div class="form-row"><label for="new-people">人物:</label><input type="text" id="new-people"></div>
-        <div class="form-row"><label for="new-special-day">节日:</label><input type="text" id="new-special-day" value="(无)"></div>
-        <div class="form-row"><label for="new-season">季节:</label><input type="text" id="new-season" value="(无)"></div>
-        <div class="form-row"><label for="new-weather">天气:</label><input type="text" id="new-weather" value="(无)"></div>
-        <div class="form-row"><label for="new-chapter">章节:</label><input type="number" id="new-chapter"></div>
-        <div class="form-row"><label for="new-category">类别:</label><input type="text" id="new-category"></div>
-        <div class="form-row"><label for="new-tags">标签:</label><input type="text" id="new-tags"></div>
-        <div class="form-row full-width"><label for="new-note">备注:</label><input type="text" id="new-note"></div>
-        <div class="form-row full-width"><label for="new-group">故事线:</label><input type="text" id="new-group" value="主线" required></div>    
+        <div class="form-row full-width"><label for="new-title">标题:</label><input type="text" id="new-title" placeholder="故事标题" required></div>
+        <div class="form-row"><label for="new-start">起始:</label><input type="date" id="new-start" placeholder="发生日期"required></div>
+        <div class="form-row"><label for="new-start">结束:</label><input type="date" id="new-end" placeholder="可不填"></div>
+        <div class="form-row"><label for="new-location">地点:</label><input type="text" id="new-location"placeholder="发生地点"></div>
+        <div class="form-row"><label for="new-key-character">主角:</label><input type="text" id="new-key-character"placeholder="关键人物"></div>
+        <div class="form-row full-width"><label for="new-people">人物:</label><input type="text" id="new-people" placeholder="所有人物"></div>
+        <div class="form-row"><label for="new-special-day">节日:</label><input type="text" id="new-special-day" placeholder="特殊节日"></div>
+        <div class="form-row"><label for="new-season">季节:</label><input type="text" id="new-season" placeholder="春夏秋冬"></div>
+        <div class="form-row"><label for="new-weather">天气:</label><input type="text" id="new-weather" placeholder="雨雪晴霜"></div>
+        <div class="form-row"><label for="new-chapter">章节:</label><input type="number" id="new-chapter" placeholder="1"></div>
+        <div class="form-row"><label for="new-category">类别:</label><input type="text" id="new-category" placeholder="情节分类：复仇，家庭等"></div>
+        <div class="form-row"><label for="new-tags">标签:</label><input type="text" id="new-tags" placeholder="情节标签：吃饭，葬礼等"></div>
+        <div class="form-row full-width"><label for="new-note">备注:</label><input type="text" id="new-note" placeholder="备注"></div>
+        <div class="form-row full-width"><label for="new-group">故事线:</label><input type="text" id="new-group" placeholder="某某线，主线等" required></div>    
         <!-- <div class="form-row full-width"><span>故事内容:</span><textarea id="new-story" rows="5"></textarea></div> -->
         <div class="form-row full-width"><label for="new-story">故事内容:</label><textarea id="new-story" rows="5"></textarea></div>
         <div class="form-row full-width" style="text-align: right;"><button type="submit" class="btn btn-success">保存</button></div>
@@ -61,10 +65,11 @@
       <h2 id="popup-title">标题</h2>
       <div class="form-grid">
         <!-- <div class="form-row full-width"><label>标题:</label> <span id="popup-title"></span></div> -->
-        <div class="form-row"><label>日期:</label> <span id="popup-start"></span></div>
+        <div class="form-row"><label>起始:</label> <span id="popup-start"></span></div>
+        <div class="form-row"><label>结束:</label> <span id="popup-end"></span></div>
         <div class="form-row"><label>地点:</label> <span id="popup-location"></span></div>
         <div class="form-row"><label>主角:</label> <span id="popup-key-character"></span></div>
-        <div class="form-row"><label>人物:</label> <span id="popup-characters"></span></div>
+        <div class="form-row full-width"><label>人物:</label> <span id="popup-characters"></span></div>
         <div class="form-row"><label>季节:</label> <span id="popup-season"></span></div>
         <div class="form-row"><label>节日:</label> <span id="popup-special-day"></span></div>
         <div class="form-row"><label>天气:</label> <span id="popup-weather"></span></div>
@@ -79,6 +84,7 @@
           <div>
             <button id="edit-btn" class="btn btn-success">编辑</button>
             <button id="save-btn" class="btn btn-success" style="margin-left: 10px;">保存</button>
+            <a id="view-original-btn" href="#" target="_blank" class="btn btn-primary hidden" style="margin-left: 10px;">查看原文</a>
             <button id="delete-btn" class="btn btn-danger" style="margin-right: 10px; float: right">删除</button>
           </div>
         </div>

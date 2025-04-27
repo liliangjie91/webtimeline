@@ -14,6 +14,7 @@ export function bindAddHandlers() {
         id: Date.now(),
         title: document.getElementById('new-title').value,
         start: document.getElementById('new-start').value || clickedDate.toISOString().slice(0, 10),
+        end: document.getElementById('new-end').value,
         location: document.getElementById('new-location').value,
         keyCharacter: document.getElementById('new-key-character').value.split(sep).map(s => s.trim()),
         characters: document.getElementById('new-people').value.split(sep).map(s => s.trim()),

@@ -18,6 +18,7 @@ export function bindPopupHandlers() {
     updated.content = document.getElementById('popup-title').innerText;
     updated.title = document.getElementById('popup-title').innerText;
     updated.start = document.getElementById('popup-start').innerText;
+    updated.end = document.getElementById('popup-end').innerText;
     updated.location = document.getElementById('popup-location').innerText;
     updated.keyCharacter = document.getElementById('popup-key-character').innerText.split(sep).map(s => s.trim());
     updated.characters = document.getElementById('popup-characters').innerText.split(sep).map(s => s.trim());
@@ -66,6 +67,15 @@ export function showPopup(item, dataSet) {
   dataRef = dataSet;
   const dateObj = new Date(item.start);
   const formattedDate = `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
+  if (item.end) {
+    const dateObj2 = new Date(item.end);
+    const formattedDate2 = `${dateObj2.getFullYear()}-${String(dateObj2.getMonth() + 1).padStart(2, '0')}-${String(dateObj2.getDate()).padStart(2, '0')}`;
+    document.getElementById('popup-end').innerText = formattedDate2;
+  } else
+  {
+    
+    document.getElementById('popup-end').innerText = '(无)';
+  }
   document.getElementById('popup-title').innerText = item.title || '(无标题)';
   document.getElementById('popup-start').innerText = formattedDate;
   document.getElementById('popup-location').innerText = item.location || '';
@@ -80,6 +90,15 @@ export function showPopup(item, dataSet) {
   document.getElementById('popup-weather').innerText = item.weather || '';
   document.getElementById('popup-group').innerText = item.group || '';
   document.getElementById('popup-note').innerText = item.note || '';
+
+  if (item.url) {
+    const linkBtn = document.getElementById('view-original-btn');
+    linkBtn.href = item.url;
+    linkBtn.classList.remove('hidden');
+  } else {
+    document.getElementById('view-original-btn').classList.add('hidden');
+  }
+
   document.getElementById('popup').classList.remove('hidden');
 }
 
@@ -94,7 +113,7 @@ function toggleEditable(editing) {
       e.preventDefault(); // 阻止默认滚动行为
     });
   };
-  ['popup-title', 'popup-start', 'popup-location', 'popup-key-character', 'popup-characters', 'popup-story','popup-category','popup-tags'].forEach(toggle);
+  ['popup-title', 'popup-start','popup-end', 'popup-location', 'popup-key-character', 'popup-characters', 'popup-story','popup-category','popup-tags'].forEach(toggle);
   ['popup-chapter','popup-season','popup-special-day','popup-weather','popup-group','popup-note'].forEach(toggle);
   document.getElementById('edit-btn').classList.toggle('hidden', editing);
   document.getElementById('save-btn').classList.toggle('hidden', !editing);
