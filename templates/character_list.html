@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>人物列表</title>
+</head>
+<body>
+    <h1>人物列表</h1>
+    <button id="add-character-btn">新增人物</button>
+    <ul>
+    {% for character in characters %}
+        <li><a href="/character/{{ character.id }}">{{ character.name }}</a></li>
+    {% endfor %}
+    </ul>
+</body>
+</html>

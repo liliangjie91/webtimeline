@@ -33,7 +33,7 @@ export function bindPopupHandlers() {
     updated.group = document.getElementById('popup-group').innerText;
     updated.note = document.getElementById('popup-note').innerText;
 
-    fetch('/update_event', {
+    fetch('/event/update', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updated)
@@ -49,7 +49,7 @@ export function bindPopupHandlers() {
 
   document.getElementById('delete-btn').onclick = () => {
     if (confirm("确定删除这个事件吗？")) {
-      fetch('/delete_event', {
+      fetch('/event/delete', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: selectedItem.id })

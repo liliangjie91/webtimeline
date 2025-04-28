@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ character.name }} - 人物介绍</title>
+</head>
+<body>
+    <h1>{{ character.name }}</h1>
+    <p><strong>分类：</strong> {{ character.category }}</p>
+    <p><strong>简介：</strong> {{ character.description }}</p>
+
+    <h2>重要情节</h2>
+    <ul>
+    {% for event in character.important_events %}
+        <li>{{ event }}</li>
+    {% endfor %}
+    </ul>
+
+    <p><a href="/characters">返回人物列表</a></p>
+</body>
+</html>

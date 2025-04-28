@@ -29,7 +29,7 @@ export function bindAddHandlers() {
         note: document.getElementById('new-note').value
       };
   
-      fetch('/add_event', {
+      fetch('/event/add', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newEvent)
