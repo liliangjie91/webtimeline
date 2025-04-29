@@ -30,6 +30,7 @@ function makelinkinspan(spanName, textNames) {
           link.href = `/character/${characterDict[name]}`; // 用ID跳转
           link.textContent = name;
           link.style.textDecoration = 'none';
+          link.target = '_blank'; // 在新标签页打开
           link.style.color = '#007bff';
           link.style.margin = '0';
           spanName.appendChild(link);

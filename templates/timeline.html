@@ -37,8 +37,8 @@
       <span id="add-popup-close" class="close">&times;</span>
       <h2>添加新事件</h2>
       <form id="add-event-form" class="form-grid">
-        <div class="form-row full-width"><label for="new-title">标题:</label><input type="text" id="new-title" placeholder="故事标题" required></div>
-        <div class="form-row"><label for="new-start">起始:</label><input type="text" id="new-start" placeholder="1111-11-11或1111-11-11 08:00"required></div>
+        <div class="form-row full-width"><label for="new-title">标题:</label><input type="text" id="new-title" placeholder="必填" required></div>
+        <div class="form-row"><label for="new-start">起始:</label><input type="text" id="new-start" placeholder="必填: 1111-11-11 08:00或时间留空"required></div>
         <div class="form-row"><label for="new-start">结束:</label><input type="text" id="new-end" placeholder="可不填"></div>
         <div class="form-row"><label for="new-location">地点:</label><input type="text" id="new-location"placeholder="发生地点"></div>
         <div class="form-row"><label for="new-key-character">主角:</label><input type="text" id="new-key-character"placeholder="关键人物"></div>
@@ -50,9 +50,9 @@
         <div class="form-row"><label for="new-category">类别:</label><input type="text" id="new-category" placeholder="情节分类：复仇，家庭等"></div>
         <div class="form-row"><label for="new-tags">标签:</label><input type="text" id="new-tags" placeholder="情节标签：吃饭，葬礼等"></div>
         <div class="form-row full-width"><label for="new-note">备注:</label><input type="text" id="new-note" placeholder="备注"></div>
-        <div class="form-row full-width"><label for="new-group">故事线:</label><input type="text" id="new-group" placeholder="某某线，主线等" required></div>    
+        <div class="form-row full-width"><label for="new-group">故事线:</label><input type="text" id="new-group" placeholder="必填: 某某线，主线等" required></div>    
         <!-- <div class="form-row full-width"><span>故事内容:</span><textarea id="new-story" rows="5"></textarea></div> -->
-        <div class="form-row full-width"><label for="new-story">故事内容:</label><textarea id="new-story" rows="5"></textarea></div>
+        <div class="form-row full-width"><label for="new-story">故事内容:</label><textarea id="new-story" rows="5" placeholder="必填" required></textarea></div>
         <div class="form-row full-width" style="text-align: right;"><button type="submit" class="btn btn-success">保存</button></div>
       </form>
     </div>
@@ -96,7 +96,6 @@
 
 
   <!-- 脚本 -->
-  <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script type="module" src="{{ url_for('static', filename='js/timeline/main.js') }}"></script>
 </body>
-
 </html>
