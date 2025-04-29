@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request
+from flask import Blueprint, render_template, jsonify
 import json
 import os
 
@@ -30,3 +30,14 @@ def character_detail(character_id):
         return render_template('character_detail.html', character=character)
     else:
         return "角色不存在", 404
+    
+# 字典接口
+@character_bp.route('/api/character_dict')
+def get_character_dict():
+    try:
+        characters = load_characters()
+        # 构建 {name: id} 形式的字典
+        character_dict = {char['name']: char['id'] for char in characters}
+        return jsonify(character_dict)
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

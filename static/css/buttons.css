@@ -9,6 +9,10 @@
     transition: background-color 0.2s ease;
   }
   
+  .hidden {
+    display: none !important;
+  }
+
   /* 主要按钮（蓝） */
   .btn-primary {
     background-color: #0077cc;

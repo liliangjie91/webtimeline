@@ -25,36 +25,22 @@ export function initTimeline(events, isFiltered = false) {
   content: item.title
 }));
   const timelineData = new vis.DataSet(eventsWithContent);
-  // ✅ 改这里：共用同一个 DataSet（data）
-//   let timelineData;
-//   if (!data) {
-//     data = new vis.DataSet(events); // 初次创建
-//   }
 
-//   if (isFiltered) {
-//     timelineData = data;
-//   } else {
-//     timelineData = data;
-//     data.clear();     // 清空旧数据
-//     data.add(events); // 添加新数据
-//   }
-
-    const options = {
-      locale: 'zh',  // 这行很重要，让vis-timeline识别中文
-      moment: function (date) {
-        return moment(date); // 用中文moment处理日期
-      },
-      groupOrder: 'content',
-      editable: {
-        add: false, // 禁用默认添加行为
-        updateTime: true,  // drag items horizontally
-        updateGroup: true, // drag items from one group to another
-        remove: false,       // delete an item by tapping the delete button top right
-        overrideItems: false  // allow these options to override item.editable
-      }
-    };
+  const options = {
+    locale: 'zh',  // 这行很重要，让vis-timeline识别中文
+    moment: function (date) {
+      return moment(date); // 用中文moment处理日期
+    },
+    groupOrder: 'content',
+    editable: {
+      add: false, // 禁用默认添加行为
+      updateTime: true,  // drag items horizontally
+      updateGroup: true, // drag items from one group to another
+      remove: false,       // delete an item by tapping the delete button top right
+      overrideItems: false  // allow these options to override item.editable
+    }
+  };
   const timelineInstance = new vis.Timeline(container, timelineData, isFiltered ? {} : options);
-
   timelineInstance.setGroups(groups);
 
   if (events.length > 0) {

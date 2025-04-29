@@ -38,8 +38,8 @@
       <h2>添加新事件</h2>
       <form id="add-event-form" class="form-grid">
         <div class="form-row full-width"><label for="new-title">标题:</label><input type="text" id="new-title" placeholder="故事标题" required></div>
-        <div class="form-row"><label for="new-start">起始:</label><input type="date" id="new-start" placeholder="发生日期"required></div>
-        <div class="form-row"><label for="new-start">结束:</label><input type="date" id="new-end" placeholder="可不填"></div>
+        <div class="form-row"><label for="new-start">起始:</label><input type="text" id="new-start" placeholder="1111-11-11或1111-11-11 08:00"required></div>
+        <div class="form-row"><label for="new-start">结束:</label><input type="text" id="new-end" placeholder="可不填"></div>
         <div class="form-row"><label for="new-location">地点:</label><input type="text" id="new-location"placeholder="发生地点"></div>
         <div class="form-row"><label for="new-key-character">主角:</label><input type="text" id="new-key-character"placeholder="关键人物"></div>
         <div class="form-row full-width"><label for="new-people">人物:</label><input type="text" id="new-people" placeholder="所有人物"></div>
@@ -80,14 +80,16 @@
         <div class="form-row full-width"><label>故事线:</label> <span id="popup-group"></span></div>
         <div class="form-row full-width"><label>故事内容:</label> <span id="popup-story"></span></div>
         <!-- 按钮区域 -->
-        <div class="form-row full-width" style="margin-top: 10px; display: flex; justify-content: space-between;">
-          <div>
-            <button id="edit-btn" class="btn btn-success">编辑</button>
-            <button id="save-btn" class="btn btn-success" style="margin-left: 10px;">保存</button>
-            <a id="view-original-btn" href="#" target="_blank" class="btn btn-primary hidden" style="margin-left: 10px;">查看原文</a>
-            <button id="delete-btn" class="btn btn-danger" style="margin-right: 10px; float: right">删除</button>
+        <div class="form-row full-width" style="margin-top: 10px; display: flex; flex-direction: row;justify-content: space-between">
+            <div style="display: flex; gap: 10px;">
+              <button id="edit-btn" class="btn btn-success">编辑</button>
+              <button id="save-btn" class="btn btn-success">保存</button>
+            </div>
+            <div style="display: flex; gap: 10px;">
+              <a id="view-original-btn" href="#" target="_blank" class="btn btn-primary hidden" style="text-decoration: none;margin-top: 10px">查看原文</a>
+              <button id="delete-btn" class="btn btn-danger">删除</button>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
