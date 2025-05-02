@@ -1,6 +1,7 @@
-[
+{
+  "characters": [
     {
-      "id": "p001",
+      "id": 1,
       "name": "西门庆",
       "birth": "1085-03-15",
       "category": "主角",
@@ -12,7 +13,7 @@
       ]
     },
     {
-      "id": "p002",
+      "id": 2,
       "name": "潘金莲",
       "category": "伙伴",
       "birth": "1085-03-15",
@@ -21,5 +22,25 @@
         "救了小明一命",
         "揭开王国秘密"
       ]
+    },
+    {
+      "create_time": "2025-05-02T10:07:39.629Z",
+      "update_time": "2025-05-02T10:07:39.629Z",
+      "name": "应伯爵",
+      "aliases": "应花子",
+      "zi": "",
+      "birth": "",
+      "first_age": 25,
+      "first_chapter": null,
+      "hobby": "",
+      "nature": "",
+      "addr": "",
+      "role": "",
+      "chara": "",
+      "job": "",
+      "note": "",
+      "main_events": "史蒂夫",
+      "id": 3
     }
   ]
+}

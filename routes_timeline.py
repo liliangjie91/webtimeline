@@ -18,11 +18,6 @@ def save_data(data):
 def index():
     return render_template('timeline.html')
 
-@timeline_bp.route('/event')
-def get_events():
-    data = load_data()
-    return jsonify(data['events'])
-
 @timeline_bp.route('/event/update', methods=['POST'])
 def update_event():
     event = request.json
@@ -51,5 +46,10 @@ def delete_event():
     save_data(data)
     return jsonify({"status": "deleted"})
 
+# api
+@timeline_bp.route('/api/event')
+def get_events():
+    data = load_data()
+    return jsonify(data['events'])
 # if __name__ == '__main__':
 #     app.run(host='0.0.0.0', port=5001, debug=True)

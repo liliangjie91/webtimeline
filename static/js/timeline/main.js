@@ -8,7 +8,7 @@ let timeline;
 let filteredTimeline;
 // let data;
 
-fetch('/event')
+fetch('/api/event')
   .then(res => res.json())
   .then(events => {
     allEvents = events;
