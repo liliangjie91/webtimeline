@@ -1,0 +1,55 @@
+.character-container {
+    display: flex;
+    max-width: 1000px;
+    margin: 30px auto;
+    border: 1px solid #ddd;
+    background: #f9f9f9;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 8px rgba(0,0,0,0.1);
+  }
+  
+  .character-side {
+    width: 250px;
+    background-color: #f0f0f0;
+    padding: 20px;
+    border-right: 1px solid #ccc;
+  }
+  
+  .character-side img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .character-content {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .hidden {
+    display: none;
+  }
+  
+  .btn-group {
+    margin-top: 20px;
+  }
+  
+  button {
+    padding: 6px 12px;
+    margin-right: 10px;
+    border: none;
+    background-color: #2196F3;
+    color: white;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  button.hidden {
+    display: none;
+  }
+  
+  button.danger {
+    background-color: #f44336;
+  }

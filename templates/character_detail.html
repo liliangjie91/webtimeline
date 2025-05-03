@@ -1,21 +1,59 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <title>{{ character.name }} - 人物介绍</title>
+  <meta charset="UTF-8" />
+  <title id="main-title">人物详情</title>
+  <link rel="stylesheet" href="/static/css/form.css" />
+  <link rel="stylesheet" href="/static/css/buttons.css" />
+  <link rel="stylesheet" href="/static/css/character_detail.css" />
 </head>
 <body>
-    <h1>{{ character.name }}</h1>
-    <p><strong>分类：</strong> {{ character.category }}</p>
-    <p><strong>简介：</strong> {{ character.description }}</p>
+  <div class="character-container">
+    <!-- 左侧栏 -->
+    <div class="character-side">
+      <img id="character-img" src="/static/imgs/cover_jmp.jpg" alt="人物图像" />
+      <h3>相关人物</h3>
+      <ul id="related-characters">
+        <!-- 相关人物列表 -->
+      </ul>
+    </div>
 
-    <h2>重要情节</h2>
-    <ul>
-    {% for event in character.important_events %}
-        <li>{{ event }}</li>
-    {% endfor %}
-    </ul>
+    <!-- 右侧内容 -->
+    <div class="character-content">
+        <h2 id="detail-character-title"></h2>
+        <div class="form-grid">
+            <div class="form-row"><label>姓名:</label><span id="detail-character-name"></span></div>
+            <div class="form-row"><label>别名:</label><span id="detail-character-aliases"></span></div>
+            <div class="form-row"><label>字号:</label><span id="detail-character-zi"></span></div>
+            <div class="form-row"><label>生日:</label><span id="detail-character-birth"></span></div>
+            <div class="form-row"><label>出场年龄:</label><span id="detail-character-firstAge"></span></div>
+            <div class="form-row"><label>出场章节:</label><span id="detail-character-firstChapter"></span></div>
+            <div class="form-row"><label>爱好:</label><span id="detail-character-hobby"></span></div>
+            <div class="form-row"><label>性格:</label><span id="detail-character-nature"></span></div>
+            <div class="form-row"><label>住址:</label><span id="detail-character-addr"></span></div>
+            <div class="form-row"><label>身份:</label><span id="detail-character-role"></span></div>
+            <div class="form-row"><label>角色:</label><span id="detail-character-chara"></span></div>
+            <div class="form-row"><label>职业:</label><span id="detail-character-job"></span></div>
+            <div class="form-row full-width"><label>长相:</label><span id="detail-character-body"></span></div>
+            <div class="form-row full-width"><label>备注:</label><span id="detail-character-note"></span></div>
+            <div class="form-row full-width"><label>简介:</label><span id="detail-character-description"></span></div>
+            <div class="form-row full-width"><label>主要事件:</label><span id="detail-character-mainEvents"></span></div>
+        </div>
+            <!-- 按钮区域 -->
+            <div class="form-row full-width" style="margin-top: 10px; display: flex; flex-direction: row;justify-content: space-between">
+                <div style="display: flex; gap: 10px;">
+                    <button id="edit-btn" class="btn btn-success">编辑</button>
+                    <button id="save-btn" class="btn btn-success hidden">保存</button>
+                    <button id="cancel-btn" class="btn btn-success hidden">取消</button>
+                </div>
+                <div style="display: flex; gap: 10px;">
+                    <button id="delete-btn" class="btn btn-danger">删除</button>
+                </div>
+            </div>
+        <p><a href="/character_list">返回人物列表</a></p>
+    </div>
+  </div>
 
-    <p><a href="/characters">返回人物列表</a></p>
+  <script src="/static/js/character/character_detial.js"></script>
 </body>
 </html>

@@ -3,14 +3,18 @@
     {
       "id": 1,
       "name": "西门庆",
-      "birth": "1085-03-15",
+      "birth": "1085-07-28",
       "category": "主角",
       "description": "一个勇敢的少年，寻找传说中的宝藏。",
-      "important_events": [
-        "遇到神秘老人",
-        "获得魔法宝石",
-        "打败黑暗魔王"
-      ]
+      "chara": "主角",
+      "aliases": "西门大官人",
+      "zi": "四泉",
+      "hobby": "女人，吃喝玩乐",
+      "addr": "清河县西门府",
+      "firstAge": 26,
+      "firstChapter": 1,
+      "updateTime": 1746256122053,
+      "mainEvents": "123发动撒地方是短发是短发法发生的规划1"
     },
     {
       "id": 2,
@@ -18,29 +22,8 @@
       "category": "伙伴",
       "birth": "1085-03-15",
       "description": "小明的青梅竹马，机智聪明。",
-      "important_events": [
-        "救了小明一命",
-        "揭开王国秘密"
-      ]
-    },
-    {
-      "create_time": "2025-05-02T10:07:39.629Z",
-      "update_time": "2025-05-02T10:07:39.629Z",
-      "name": "应伯爵",
-      "aliases": "应花子",
-      "zi": "",
-      "birth": "",
-      "first_age": 25,
-      "first_chapter": null,
-      "hobby": "",
-      "nature": "",
-      "addr": "",
-      "role": "",
-      "chara": "",
-      "job": "",
-      "note": "",
-      "main_events": "史蒂夫",
-      "id": 3
+      "note": "-sdfas",
+      "brif": "-sdfs"
     }
   ]
 }

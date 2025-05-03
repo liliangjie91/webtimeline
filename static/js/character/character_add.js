@@ -32,14 +32,14 @@ export function bindAddCharacterHandlers() {
         return;
       }
       const characterData = {
-          create_time: Date.now(),
-          update_time: Date.now(),
+          createTime: Date.now(),
+          updateTime: Date.now(),
           name: name0,
           aliases: document.getElementById('new-character-aliases').value.trim(),
           zi: document.getElementById('new-character-zi').value.trim(),
           birth: document.getElementById('new-character-birth').value,  // date 类型
-          first_age: parseInt(document.getElementById('new-character-first-age').value) || null,
-          first_chapter: parseInt(document.getElementById('new-character-first-chapter').value) || null,
+          firstAge: parseInt(document.getElementById('new-character-firstAge').value) || null,
+          firstChapter: parseInt(document.getElementById('new-character-firstChapter').value) || null,
           hobby: document.getElementById('new-character-hobby').value.trim(),
           nature: document.getElementById('new-character-nature').value.trim(),
           addr: document.getElementById('new-character-addr').value.trim(),
@@ -47,7 +47,8 @@ export function bindAddCharacterHandlers() {
           chara: document.getElementById('new-character-chara').value.trim(),
           job: document.getElementById('new-character-job').value.trim(),
           note: document.getElementById('new-character-note').value.trim(),
-          main_events: document.getElementById('new-character-main-events').value.trim()
+          description: document.getElementById('new-character-description').value.trim(),
+          mainEvents: document.getElementById('new-character-mainEvents').value.trim()
       };
       
       fetch('/character/add', {

@@ -13,7 +13,7 @@ fetch('/api/character')
 
     allCharacters.forEach(c => {
       const li = document.createElement('li');
-      li.innerHTML = `<a href="/character/${c.id}" target="_blank">${c.name}</a>`;
+      li.innerHTML = `<a href="/character?id=${c.id}" target="_blank">${c.name}</a>`;
       // li.innerHTML = `<a href="/character/${c.id}" target="_blank">${c.name}</a>: ${c.description}`;
       ul.appendChild(li);
     });
