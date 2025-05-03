@@ -1,6 +1,8 @@
+
 let characterData = {};
 const params = new URLSearchParams(window.location.search);
 const characterId = params.get('id');
+
 
 if (!characterId) {
   document.body.innerHTML = '<h2>缺少角色ID</h2>';
@@ -78,6 +80,7 @@ function renderCharacter(character) {
         return value !== undefined && value !== null && value !== '' ? value : '-';
     }
     document.getElementById('main-title').innerText = safeText(character.name)+'-人物详情';
+    document.getElementById('detail-character-title').innerText = safeText(character.name);
     document.getElementById('detail-character-name').innerText = safeText(character.name);
     document.getElementById('detail-character-aliases').innerText = safeText(character.aliases);
     document.getElementById('detail-character-zi').innerText = safeText(character.zi);
@@ -98,12 +101,45 @@ function renderCharacter(character) {
     const img = document.getElementById('character-img');
     // img.src = character.image || "/static/imgs/cover_jpm.jpg";
   
-    const relatedEl = document.getElementById('related-characters');
+    showRelatedCharacters(character.related);
+  }
+
+function showRelatedCharacters(related) {
+    const relatedEl = document.getElementById('related-characters-block');
     relatedEl.innerHTML = '';
-    (character.related || []).forEach(name => {
-      const li = document.createElement('li');
-      li.textContent = name;
-      relatedEl.appendChild(li);
+    if (!related) {
+      relatedEl.innerHTML = '<li>无</li>';
+      return;
+    }
+    const relatedList = related.split(';').map(relation => relation.trim());
+    console.log(relatedList);
+    relatedList.forEach(relation => {
+        const [relationType, name] = relation.split(':').map(item => item.trim());
+        const nameList = name.split(',').map(item => item.trim());
+        const block = document.createElement('div');
+        block.className = 'relation-block';
+
+        const label = document.createElement('div');
+        label.className = 'relation-label';
+        label.innerText = `${relationType}:`;
+        block.appendChild(label);
+
+        const list = document.createElement('div');
+        list.className = 'relation-list';
+
+        nameList.forEach(person => {
+            // const a = document.createElement('a');
+            // a.className = 'relation-person';
+            // a.href = `/character/${person.id}`;
+            // a.innerText = person.name;
+            const span = document.createElement('span');
+            span.className = 'relation-person';
+            span.innerText = person;
+            list.appendChild(span);
+        });
+
+        block.appendChild(list);
+        relatedEl.appendChild(block);
     });
   }
 

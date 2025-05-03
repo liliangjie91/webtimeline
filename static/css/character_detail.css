@@ -32,24 +32,33 @@
     display: none;
   }
   
-  .btn-group {
-    margin-top: 20px;
+  .related-characters {
+    padding: 10px;
+    border-top: 1px solid #ccc;
   }
   
-  button {
-    padding: 6px 12px;
-    margin-right: 10px;
-    border: none;
-    background-color: #2196F3;
-    color: white;
-    cursor: pointer;
+  .relation-block {
+    margin-bottom: 10px;
+  }
+  
+  .relation-label {
+    font-weight: bold;
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+  
+  .relation-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-left: 4px;
+  }
+  
+  .relation-person {
+    background-color: #f0f0f0;
+    padding: 1px 1px;
     border-radius: 4px;
-  }
-  
-  button.hidden {
-    display: none;
-  }
-  
-  button.danger {
-    background-color: #f44336;
+    text-decoration: none;
+    color: #333;
+    font-size: 16px;
   }

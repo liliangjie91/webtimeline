@@ -1,6 +1,6 @@
 let characterDict = {};
 
-function loadCharacterDict() {
+export function loadCharacterDict() {
   fetch('/api/character_dict')
     .then(response => response.json())
     .then(data => {
