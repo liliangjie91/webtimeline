@@ -1,9 +1,19 @@
+import { loadCharacterDict } from './character_utils.js';
 
 let characterData = {};
+let characterDict = {};
 const params = new URLSearchParams(window.location.search);
 const characterId = params.get('id');
 
-
+// 页面加载完成就拉取字典
+// document.addEventListener('DOMContentLoaded', () => {
+//   loadCharacterDict().then(data => {
+//     characterDict = data;
+//     console.log('角色字典加载成功', characterDict);
+//     // 此处可以调用渲染函数或做其他操作
+//   });
+// });
+// console.log('角色字典加载成功123', characterDict);
 if (!characterId) {
   document.body.innerHTML = '<h2>缺少角色ID</h2>';
 } else {
@@ -80,8 +90,8 @@ function renderCharacter(character) {
         return value !== undefined && value !== null && value !== '' ? value : '-';
     }
     document.getElementById('main-title').innerText = safeText(character.name)+'-人物详情';
-    document.getElementById('detail-character-title').innerText = safeText(character.name);
     document.getElementById('detail-character-name').innerText = safeText(character.name);
+    document.getElementById('detail-character-gender').innerText = safeText(character.gender);
     document.getElementById('detail-character-aliases').innerText = safeText(character.aliases);
     document.getElementById('detail-character-zi').innerText = safeText(character.zi);
     document.getElementById('detail-character-birth').innerText = safeText(character.birth);
@@ -97,6 +107,7 @@ function renderCharacter(character) {
     document.getElementById('detail-character-note').innerText = safeText(character.note);
     document.getElementById('detail-character-description').innerText = safeText(character.description);
     document.getElementById('detail-character-mainEvents').innerText = safeText(character.mainEvents);
+    document.getElementById('detail-character-related').innerText = safeText(character.related);
 
     const img = document.getElementById('character-img');
     // img.src = character.image || "/static/imgs/cover_jpm.jpg";
@@ -104,7 +115,11 @@ function renderCharacter(character) {
     showRelatedCharacters(character.related);
   }
 
-function showRelatedCharacters(related) {
+  // 角色关系渲染函数
+async function showRelatedCharacters(related) {
+    characterDict = await loadCharacterDict();
+    // characterDict = await response.json();
+    // console.log('renwu dict:', characterDict);
     const relatedEl = document.getElementById('related-characters-block');
     relatedEl.innerHTML = '';
     if (!related) {
@@ -112,9 +127,12 @@ function showRelatedCharacters(related) {
       return;
     }
     const relatedList = related.split(';').map(relation => relation.trim());
-    console.log(relatedList);
+    // console.log(relatedList);
     relatedList.forEach(relation => {
         const [relationType, name] = relation.split(':').map(item => item.trim());
+        if (!relationType || !name) {
+            return; // 如果没有关系类型或名字，跳过
+        }
         const nameList = name.split(',').map(item => item.trim());
         const block = document.createElement('div');
         block.className = 'relation-block';
@@ -127,15 +145,32 @@ function showRelatedCharacters(related) {
         const list = document.createElement('div');
         list.className = 'relation-list';
 
-        nameList.forEach(person => {
+        nameList.forEach(name => {
             // const a = document.createElement('a');
             // a.className = 'relation-person';
             // a.href = `/character/${person.id}`;
             // a.innerText = person.name;
-            const span = document.createElement('span');
-            span.className = 'relation-person';
-            span.innerText = person;
-            list.appendChild(span);
+            if (name === '') {
+                return; // 如果名字为空，跳过
+            }
+            if (characterDict[name]) {
+                // 如果字典里有这个名字
+                const link = document.createElement('a');
+                link.href = `/character?id=${characterDict[name]}`; // 用ID跳转
+                link.textContent = name;
+                link.className = 'relation-person';
+                link.style.textDecoration = 'none';
+                link.target = '_blank'; // 在新标签页打开
+                link.style.color = '#007bff';
+                link.style.margin = '0';
+                list.appendChild(link);
+              } else {
+                // 如果没有，就直接显示名字
+                const span = document.createElement('span');
+                span.textContent = name;
+                span.className = 'relation-person';
+                list.appendChild(span);
+              }
         });
 
         block.appendChild(list);
@@ -144,19 +179,24 @@ function showRelatedCharacters(related) {
   }
 
 const character_fields = [
-    'name', 'aliases', 'zi', 'birth', 'firstAge', 'firstChapter',
-    'hobby', 'nature', 'addr', 'role', 'chara', 'job', 'body', 'note', 'description', 'mainEvents'
+    'name', 'aliases', 'gender','zi', 'birth', 'firstAge', 'firstChapter',
+    'hobby', 'nature', 'addr', 'role', 'chara', 'job', 'body', 'note', 'description', 'mainEvents','related'
 ];
+
+const hidden_fields = [
+    'detail-character-div-related'
+];
+
 function updateCharacter(id) {
     let updateData = {};
     character_fields.forEach(field => {
         const element = document.getElementById(`detail-character-${field}`);
         if (!element) return;
-        const newValue = element.innerText.trim();
+        let newValue = element.innerText.trim();
         if (newValue === undefined || newValue === null || newValue === '-') {
             return;
         }
-        // newValue = newValue.trim();
+        newValue = newValue.trim().replaceAll('；', ';').replaceAll('，', ',').replaceAll('：', ':');
         
         const oldValue = (characterData[field] || '').toString().trim();
         if (newValue !== oldValue) {
@@ -180,14 +220,19 @@ function toggleEditable(editing) {
         e.preventDefault(); // 阻止默认滚动行为
         });
     };
-    character_elments = [
-        'detail-character-name', 'detail-character-aliases', 'detail-character-zi', 'detail-character-birth',
-        'detail-character-firstAge', 'detail-character-firstChapter', 'detail-character-hobby', 'detail-character-nature',
-        'detail-character-addr', 'detail-character-role', 'detail-character-chara', 'detail-character-job',
-        'detail-character-body', 'detail-character-note','detail-character-description', 'detail-character-mainEvents'
-    ];
+
+    const character_elments = character_fields.map(val => `detail-character-${val}`);
+    // console.log('character_elments:', character_elments);
     character_elments.forEach(toggle);
     document.getElementById('edit-btn').classList.toggle('hidden', editing);
     document.getElementById('save-btn').classList.toggle('hidden', !editing);
     document.getElementById('cancel-btn').classList.toggle('hidden', !editing);
+    hidden_fields.forEach(val => {
+        const element = document.getElementById(val);
+        if (editing) {
+            element.classList.remove('hidden');
+        } else {
+            element.classList.add('hidden');
+        }
+    });
 }

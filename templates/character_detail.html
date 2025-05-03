@@ -20,11 +20,12 @@
 
     <!-- 右侧内容 -->
     <div class="character-content">
-        <h2 id="detail-character-title"></h2>
+        <h2 id="detail-character-name"></h2>
         <div class="form-grid">
-            <div class="form-row"><label>姓名:</label><span id="detail-character-name"></span></div>
-            <div class="form-row"><label>别名:</label><span id="detail-character-aliases"></span></div>
+            <!-- <div class="form-row"><label>姓名:</label><span id="detail-character-name"></span></div> -->
             <div class="form-row"><label>字号:</label><span id="detail-character-zi"></span></div>
+            <div class="form-row"><label>别名:</label><span id="detail-character-aliases"></span></div>
+            <div class="form-row"><label>性别:</label><span id="detail-character-gender"></span></div>
             <div class="form-row"><label>生日:</label><span id="detail-character-birth"></span></div>
             <div class="form-row"><label>出场年龄:</label><span id="detail-character-firstAge"></span></div>
             <div class="form-row"><label>出场章节:</label><span id="detail-character-firstChapter"></span></div>
@@ -38,6 +39,7 @@
             <div class="form-row full-width"><label>备注:</label><span id="detail-character-note"></span></div>
             <div class="form-row full-width"><label>简介:</label><span id="detail-character-description"></span></div>
             <div class="form-row full-width"><label>主要事件:</label><span id="detail-character-mainEvents"></span></div>
+            <div id="detail-character-div-related" class="form-row full-width hidden"><label>主要关系:</label><span id="detail-character-related"></span></div>
         </div>
             <!-- 按钮区域 -->
             <div class="form-row full-width" style="margin-top: 10px; display: flex; flex-direction: row;justify-content: space-between">
@@ -54,6 +56,6 @@
     </div>
   </div>
 
-  <script src="/static/js/character/character_detial.js"></script>
+  <script type="module" src="/static/js/character/character_detial.js"></script>
 </body>
 </html>

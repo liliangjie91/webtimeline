@@ -1,18 +1,14 @@
+import { loadCharacterDict } from './character_utils.js';
 let characterDict = {};
 
-export function loadCharacterDict() {
-  fetch('/api/character_dict')
-    .then(response => response.json())
-    .then(data => {
-      characterDict = data;
-      // console.log('角色字典加载成功', characterDict);
-    })
-    .catch(error => {
-      console.error('角色字典加载失败:', error);
-    });
-}
 // 页面加载完成就拉取字典
-document.addEventListener('DOMContentLoaded', loadCharacterDict);
+document.addEventListener('DOMContentLoaded', () => {
+  loadCharacterDict().then(data => {
+    characterDict = data;
+    // console.log('角色字典加载成功', characterDict);
+    // 此处可以调用渲染函数或做其他操作
+  });
+});
 
 // 角色添加功能
 export function bindAddCharacterHandlers() {
@@ -31,24 +27,26 @@ export function bindAddCharacterHandlers() {
         alert('角色名已存在，请更换角色名');
         return;
       }
+      const sep = /[,，、;；\s]+/
       const characterData = {
           createTime: Date.now(),
           updateTime: Date.now(),
           name: name0,
-          aliases: document.getElementById('new-character-aliases').value.trim(),
+          aliases: document.getElementById('new-character-aliases').value.trim().split(sep).map(s => s.trim()).join(','),
           zi: document.getElementById('new-character-zi').value.trim(),
           birth: document.getElementById('new-character-birth').value,  // date 类型
           firstAge: parseInt(document.getElementById('new-character-firstAge').value) || null,
           firstChapter: parseInt(document.getElementById('new-character-firstChapter').value) || null,
-          hobby: document.getElementById('new-character-hobby').value.trim(),
-          nature: document.getElementById('new-character-nature').value.trim(),
+          hobby: document.getElementById('new-character-hobby').value.trim().split(sep).map(s => s.trim()).join(','),
+          nature: document.getElementById('new-character-nature').value.trim().split(sep).map(s => s.trim()).join(','),
           addr: document.getElementById('new-character-addr').value.trim(),
-          role: document.getElementById('new-character-role').value.trim(),
+          role: document.getElementById('new-character-role').value.trim().split(sep).map(s => s.trim()).join(','),
           chara: document.getElementById('new-character-chara').value.trim(),
-          job: document.getElementById('new-character-job').value.trim(),
+          job: document.getElementById('new-character-job').value.trim().split(sep).map(s => s.trim()).join(','),
           note: document.getElementById('new-character-note').value.trim(),
           description: document.getElementById('new-character-description').value.trim(),
-          mainEvents: document.getElementById('new-character-mainEvents').value.trim()
+          mainEvents: document.getElementById('new-character-mainEvents').value.trim().replaceAll('；',';'),
+          related: document.getElementById('new-character-related').value.trim().replaceAll('，',',').replaceAll('；',';').replaceAll('：',':'),
       };
       
       fetch('/character/add', {
