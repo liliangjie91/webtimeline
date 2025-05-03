@@ -7,12 +7,17 @@
     <link rel="stylesheet" href="/static/css/modal.css" />
     <link rel="stylesheet" href="/static/css/buttons.css" />
     <link rel="stylesheet" href="/static/css/form.css">
+    <!-- <link rel="stylesheet" href="/static/css/character_detail.css" /> -->
     <title>人物列表</title>
 </head>
 <body>
+    <div class="character-container" style="margin: 0 auto; width: 900px;">
+      
     <h1>人物列表</h1>
     <button id="add-character-btn" style="margin-bottom: 15px;">新增人物</button>
-    <div id="character-list"></div>
+    <div class="character-list-container">
+      <div id="character-list"></div>
+    </div>
 
       <!-- 添加人物的弹窗 -->
     <div id="add-character-popup" class="modal hidden">
@@ -23,23 +28,25 @@
             <div class="form-row"><label for="new-character-aliases">别名:</label><input type="text" id="new-character-aliases" placeholder="外号等"></div>
             <div class="form-row"><label for="new-character-zi">字号:</label><input type="text" id="new-character-zi" placeholder="字号" ></div>
             <div class="form-row"><label for="new-character-birth">生日:</label><input type="date" id="new-character-birth"placeholder="生日"></div>
-            <div class="form-row"><label for="new-character-first-age">出场年龄:</label><input type="number" id="new-character-first-age" placeholder="初次出场年龄"></div>
-            <div class="form-row"><label for="new-character-first-chapter">出场章节:</label><input type="number" id="new-character-first-chapter" placeholder="初次出场章节"></div>
+            <div class="form-row"><label for="new-character-firstAge">出场年龄:</label><input type="number" id="new-character-firstAge" placeholder="初次出场年龄"></div>
+            <div class="form-row"><label for="new-character-firstChapter">出场章节:</label><input type="number" id="new-character-firstChapter" placeholder="初次出场章节"></div>
             <div class="form-row"><label for="new-character-hobby">爱好:</label><input type="text" id="new-character-hobby" placeholder="爱好"></div>
             <div class="form-row"><label for="new-character-nature">性格:</label><input type="text" id="new-character-nature" placeholder="性格"></div>
             <div class="form-row"><label for="new-character-addr">住址:</label><input type="text" id="new-character-addr" placeholder="住址"></div>
             <div class="form-row"><label for="new-character-role">身份:</label><input type="text" id="new-character-role" placeholder="xxx之妾,xxx之仆"></div>
-            <div class="form-row"><label for="new-character-chara">角色:</label><input type="text" id="new-character-chara" placeholder="主角,配角"></div>
+            <div class="form-row"><label for="new-character-chara">角色:</label><input type="text" id="new-character-chara" placeholder="所属群体：西门庆家人"></div>
             <div class="form-row"><label for="new-character-job">职业:</label><input type="text" id="new-character-job" placeholder="主职业/官职"></div>
             <div class="form-row full-width"><label for="new-character-body">长相:</label><input type="text" id="new-character-body" placeholder="长相"></div>
             <div class="form-row full-width"><label for="new-character-note">备注:</label><input type="text" id="new-character-note" placeholder="备注"></div>
-            <div class="form-row full-width"><label for="new-character-main-events">简介:</label><textarea id="new-character-description" rows="3" placeholder="简介"></textarea></div>
-            <div class="form-row full-width"><label for="new-character-main-events">主要事件:</label><textarea id="new-character-main-events" rows="5" placeholder="主要事件"></textarea></div>
+            <div class="form-row full-width"><label for="new-character-description">简介:</label><textarea id="new-character-description" rows="3" placeholder="简介"></textarea></div>
+            <div class="form-row full-width"><label for="new-character-mainEvents">主要事件:</label><textarea id="new-character-mainEvents" rows="5" placeholder="主要事件"></textarea></div>
             <div class="form-row full-width"><label for="new-character-related">主要关系:</label><textarea id="new-character-related" rows="3" placeholder="朋友:xx,xxx;妻子:xx"></textarea></div>
             <div class="form-row full-width" style="text-align: right;"><button type="submit" class="btn btn-success">保存</button></div>
         </form>
         </div>
     </div>
+
+  </div>
     <!-- 脚本 -->
   <script type="module" src="{{ url_for('static', filename='js/character/character_main.js') }}"></script>
 </body>
