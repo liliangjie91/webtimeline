@@ -2,22 +2,17 @@ import { loadCharacterDict } from './character_utils.js';
 
 let characterData = {};
 let characterDict = {};
+const match = window.location.pathname.match(/^\/story\/(\d+)/);
+const storyId = match[1];
 const params = new URLSearchParams(window.location.search);
 const characterId = params.get('id');
 
-// 页面加载完成就拉取字典
-// document.addEventListener('DOMContentLoaded', () => {
-//   loadCharacterDict().then(data => {
-//     characterDict = data;
-//     console.log('角色字典加载成功', characterDict);
-//     // 此处可以调用渲染函数或做其他操作
-//   });
-// });
-// console.log('角色字典加载成功123', characterDict);
-if (!characterId) {
+if (!storyId) {
+  document.body.innerHTML = '<h2>缺少故事ID</h2>';
+} else if (!characterId) {
   document.body.innerHTML = '<h2>缺少角色ID</h2>';
 } else {
-  fetch(`/api/character/${characterId}`)
+  fetch(`/api/story/${storyId}/character/${characterId}`)
     .then(res => {
       if (!res.ok) {
         throw new Error('角色不存在');
@@ -41,7 +36,7 @@ document.getElementById('edit-btn').onclick = () => {
 document.getElementById('cancel-btn').onclick = () => {
     toggleEditable(false);
 };
-
+// 保存编辑
 document.getElementById('save-btn').onclick = () => {
     
     const id = characterData.id;
@@ -54,7 +49,7 @@ document.getElementById('save-btn').onclick = () => {
 
     updateData['updateTime'] = Date.now();
 
-    fetch(`/api/character/${id}`, {
+    fetch(`/api/story/${storyId}/character/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updateData)
@@ -71,14 +66,14 @@ document.getElementById('save-btn').onclick = () => {
 // 删除人物
 document.getElementById('delete-btn').onclick = () => {
     if (confirm("确定删除这个人物吗？")) {
-        fetch('/character/delete', {
+        fetch(`/story/${storyId}/character/delete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: characterData.id })
         }).then(() => {
         // dataRef.remove(selectedItem.id);
         // document.getElementById('popup').classList.add('hidden');
-        window.location.href = '/character_list';
+        window.location.href = `/story/${storyId}/character_list`;
         // location.reload();
         });
     }
@@ -117,7 +112,7 @@ function renderCharacter(character) {
 
   // 角色关系渲染函数
 async function showRelatedCharacters(related) {
-    characterDict = await loadCharacterDict();
+    characterDict = await loadCharacterDict(storyId);
     // characterDict = await response.json();
     // console.log('renwu dict:', characterDict);
     const relatedEl = document.getElementById('related-characters-block');
@@ -156,11 +151,11 @@ async function showRelatedCharacters(related) {
             if (characterDict[name]) {
                 // 如果字典里有这个名字
                 const link = document.createElement('a');
-                link.href = `/character?id=${characterDict[name]}`; // 用ID跳转
+                link.href = `/story/${storyId}/character?id=${characterDict[name]}`; // 用ID跳转
                 link.textContent = name;
                 link.className = 'relation-person';
                 link.style.textDecoration = 'none';
-                link.target = '_blank'; // 在新标签页打开
+                // link.target = '_blank'; // 在新标签页打开
                 link.style.color = '#007bff';
                 link.style.margin = '0';
                 list.appendChild(link);

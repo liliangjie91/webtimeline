@@ -13,10 +13,11 @@
       "addr": "清河县西门府",
       "firstAge": 26,
       "firstChapter": 1,
-      "updateTime": 1746278702747,
+      "updateTime": 1746540191862,
       "mainEvents": "西门庆结拜;偷情潘金莲;迎娶孟玉楼;偷情李瓶儿;包养李桂姐;偷情宋惠莲",
       "related": "妻:吴月娘,陈氏(亡);\n妾:李娇儿,卓丢儿(亡),孟玉楼,孙雪娥,潘金莲,李瓶儿;\n情妇:春梅,李桂姐,郑爱姐,王六儿,林太太;\n朋友:应伯爵,谢希大,常时节;\n父母:西门达;\n子女:西门大姐,官哥,孝哥",
-      "gender": "男"
+      "gender": "男",
+      "job": "生药铺老板"
     },
     {
       "id": 2,
@@ -164,6 +165,27 @@
       "mainEvents": "",
       "related": "夫:西门庆",
       "id": 8
+    },
+    {
+      "createTime": 1746540505973,
+      "updateTime": 1746540505973,
+      "name": "应伯爵",
+      "aliases": "应花子",
+      "zi": "",
+      "birth": "",
+      "firstAge": 23,
+      "firstChapter": 1,
+      "hobby": "",
+      "nature": "",
+      "addr": "",
+      "role": "",
+      "chara": "",
+      "job": "",
+      "note": "",
+      "description": "",
+      "mainEvents": "",
+      "related": "",
+      "id": 9
     }
   ]
 }

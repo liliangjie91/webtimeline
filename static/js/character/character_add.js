@@ -1,9 +1,11 @@
 import { loadCharacterDict } from './character_utils.js';
 let characterDict = {};
 
+const match = window.location.pathname.match(/^\/story\/(\d+)/);
+const storyId = match[1];
 // 页面加载完成就拉取字典
 document.addEventListener('DOMContentLoaded', () => {
-  loadCharacterDict().then(data => {
+  loadCharacterDict(storyId).then(data => {
     characterDict = data;
     // console.log('角色字典加载成功', characterDict);
     // 此处可以调用渲染函数或做其他操作
@@ -49,7 +51,7 @@ export function bindAddCharacterHandlers() {
           related: document.getElementById('new-character-related').value.trim().replaceAll('，',',').replaceAll('；',';').replaceAll('：',':'),
       };
       
-      fetch('/character/add', {
+      fetch(`/story/${storyId}/character/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(characterData)
