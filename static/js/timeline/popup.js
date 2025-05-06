@@ -1,21 +1,16 @@
+import { loadCharacterDict } from '../character/character_utils.js';
 let selectedItem;
 let dataRef;
 let characterDict = {};
-
-function loadCharacterDict() {
-  fetch('/api/character_dict')
-    .then(response => response.json())
-    .then(data => {
-      characterDict = data;
-      // console.log('角色字典加载成功', characterDict);
-    })
-    .catch(error => {
-      console.error('角色字典加载失败:', error);
-    });
-}
+const match = window.location.pathname.match(/^\/story\/(\d+)/);
+const storyId = match[1];
 
 // 页面加载完成就拉取字典
-document.addEventListener('DOMContentLoaded', loadCharacterDict);
+document.addEventListener('DOMContentLoaded', () => {
+  loadCharacterDict(storyId).then(data => {
+    characterDict = data;
+  });
+});
 
 
 function makelinkinspan(spanName, textNames) {
@@ -27,7 +22,7 @@ function makelinkinspan(spanName, textNames) {
         if (characterDict[name]) {
           // 如果字典里有这个名字
           const link = document.createElement('a');
-          link.href = `/character/${characterDict[name]}`; // 用ID跳转
+          link.href = `/story/${storyId}/character/${characterDict[name]}`; // 用ID跳转
           link.textContent = name;
           link.style.textDecoration = 'none';
           link.target = '_blank'; // 在新标签页打开
@@ -89,8 +84,8 @@ export function bindPopupHandlers() {
     updated.group = document.getElementById('popup-group').innerText;
     updated.note = document.getElementById('popup-note').innerText;
 
-    fetch('/event/update', {
-      method: 'POST',
+    fetch(`/story/${storyId}/event/${selectedItem.id}`, {
+      method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updated)
     }).then(() => {
@@ -107,7 +102,7 @@ export function bindPopupHandlers() {
   // 删除事件
   document.getElementById('delete-btn').onclick = () => {
     if (confirm("确定删除这个事件吗？")) {
-      fetch('/event/delete', {
+      fetch(`/story/${storyId}/event/delete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: selectedItem.id })

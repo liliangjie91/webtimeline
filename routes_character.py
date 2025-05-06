@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, jsonify, request, abort
+from utils import story_map
 import json
 import os
 
@@ -6,10 +7,7 @@ character_bp = Blueprint('character', __name__)
 
 file_folder = 'data'
 file_prifix = 'characters'
-story_map = {
-    '1': '金瓶梅',
-    '2': '红楼梦'
-}
+
 def get_file_path(story_id):
     return os.path.join(file_folder, f'{file_prifix}_{story_id}.json')
 

@@ -1,3 +1,6 @@
+const match = window.location.pathname.match(/^\/story\/(\d+)/);
+const storyId = match[1];
+
 export function bindAddHandlers() {
     document.getElementById('add-event-btn').onclick = () => {
       document.getElementById('add-popup').classList.remove('hidden');
@@ -35,7 +38,7 @@ export function bindAddHandlers() {
         note: document.getElementById('new-note').value
       };
   
-      fetch('/event/add', {
+      fetch(`/story/${storyId}/event/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newEvent)

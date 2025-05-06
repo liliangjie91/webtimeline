@@ -7,8 +7,10 @@ let allEvents = [];
 let timeline;
 let filteredTimeline;
 // let data;
-
-fetch('/api/event')
+const match = window.location.pathname.match(/^\/story\/(\d+)/);
+const storyId = match[1];
+const apiUrl = `/api/story/${storyId}/event`;
+fetch(apiUrl)
   .then(res => res.json())
   .then(events => {
     allEvents = events;

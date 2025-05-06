@@ -50,15 +50,6 @@ export function initTimeline(events, isFiltered = false) {
     timelineInstance.setWindow(new Date(start.getTime() - buffer), new Date(end.getTime() + buffer));
   }
 
-//   timelineInstance.on('doubleClick', function (props) {
-//     if (props.item) {
-//       const item = data.get(props.item);
-//       alert('你双击了事件：' + item.content);
-//     } else {
-//       alert('你双击了空白区域');
-//     }
-//   });
-
   timelineInstance.on('doubleClick', props => {
     if (props.item) {
         const item = timelineData.get(props.item);
