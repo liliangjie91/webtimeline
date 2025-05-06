@@ -3,14 +3,39 @@
 
 <head>
   <meta charset="utf-8" />
-  <title>首页</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>故事线管理器</title>
+  <style>
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #007bff;
+    }
+
+    @media (max-width: 600px) {
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      nav ul {
+        flex-direction: column;
+      }
+    }
+  </style>
   
 </head>
 
 <body>
   
-  <div style="margin: 0 auto; width: 900px;">
-  <h2>时间线管理器</h2>
+  <div style="margin: 0 20%">
+  <h3>时间线管理器</h3>
   <nav>
     <ul>
       <li><a href="/timeline">时间线</a></li>

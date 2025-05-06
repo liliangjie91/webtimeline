@@ -227,6 +227,7 @@ function toggleEditable(editing) {
     document.getElementById('edit-btn').classList.toggle('hidden', editing);
     document.getElementById('save-btn').classList.toggle('hidden', !editing);
     document.getElementById('cancel-btn').classList.toggle('hidden', !editing);
+    document.getElementById('delete-btn').classList.toggle('hidden', !editing);
     hidden_fields.forEach(val => {
         const element = document.getElementById(val);
         if (editing) {
