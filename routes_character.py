@@ -6,6 +6,10 @@ character_bp = Blueprint('character', __name__)
 
 file_folder = 'data'
 file_prifix = 'characters'
+story_map = {
+    '1': '金瓶梅',
+    '2': '红楼梦'
+}
 def get_file_path(story_id):
     return os.path.join(file_folder, f'{file_prifix}_{story_id}.json')
 
@@ -22,11 +26,15 @@ def save_characters(data,path_character):
 
 @character_bp.route('/story/<story_id>/character_list')
 def character_list(story_id):
-    return render_template('character_list.html')
+    if story_id not in story_map:
+        return "Invalid story ID", 404
+    return render_template('character_list.html', storyName=story_map[story_id])
 
 @character_bp.route('/story/<story_id>/character')
 def character_detail(story_id):
-    return render_template('character_detail.html')
+    if story_id not in story_map:
+        return "Invalid story ID", 404
+    return render_template('character_detail.html',storyId=story_id, storyName=story_map[story_id])
     
 # 更新角色
 @character_bp.route('/api/story/<story_id>/character/<int:character_id>', methods=['PATCH'])
