@@ -1,7 +1,7 @@
-import { initTimeline, setTimelineInstances } from './timeline.js';
-import { updateFilterOptions, applyFilters } from './filters.js';
-import { bindPopupHandlers } from './popup.js';
-import { bindAddHandlers } from './add.js';
+import { initTimeline, setTimelineInstances } from './timeline_init.js';
+import { updateFilterOptions, applyFilters } from './timeline_filters.js';
+import { bindPopupHandlers } from '../event/event_popup.js';
+import { bindAddHandlers } from '../event/event_add.js';
 
 let allEvents = [];
 let timeline;

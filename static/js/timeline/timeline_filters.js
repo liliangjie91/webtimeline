@@ -1,4 +1,4 @@
-import { initTimeline } from './timeline.js';
+import { initTimeline } from './timeline_init.js';
 
 export function updateFilterOptions(events) {
   const container = document.getElementById('filter-group');

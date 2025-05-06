@@ -22,7 +22,7 @@ function makelinkinspan(spanName, textNames) {
         if (characterDict[name]) {
           // 如果字典里有这个名字
           const link = document.createElement('a');
-          link.href = `/story/${storyId}/character/${characterDict[name]}`; // 用ID跳转
+          link.href = `/story/${storyId}/character?id=${characterDict[name]}`; // 用ID跳转
           link.textContent = name;
           link.style.textDecoration = 'none';
           link.target = '_blank'; // 在新标签页打开

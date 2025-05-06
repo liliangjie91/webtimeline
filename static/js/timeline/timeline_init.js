@@ -1,5 +1,5 @@
-import { showPopup } from './popup.js';
-import { handleAddEventFromDoubleClick } from './add.js';
+import { showPopup } from '../event/event_popup.js';
+import { handleAddEventFromDoubleClick } from '../event/event_add.js';
 
 let timeline, filteredTimeline, allEventsRef;
 
