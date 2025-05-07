@@ -17,7 +17,7 @@
     "tags": "结拜,吃喝",
     "title": "西门庆十兄弟结拜",
     "weather": "",
-    "url": "/static/novel/jpm/text/part0004.html#p001"
+    "textUrl": "/static/novel/jpm/text/part0005.html#p011"
   },
   {
     "id": 10005,
@@ -36,7 +36,8 @@
     "group": "西门庆结拜",
     "chapter": "1",
     "note": "",
-    "content": "结拜-约定日期"
+    "content": "结拜-约定日期",
+    "textUrl": "/static/novel/jpm/text/part0004.html#p026"
   },
   {
     "id": 10006,
@@ -55,7 +56,8 @@
     "group": "西门庆结拜",
     "chapter": "1",
     "note": "",
-    "content": "结拜-送分资"
+    "content": "结拜-送分资",
+    "textUrl": "/static/novel/jpm/text/part0004.html#p030"
   },
   {
     "id": 10007,
@@ -72,8 +74,10 @@
     "specialDay": "",
     "weather": "",
     "group": "西门庆结拜",
-    "chapter": 1,
-    "note": ""
+    "chapter": "1",
+    "note": "",
+    "content": "结拜-准备物品",
+    "textUrl": "/static/novel/jpm/text/part0004.html#p032"
   },
   {
     "id": 10008,
@@ -87,16 +91,18 @@
     "category": "友情",
     "tags": "结拜,喝酒",
     "season": "秋",
-    "specialDay": "",
+    "specialDay": "西门庆兄弟会期",
     "weather": "",
     "group": "西门庆结拜",
-    "chapter": 1,
-    "note": ""
+    "chapter": "1",
+    "note": "",
+    "content": "结拜-当日",
+    "textUrl": "/static/novel/jpm/text/part0004.html#p033"
   },
   {
     "id": 10009,
     "title": "西门庆酒楼观武松",
-    "start": "1112-10-10",
+    "start": "1112-10-10 08:05",
     "end": null,
     "location": "临街酒楼",
     "keyCharacter": "西门庆,应伯爵",
@@ -110,7 +116,8 @@
     "group": "主线",
     "chapter": "1",
     "note": "十月初十外，即十几号左右。引出武松",
-    "content": "西门庆酒楼观武松"
+    "content": "西门庆酒楼观武松",
+    "textUrl": "/static/novel/jpm/text/part0004.html#p047"
   },
   {
     "id": 10010,
@@ -129,7 +136,8 @@
     "group": "主线",
     "chapter": "1",
     "note": "",
-    "content": "武松兄弟相见"
+    "content": "武松兄弟相见",
+    "textUrl": "/static/novel/jpm/text/part0004.html#p053"
   },
   {
     "id": 10011,
@@ -148,7 +156,8 @@
     "group": "主线",
     "chapter": "2",
     "note": "",
-    "content": "潘金莲勾引武松"
+    "content": "潘金莲勾引武松",
+    "textUrl": "/static/novel/jpm/text/part0005.html#p009"
   },
   {
     "id": 10012,
@@ -165,7 +174,9 @@
     "specialDay": "",
     "weather": "晴",
     "group": "主线",
-    "chapter": 2,
-    "note": ""
+    "chapter": "2",
+    "note": "",
+    "content": "武松出差",
+    "textUrl": "/static/novel/jpm/text/part0005.html#p013"
   }
 ]

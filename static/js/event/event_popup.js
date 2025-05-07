@@ -83,6 +83,7 @@ export function bindPopupHandlers() {
     updated.weather = document.getElementById('popup-weather').innerText;
     updated.group = document.getElementById('popup-group').innerText;
     updated.note = document.getElementById('popup-note').innerText;
+    updated.textUrl = document.getElementById('popup-textUrl').innerText;
 
     fetch(`/story/${storyId}/event/${selectedItem.id}`, {
       method: 'PATCH',
@@ -143,10 +144,11 @@ export function showPopup(item, dataSet) {
   document.getElementById('popup-weather').innerText = item.weather || '';
   document.getElementById('popup-group').innerText = item.group || '';
   document.getElementById('popup-note').innerText = item.note || '';
+  document.getElementById('popup-textUrl').innerText = item.textUrl || '';
   // 如有原文链接，显示按钮
-  if (item.url) {
+  if (item.textUrl) {
     const linkBtn = document.getElementById('view-original-btn');
-    linkBtn.href = item.url;
+    linkBtn.href = item.textUrl;
     linkBtn.classList.remove('hidden');
   } else {
     document.getElementById('view-original-btn').classList.add('hidden');
@@ -167,7 +169,7 @@ function toggleEditable(editing) {
     });
   };
   ['popup-title', 'popup-start','popup-end', 'popup-location', 'popup-key-character', 'popup-characters', 'popup-story','popup-category','popup-tags'].forEach(toggle);
-  ['popup-chapter','popup-season','popup-special-day','popup-weather','popup-group','popup-note'].forEach(toggle);
+  ['popup-chapter','popup-season','popup-special-day','popup-weather','popup-group','popup-note','popup-textUrl'].forEach(toggle);
   document.getElementById('edit-btn').classList.toggle('hidden', editing);
   document.getElementById('save-btn').classList.toggle('hidden', !editing);
 }
