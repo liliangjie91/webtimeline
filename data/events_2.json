@@ -19,7 +19,7 @@
       "story": "李青鸾在皇宫后花园邂逅神秘少年萧逸辰，因一本古籍结缘。\n",
       "tags": "",
       "title": "秘密花园的初遇",
-      "url": "static/novel/jpm/text/part0004.html#p001",
+      "url": "/static/novel/jpm/text/part0004.html#p001",
       "weather": "细雨蒙蒙"
     },
     {
@@ -41,7 +41,7 @@
       "story": "曹玉与白无常在密室中策划颠覆皇权，暗中布置刺杀计划。",
       "tags": "",
       "title": "密谋政变",
-      "url": "static/novel/jpm/text/part0000.html",
+      "url": "/static/novel/jpm/text/part0000.html",
       "weather": "阴"
     },
     {
@@ -62,7 +62,7 @@
       "story": "萧逸辰在梅花林月夜独自练剑，回忆起年少丧母之痛。",
       "tags": "",
       "title": "月下练剑",
-      "url": "static/novel/jpm/text/part0004.html#p000",
+      "url": "/static/novel/jpm/text/part0004.html#p000",
       "weather": "晴",
       "end": null
     },
@@ -102,30 +102,11 @@
       "season": "夏季",
       "specialDay": "元旦节",
       "special_day": "端午节",
-      "start": "1111-05-05 08",
+      "start": "1111-05-05",
       "story": "赵守义因服毒太晚，临终前托付青鸾调查真相。",
       "tags": "",
       "title": "毒发身亡",
       "weather": "闷热"
-    },
-    {
-      "category": "友情",
-      "chapter": "1",
-      "characters": "西门庆,应伯爵,谢希大",
-      "content": "西门庆十兄弟结拜",
-      "end": null,
-      "group": "主线",
-      "id": 1745695414940,
-      "keyCharacter": "西门庆,潘金莲,123",
-      "location": "玉皇庙",
-      "note": "有笑话",
-      "season": "秋",
-      "specialDay": "",
-      "start": "1111-09-18",
-      "story": "西门庆十兄弟结拜",
-      "tags": "结拜,吃喝",
-      "title": "西门庆十兄弟结拜",
-      "weather": ""
     }
   ]
 }
