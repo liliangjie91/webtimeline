@@ -63,15 +63,6 @@
   padding: 4px;
 }
 
-/* ========== 响应式支持 ========== */
-@media screen and (max-width: 600px) {
-  .form-grid {
-    grid-template-columns: 1fr;
-  }
-  .form-row {
-    background: lightcoral;
-  }
-}
 
 #monica-writing-entry-btn-root {
   display: none !important;

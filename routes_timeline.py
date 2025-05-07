@@ -31,11 +31,11 @@ def update_event(story_id,event_id):
     event = request.json
     file_path = get_file_path(story_id)
     data = load_data(file_path)
-    for idx, item in enumerate(data['events']):
+    for idx, item in enumerate(data):
         if item['id'] == event_id:
             for key, value in event.items():
                 # setattr(data['characters'][idx], key, value)
-                data['events'][idx][key] = value
+                data[idx][key] = value
             break
     save_data(data,file_path)
     return jsonify({"status": "success"})
@@ -45,7 +45,10 @@ def add_event(story_id):
     new_event = request.json
     file_path = get_file_path(story_id)
     data = load_data(file_path)
-    data['events'].append(new_event)
+    ids = [e['id'] for e in data]
+    id_tobe = len(ids)+10001
+    new_event['id'] = id_tobe if id_tobe not in ids else max(ids)+1
+    data.append(new_event)
     save_data(data,file_path)
     return jsonify({"status": "added"})
 
@@ -55,7 +58,7 @@ def delete_event(story_id):
     file_path = get_file_path(story_id)
     event_id = req_data.get("id")
     data = load_data(file_path)
-    data["events"] = [e for e in data["events"] if e["id"] != event_id]
+    data = [e for e in data if e["id"] != event_id]
     save_data(data,file_path)
     return jsonify({"status": "deleted"})
 
@@ -63,4 +66,4 @@ def delete_event(story_id):
 @timeline_bp.route('/api/story/<story_id>/event')
 def get_events(story_id):
     data = load_data(get_file_path(story_id))
-    return jsonify(data['events'])
+    return jsonify(data)

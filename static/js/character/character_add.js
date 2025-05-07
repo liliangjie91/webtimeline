@@ -45,6 +45,7 @@ export function bindAddCharacterHandlers() {
           role: document.getElementById('new-character-role').value.trim().split(sep).map(s => s.trim()).join(','),
           chara: document.getElementById('new-character-chara').value.trim(),
           job: document.getElementById('new-character-job').value.trim().split(sep).map(s => s.trim()).join(','),
+          body: document.getElementById('new-character-body').value.trim(),
           note: document.getElementById('new-character-note').value.trim(),
           description: document.getElementById('new-character-description').value.trim(),
           mainEvents: document.getElementById('new-character-mainEvents').value.trim().replaceAll('；',';'),

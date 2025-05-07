@@ -1,3 +1,5 @@
+import {generateShortId} from "../utils.js";
+
 const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
 
@@ -20,7 +22,9 @@ export function bindAddHandlers() {
       }
       const sep = /[,，、;；\s]+/
       const newEvent = {
-        id: Date.now(),
+        createTime: Date.now(),
+        updateTime: Date.now(),
+        shortId: generateShortId(),
         title: document.getElementById('new-title').value,
         start: document.getElementById('new-start').value || clickedDate.toISOString().slice(0, 10),
         end: (curend && curend.trim() && !isNaN(Date.parse(curend))) ? curend : null,

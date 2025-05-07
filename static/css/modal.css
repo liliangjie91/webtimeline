@@ -28,10 +28,10 @@
     background-color: rgb(159, 167, 153); /* 背景色为白色 */
     padding: 20px; /* 内边距20px */
     border-radius: 8px; /* 圆角边框 */
-    max-height: 90vh;        /* 不超过可视区 */
-    width: 500px; /* 固定宽度为500px */
+    max-height: 90%;        /* 不超过可视区 */
+    width: 600px; /* 固定宽度为500px */
     max-width: 90vw; /* 最大宽度为父元素的90% */
-    scroll-margin-top: 160px; /* 当内部 textarea 聚焦时，至少保留上边距 */
+    /* scroll-margin-top: 160px; 当内部 textarea 聚焦时，至少保留上边距 */
    /* overflow-y: auto;         内容多时滚动 modal-content 自己，而不是整个页面 */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加阴影效果 */
     z-index: 100;
@@ -62,3 +62,10 @@
     border: none;
     color: #555;
 }
+
+/* ========== 响应式支持 ==========  */
+@media (max-width: 600px) {
+    .modal {
+        justify-content: left; 
+    }
+  }

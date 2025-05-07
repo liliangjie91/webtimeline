@@ -40,14 +40,14 @@ def update_character(story_id, character_id):
     character_new = request.json
     file_path = get_file_path(story_id)
     data = load_characters(file_path)
-    for idx, item in enumerate(data['characters']):
+    for idx, item in enumerate(data):
         if item['id'] == character_id:
             for key, value in character_new.items():
-                # setattr(data['characters'][idx], key, value)
-                data['characters'][idx][key] = value
+                # setattr(data[idx], key, value)
+                data[idx][key] = value
             break
     save_characters(data, file_path)
-    # print(data['characters'][idx])
+    # print(data[idx])
     return jsonify({"status": "success"})
 # 添加角色
 @character_bp.route('/story/<story_id>/character/add', methods=['POST'])
@@ -55,9 +55,9 @@ def add_character(story_id):
     new_character = request.json
     file_path = get_file_path(story_id)
     data = load_characters(file_path)
-    length = len(data['characters'])
+    length = len(data)
     new_character['id'] = length + 1
-    data['characters'].append(new_character)
+    data.append(new_character)
     save_characters(data, file_path)
     return jsonify({"status": "added"})
 # 删除角色
@@ -67,7 +67,7 @@ def delete_character(story_id):
     character_id = req_data.get("id")
     file_path = get_file_path(story_id)
     data = load_characters(file_path)
-    data["characters"] = [e for e in data["characters"] if e["id"] != character_id]
+    data = [e for e in data if e["id"] != character_id]
     save_characters(data, file_path)
     return jsonify({"status": "deleted"})
 
@@ -76,14 +76,14 @@ def delete_character(story_id):
 def get_character_all(story_id):
     try:
         characters = load_characters(get_file_path(story_id))
-        return jsonify(characters['characters'])
+        return jsonify(characters)
     except Exception as e:
         return jsonify({'error': str(e)}), 500
     
 @character_bp.route('/api/story/<story_id>/character_dict')
 def get_character_dict(story_id):
     try:
-        characters = load_characters(get_file_path(story_id))['characters']
+        characters = load_characters(get_file_path(story_id))
         # 构建 {name: id} 形式的字典
         character_dict = {char['name']: char['id'] for char in characters}
         return jsonify(character_dict)
@@ -92,7 +92,7 @@ def get_character_dict(story_id):
 
 @character_bp.route('/api/story/<story_id>/character/<int:character_id>')
 def get_character(story_id,character_id):
-    characters = load_characters(get_file_path(story_id))["characters"]
+    characters = load_characters(get_file_path(story_id))
     character = next((c for c in characters if c['id'] == character_id), None)
     if character is None:
         abort(404)

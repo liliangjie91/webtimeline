@@ -31,8 +31,9 @@
 <body>
     <div class="character-container" style="margin: 0 auto; width: 1200px;">
       
-    <h1>{{storyName}}-人物列表</h1>
-    <button id="add-character-btn" style="margin-bottom: 15px;">新增人物</button>
+    <h2>{{storyName}}-人物列表</h2>
+    <button id="back" class="btn btn-success" style="margin-bottom: 15px;"><a href="/" style="text-decoration: none; color: azure;">首页</a></button>
+    <button id="add-character-btn" class="btn btn-primary" style="margin-bottom: 15px;">新增人物</button>
     <div class="character-list-container">
       <div id="character-list"></div>
     </div>
@@ -55,7 +56,7 @@
             <div class="form-row"><label for="new-character-chara">角色:</label><input type="text" id="new-character-chara" placeholder="所属群体：西门庆家人"></div>
             <div class="form-row"><label for="new-character-job">职业:</label><input type="text" id="new-character-job" placeholder="主职业/官职"></div>
             <div class="form-row full-width"><label for="new-character-body">长相:</label><input type="text" id="new-character-body" placeholder="长相"></div>
-            <div class="form-row full-width"><label for="new-character-note">备注:</label><input type="text" id="new-character-note" placeholder="备注"></div>
+            <div class="form-row full-width"><label for="new-character-note">备注:</label><textarea id="new-character-note" rows="3" placeholder="备注"></textarea></div>
             <div class="form-row full-width"><label for="new-character-description">简介:</label><textarea id="new-character-description" rows="3" placeholder="简介"></textarea></div>
             <div class="form-row full-width"><label for="new-character-mainEvents">主要事件:</label><textarea id="new-character-mainEvents" rows="5" placeholder="主要事件"></textarea></div>
             <div class="form-row full-width"><label for="new-character-related">主要关系:</label><textarea id="new-character-related" rows="3" placeholder="朋友:xx,xxx;妻子:xx"></textarea></div>
