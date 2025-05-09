@@ -28,7 +28,6 @@ if (titleElement && targetElement) {
 function showSelectedLink(event, selection) {
     const selectedText = selection.toString().trim();
     if (!selectedText) return;
-
     const range = selection.getRangeAt(0);
     const parentParagraph = range.startContainer.parentElement.closest('p');
     const paragraphId = parentParagraph ? parentParagraph.id : null;

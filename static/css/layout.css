@@ -2,33 +2,6 @@
 body {
     font-family: sans-serif; /* 设置无衬线字体 */
     padding: 20px; /* 页面内容与边缘的间距 */
-    background: #e8e9e9; /* 灰白背景 */
+    background: #bed6cc; /* 灰白背景 */
 }
   
-/* 主时间线与筛选时间线容器样式 */
-#visualization,
-#visualization-selected {
-    border: 1px solid #ccc; /* 边框为浅灰色 */
-    background: #dfe0e055; /* 背景色为白色 */
-}
-  
-#visualization {
-    height: 800px; /* 主时间线容器高度设置为600px */
-}
-  
-#visualization-selected {
-    height: 300px; /* 筛选时间线容器高度设置为300px */
-}
-
-.checkbox-group {
-    display: flex;
-    flex-wrap: wrap;            /* 自动换行 */
-    gap: 10px 20px;             /* 上下 10px，左右 20px 的间距 */
-    margin-top: 6px;
-  }
-  
-  .checkbox-group label {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-  }

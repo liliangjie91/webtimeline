@@ -15,28 +15,44 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 20px;
-      background-color: #f4f4f4;
+      /* background-color: #f4f4f4; */
     }
     a {
       text-decoration: none;
       color: #007bff;
     }
+    .character-namelist{
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      padding: 0 10px;
+      flex-wrap: wrap;
+      border-bottom: 1px dotted #454949; 
+      margin: 10px 5px;
+    } 
+    .character-nametitle{
+      padding: 0 5px;
+    }
+    .character-list-container{
+      padding: 10px;
+      border: 3px double #454949;
+    }
     @media (max-width: 600px) {
       body {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
       }
     }
     </style>
 </head>
 <body>
-    <div class="character-container" style="margin: 0 auto; width: 1200px;">
+    <div class="character-container" style="margin: 0 auto; max-width: 1000px;">
       
     <h2>{{storyName}}-人物列表</h2>
     <button id="back" class="btn btn-success" style="margin-bottom: 15px;"><a href="/" style="text-decoration: none; color: azure;">首页</a></button>
     <button id="add-character-btn" class="btn btn-primary" style="margin-bottom: 15px;">新增人物</button>
-    <div class="character-list-container">
-      <div id="character-list"></div>
-    </div>
+    
+    <div id="character-list" class="character-list-container"></div>
+    
 
       <!-- 添加人物的弹窗 -->
     <div id="add-character-popup" class="modal hidden">

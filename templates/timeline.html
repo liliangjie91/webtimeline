@@ -11,8 +11,8 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/zh-cn.min.js"></script>
 
-  <!-- <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" /> -->
   <link rel="stylesheet" href="/static/css/layout.css" />
+  <link rel="stylesheet" href="/static/css/timeline.css" />
   <link rel="stylesheet" href="/static/css/modal.css" />
   <link rel="stylesheet" href="/static/css/buttons.css" />
   <link rel="stylesheet" href="/static/css/form.css">
@@ -21,21 +21,23 @@
 <body>
   <h1>📖 {{storyName}}故事时间线</h1>
   <button id="back" class="btn btn-success" style="margin-bottom: 15px;"><a href="/" style="text-decoration: none; color: azure;">首页</a></button>
+  <button id="novel-toc" class="btn btn-success" style="margin-bottom: 15px;"><a href="/static/novel/jpm/text/part0000.html" style="text-decoration: none; color: azure;">目录</a></button>
   <button id="add-event-btn" class="btn btn-primary" style="margin-bottom: 15px;">添加新事件</button>
   
-  <div id="visualization"></div>
+  <div id="show-timeline">
+    <div id="visualization"></div>
 
-  <label for="filter-group">故事线：</label>
-    <div id="filter-group"  class="checkbox-group">
-    <!-- 复选框选项将通过 JavaScript 动态生成 -->
-    </div>
-  <div id="visualization-selected"></div>
-
+    <label for="filter-group">故事线：</label>
+      <div id="filter-group"  class="checkbox-group">
+      <!-- 复选框选项将通过 JavaScript 动态生成 -->
+      </div>
+    <div id="visualization-selected"></div>
+  </div>
   <!-- 添加事件的弹窗 -->
   <div id="add-popup" class="modal hidden">
     <div class="modal-content">
       <span id="add-popup-close" class="close">&times;</span>
-      <h2>添加新事件</h2>
+      <!-- <h2>添加新事件</h2> -->
       <form id="add-event-form" class="form-grid">
         <div class="form-row full-width"><label for="new-title">标题:</label><input type="text" id="new-title" placeholder="必填" required></div>
         <div class="form-row"><label for="new-start">起始:</label><input type="text" id="new-start" placeholder="必填: 1111-11-11 08:00或时间留空"required></div>
@@ -53,7 +55,7 @@
         <div class="form-row full-width"><label for="new-group">故事线:</label><input type="text" id="new-group" placeholder="必填: 某某线，主线等" required></div>    
         <!-- <div class="form-row full-width"><span>故事内容:</span><textarea id="new-story" rows="5"></textarea></div> -->
         <div class="form-row full-width"><label for="new-story">故事内容:</label><textarea id="new-story" rows="5" placeholder="必填" required></textarea></div>
-        <div class="form-row full-width" style="text-align: right;"><button type="submit" class="btn btn-success">保存</button></div>
+        <div class="form-row full-width" style="text-align: right;"><button type="submit" class="btn btn-success">提交</button></div>
       </form>
     </div>
   </div>
