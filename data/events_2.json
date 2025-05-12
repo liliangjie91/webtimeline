@@ -1,5 +1,4 @@
-{
-  "events": [
+[
     {
       "category": "邂逅",
       "chapter": "3",
@@ -31,12 +30,10 @@
       "group": "反派势力",
       "id": 1682471900002,
       "keyCharacter": "",
-      "key_character": "曹玉",
       "location": "东厂密室",
       "note": "",
       "season": "春季",
       "specialDay": "",
-      "special_day": "",
       "start": "1111-04-25",
       "story": "曹玉与白无常在密室中策划颠覆皇权，暗中布置刺杀计划。",
       "tags": "",
@@ -52,12 +49,10 @@
       "group": "主角团",
       "id": 1682471900003,
       "keyCharacter": "",
-      "key_character": "萧逸辰",
       "location": "梅花林",
       "note": "",
       "season": "春季",
       "specialDay": "",
-      "special_day": "",
       "start": "1111-04-27",
       "story": "萧逸辰在梅花林月夜独自练剑，回忆起年少丧母之痛。",
       "tags": "",
@@ -79,7 +74,6 @@
       "note": "",
       "season": "夏季",
       "specialDay": "中秋节",
-      "special_day": "",
       "start": "1111-05-02",
       "story": "秦烟儿主办比武招亲，\n\n\n众多江湖俊杰前来挑战。",
       "tags": "战斗,江湖",
@@ -96,12 +90,10 @@
       "group": "主角团",
       "id": 1682471900005,
       "keyCharacter": "老挝",
-      "key_character": "赵守义",
       "location": "医馆",
       "note": "",
       "season": "夏季",
       "specialDay": "元旦节",
-      "special_day": "端午节",
       "start": "1111-05-05",
       "story": "赵守义因服毒太晚，临终前托付青鸾调查真相。",
       "tags": "",
@@ -109,4 +101,3 @@
       "weather": "闷热"
     }
   ]
-}

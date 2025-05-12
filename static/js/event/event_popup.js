@@ -4,7 +4,9 @@ let dataRef;
 let characterDict = {};
 const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
-
+// 事件结构体内含元素
+const eventElements = ['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','group','note','textUrl']
+const hidden_fields = ["popup-textUrl-div"]
 // 页面加载完成就拉取字典
 document.addEventListener('DOMContentLoaded', () => {
   loadCharacterDict(storyId).then(data => {
@@ -12,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-
+// 匹配内容改为超链接
 function makelinkinspan(spanName, textNames) {
   spanName.innerHTML = ''; // 先清空
   if (textNames && textNames.trim() !== '') {
@@ -59,40 +61,34 @@ export function bindPopupHandlers() {
     // document.querySelector('.modal-content').classList.add('editing');
     toggleEditable(true);
   };
-
+  // 取消编辑
+  document.getElementById('cancel-btn').onclick = () => {
+    // document.querySelector('.modal-content').classList.add('editing');
+    toggleEditable(false);
+    document.getElementById('popup').classList.add('hidden');
+  };
   // 保存编辑
   document.getElementById('save-btn').onclick = () => {
-    // document.querySelector('.modal-content').classList.remove('editing');
-    const sep = /[,，、;；\s]+/
-    const updated = { ...selectedItem };
-    updated.content = document.getElementById('popup-title').innerText;
-    updated.title = document.getElementById('popup-title').innerText;
-    updated.start = document.getElementById('popup-start').innerText;
-    const curend = document.getElementById('popup-end').innerText;
-    updated.end = (curend.trim() && !isNaN(Date.parse(curend))) ? curend : null; // 结束时间特殊处理
-    updated.location = document.getElementById('popup-location').innerText;
-    updated.keyCharacter = document.getElementById('popup-key-character').innerText.split(sep).map(s => s.trim()).join(',');
-    updated.characters = document.getElementById('popup-characters').innerText.split(sep).map(s => s.trim()).join(',');
-    updated.story = document.getElementById('popup-story').innerText;
-    updated.category = document.getElementById('popup-category').innerText.split(sep).map(s => s.trim()).join(',');
-    updated.tags = document.getElementById('popup-tags').innerText.split(sep).map(s => s.trim()).join(',');
-    // console.log(document.getElementById('popup-tags').innerText.split(sep).map(s => s.trim()));
-    updated.chapter = document.getElementById('popup-chapter').innerText;
-    updated.season = document.getElementById('popup-season').innerText;
-    updated.specialDay = document.getElementById('popup-special-day').innerText;
-    updated.weather = document.getElementById('popup-weather').innerText;
-    updated.group = document.getElementById('popup-group').innerText;
-    updated.note = document.getElementById('popup-note').innerText;
-    updated.textUrl = document.getElementById('popup-textUrl').innerText;
+
+    const updateData = updateEvent(selectedItem.id);
+
+    if (Object.keys(updateData).length === 0) {
+        alert('没有字段被修改');
+        return;
+      }
+    updateData['id'] = selectedItem.id;
+    updateData['updateTime'] = Date.now();
 
     fetch(`/story/${storyId}/event/${selectedItem.id}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updated)
+      body: JSON.stringify(updateData)
     }).then(() => {
-      dataRef.update(updated);
+      if ('title' in updateData){
+        updateData['content'] = updateData.title;
+      }
+      dataRef.update(updateData);
       toggleEditable(false);
-      loadCharacterDict()
       document.getElementById('popup').classList.add('hidden');
     //   location.reload();
       // 设置时间线显示的窗口范围
@@ -116,6 +112,44 @@ export function bindPopupHandlers() {
   };
 }
 
+function updateEvent(id) {
+  const sep = /[,，、;；\s]+/
+  let updateData = {};
+  eventElements.forEach(field => {
+      if(field==='start'){
+        console.log('start')
+      }
+      const element = document.getElementById(`popup-${field}`);
+      if (!element) return;
+      let newValue = element.innerText.trim();
+      if (newValue === undefined || newValue === null || newValue === '-' || newValue === '(无需)') {
+          return;
+      }
+      newValue = newValue.trim().replaceAll('；', ';').replaceAll('，', ',').replaceAll('：', ':');
+      
+      if (field === 'end'){
+        const curend = document.getElementById('popup-end').innerText;
+        newValue = (curend.trim() && !isNaN(Date.parse(curend))) ? curend : null; // 结束时间特殊处理
+      }
+        
+      
+      if (field in ['keyCharacter','characters','category','tags']){
+        newValue = newValue.split(sep).map(s => s.trim()).join(',')
+      }
+      let oldValue = (selectedItem[field] || '').toString().trim();
+      if (field === 'end' || field === 'start'){
+        if (oldValue){
+          oldValue = dateFormat(new Date(oldValue))
+        }
+      }
+      if (newValue !== oldValue) {
+          updateData[field] = field === 'chapter' ? parseInt(newValue) || null : newValue;
+      }
+  });
+
+  return updateData;
+}
+
 function dateFormat(dateObj){
   if (dateObj.getHours() === 0 && dateObj.getMinutes() == 0) {
     return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
@@ -133,14 +167,14 @@ export function showPopup(item, dataSet) {
   document.getElementById('popup-title').innerText = item.title || '(无标题)';
   document.getElementById('popup-location').innerText = item.location || '';
   // 主角链接处理
-  makelinkinspan(document.getElementById('popup-key-character'), item.keyCharacter || '');
+  makelinkinspan(document.getElementById('popup-keyCharacter'), item.keyCharacter || '');
   document.getElementById('popup-characters').innerText = item.characters || '';
   document.getElementById('popup-story').innerText = item.story || '';
   document.getElementById('popup-category').innerText = item.category || '';
   document.getElementById('popup-tags').innerText = item.tags || '';
   document.getElementById('popup-chapter').innerText = item.chapter || '';
   document.getElementById('popup-season').innerText = item.season || '';
-  document.getElementById('popup-special-day').innerText = item.specialDay || '';
+  document.getElementById('popup-specialDay').innerText = item.specialDay || '';
   document.getElementById('popup-weather').innerText = item.weather || '';
   document.getElementById('popup-group').innerText = item.group || '';
   document.getElementById('popup-note').innerText = item.note || '';
@@ -157,6 +191,7 @@ export function showPopup(item, dataSet) {
   document.getElementById('popup').classList.remove('hidden');
 }
 
+// 设置是否可编辑
 function toggleEditable(editing) {
   // const toggle = val => document.getElementById(val).contentEditable = editing;
   const toggle = val => {
@@ -168,8 +203,17 @@ function toggleEditable(editing) {
       e.preventDefault(); // 阻止默认滚动行为
     });
   };
-  ['popup-title', 'popup-start','popup-end', 'popup-location', 'popup-key-character', 'popup-characters', 'popup-story','popup-category','popup-tags'].forEach(toggle);
-  ['popup-chapter','popup-season','popup-special-day','popup-weather','popup-group','popup-note','popup-textUrl'].forEach(toggle);
+  const toggleElements = eventElements.map(val => `popup-${val}`);
+  toggleElements.forEach(toggle);
   document.getElementById('edit-btn').classList.toggle('hidden', editing);
   document.getElementById('save-btn').classList.toggle('hidden', !editing);
+  document.getElementById('cancel-btn').classList.toggle('hidden', !editing);
+  hidden_fields.forEach(val => {
+    const element = document.getElementById(val);
+    if (editing) {
+        element.classList.remove('hidden');
+    } else {
+        element.classList.add('hidden');
+    }
+});
 }
