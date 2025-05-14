@@ -37,7 +37,7 @@ export function bindAddHandlers() {
         season: document.getElementById('new-season').value,
         specialDay: document.getElementById('new-specialDay').value,
         weather: document.getElementById('new-weather').value,
-        group: document.getElementById('new-group').value,
+        storyLine: document.getElementById('new-storyLine').value,
         chapter: parseInt(document.getElementById('new-chapter').value, 10) || 0, //  document.getElementById('new-chapter').value,
         note: document.getElementById('new-note').value
       };

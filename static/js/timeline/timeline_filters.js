@@ -2,7 +2,7 @@ import { initTimeline } from './timeline_init.js';
 
 export function updateFilterOptions(events) {
   const container = document.getElementById('filter-group');
-  const groups = [...new Set(events.map(e => e.group))];
+  const groups = [...new Set(events.map(e => e.storyLine))];
   container.innerHTML = '';
     // 创建复选框
   const allOption = document.createElement('div');

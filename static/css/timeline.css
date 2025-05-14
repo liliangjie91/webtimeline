@@ -4,6 +4,7 @@
     border: 1px solid #ccc; /* 边框为浅灰色 */
     background: #dfe0e055; /* 背景色为白色 */
     height: auto;
+    /* max-height: 1000px; */
     margin-bottom: 10px;
 }
 

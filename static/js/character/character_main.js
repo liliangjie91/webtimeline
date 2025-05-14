@@ -38,7 +38,8 @@ function makeListByGroup(allCharacters){
     const subCharacters = grouped[k];
     subCharacters.forEach(c => {
       const li = document.createElement('li');
-      li.innerHTML = `<a href="/story/${storyId}/character?id=${c.id}" target="_blank">${c.name}</a>`;
+      li.innerHTML = `<a href="/story/${storyId}/character?id=${c.id}">${c.name}</a>`;
+      // li.innerHTML = `<a href="/story/${storyId}/character?id=${c.id}" target="_blank">${c.name}</a>`;
       // li.innerHTML = `<a href="/character/${c.id}" target="_blank">${c.name}</a>: ${c.description}`;
       div02.appendChild(li);
     });

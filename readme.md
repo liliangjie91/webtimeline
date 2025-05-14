@@ -36,13 +36,13 @@ webtimeline/
 | `location`     | `string`   | 地点-事件发生的地点 |
 | `characters`   | `string`   | 人物-参与该事件的所有人物数组，逗号分隔|
 | `keyCharacter` | `string`   | 人物-此事件中情节的核心人物，逗号分隔|
-| `title`        | `string`   | ·故事-事件标题（用于 vis-timeline 中的 `content` 字段） |
+| `title`        | `string`   | 故事-事件标题（用于 vis-timeline 中的 `content` 字段） |
 | `story`        | `string`   | 故事-事件的详细叙述内容 |
 | `category`     | `string`   | 故事-事件类型，如“战斗”、“内心戏”、“情节推进”等，逗号分隔 |
 | `tags`         | `string`   | 故事-自定义标签列表，用于快速分类,逗号分隔 |
 | `chapter`      | `number`   | 故事-所在小说章节，例如 `5` |
 | `note`         | `string`   | 故事-编剧/作者的备注说明 |
-| `group`        | `string`   | 故事线-所属时间线分组，如“主线”、“支线” |
+| `storyLine`    | `string`   | 故事线-所属时间线分组，如“主线”、“支线” |
 | `createTime`   | `string`   | 创建时间（用于后端记录） |
 | `updateTime`   | `string`   | 最后一次修改时间 |
 

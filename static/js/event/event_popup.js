@@ -5,7 +5,7 @@ let characterDict = {};
 const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
 // 事件结构体内含元素
-const eventElements = ['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','group','note','textUrl']
+const eventElements = ['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','storyLine','note','textUrl']
 const hidden_fields = ["popup-textUrl-div"]
 // 页面加载完成就拉取字典
 document.addEventListener('DOMContentLoaded', () => {
@@ -69,30 +69,38 @@ export function bindPopupHandlers() {
   };
   // 保存编辑
   document.getElementById('save-btn').onclick = () => {
-
-    const updateData = updateEvent(selectedItem.id);
+    let eventId = selectedItem.id
+    if (typeof(selectedItem.id)==='string'){
+      eventId = Number(selectedItem.id.split('-')[0])
+    }
+    const updateData = updateEvent();
 
     if (Object.keys(updateData).length === 0) {
         alert('没有字段被修改');
         return;
       }
-    updateData['id'] = selectedItem.id;
+    updateData['id'] = eventId;
     updateData['updateTime'] = Date.now();
 
-    fetch(`/story/${storyId}/event/${selectedItem.id}`, {
+    fetch(`/story/${storyId}/event/${eventId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updateData)
     }).then(() => {
-      if ('title' in updateData){
+      if (typeof(selectedItem.id)==='string'){
+        location.reload();
+      }else{
+        if ('title' in updateData){
         updateData['content'] = updateData.title;
+        }
+        dataRef.update(updateData);
+        toggleEditable(false);
+        document.getElementById('popup').classList.add('hidden');
+      //   location.reload();
+        // 设置时间线显示的窗口范围
+      //   timeline.setWindow(dataRef.start, dataRef.end || dataRef.start);
       }
-      dataRef.update(updateData);
-      toggleEditable(false);
-      document.getElementById('popup').classList.add('hidden');
-    //   location.reload();
-      // 设置时间线显示的窗口范围
-    //   timeline.setWindow(dataRef.start, dataRef.end || dataRef.start);
+      
     });
   };
 
@@ -112,7 +120,7 @@ export function bindPopupHandlers() {
   };
 }
 
-function updateEvent(id) {
+function updateEvent() {
   const sep = /[,，、;；\s]+/
   let updateData = {};
   eventElements.forEach(field => {
@@ -176,7 +184,7 @@ export function showPopup(item, dataSet) {
   document.getElementById('popup-season').innerText = item.season || '';
   document.getElementById('popup-specialDay').innerText = item.specialDay || '';
   document.getElementById('popup-weather').innerText = item.weather || '';
-  document.getElementById('popup-group').innerText = item.group || '';
+  document.getElementById('popup-storyLine').innerText = item.storyLine || '';
   document.getElementById('popup-note').innerText = item.note || '';
   document.getElementById('popup-textUrl').innerText = item.textUrl || '';
   // 如有原文链接，显示按钮
