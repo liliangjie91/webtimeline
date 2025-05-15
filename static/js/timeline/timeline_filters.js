@@ -1,8 +1,13 @@
 import { initTimeline } from './timeline_init.js';
+import {setGroupValue} from "../utils.js";
+const match = window.location.pathname.match(/^\/story\/(\d+)/);
+const storyId = match[1];
 
 export function updateFilterOptions(events, groupType='storyLine') {
   const container = document.getElementById('filter-group');
-  const groups = [...new Set(events.map(e => e[groupType]))];
+  const groups = [...new Set(events.map(e => e[groupType]))].map(g => ({ id: g, content: g }));
+  const groupsValue = setGroupValue(storyId, groups);
+  groupsValue.sort((a, b) => a.value - b.value);
   container.innerHTML = '';
     // 创建复选框
   const allOption = document.createElement('div');
@@ -11,10 +16,10 @@ export function updateFilterOptions(events, groupType='storyLine') {
   `;
   container.appendChild(allOption);
 
-  groups.forEach(group => {
+  groupsValue.forEach(group => {
     const option = document.createElement('div');
     option.innerHTML = `
-      <label><input type="checkbox" value="${group}" class="filter-option" /> ${group}</label>
+      <label><input type="checkbox" value="${group.id}" class="filter-option" /> ${group.content}</label>
     `;
     container.appendChild(option);
   });

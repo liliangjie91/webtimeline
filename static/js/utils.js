@@ -6,7 +6,7 @@ export function generateShortId() {
   }
 
 export const optionsMain = {
-  locale: 'zh',  // 这行很重要，让vis-timeline识别中文
+  // locale: 'zh',  // 这行很重要，让vis-timeline识别中文
   // moment: function (date) {
   //   return moment(date); // 用中文moment处理日期
   // },
@@ -20,7 +20,7 @@ export const optionsMain = {
   //   return a.importance - b.importance;
   // },
   zoomMin: 1000 * 60 * 60 * 24 * 15, // 最小缩放粒度为 1 天（以毫秒计）
-  zoomMax: 1000 * 60 * 60 * 24 * 365 * 1, // 可选：最大缩放粒度，例如 10 年
+  zoomMax: 1000 * 60 * 60 * 24 * 365 * 5, // 可选：最大缩放粒度，例如 10 年
   // timeAxis: { scale: 'month', step: 1 }, // 默认时间轴显示
   format: {
     minorLabels: {
