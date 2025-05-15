@@ -1,8 +1,8 @@
 import { initTimeline } from './timeline_init.js';
 
-export function updateFilterOptions(events) {
+export function updateFilterOptions(events, groupType='storyLine') {
   const container = document.getElementById('filter-group');
-  const groups = [...new Set(events.map(e => e.storyLine))];
+  const groups = [...new Set(events.map(e => e[groupType]))];
   container.innerHTML = '';
     // 创建复选框
   const allOption = document.createElement('div');
@@ -23,19 +23,19 @@ export function updateFilterOptions(events) {
   document.getElementById('filter-all').onchange = e => {
     const checked = e.target.checked;
     document.querySelectorAll('.filter-option').forEach(cb => cb.checked = checked);
-    applyFilters(events);
+    applyFilters(events, groupType);
   };
 
   document.querySelectorAll('.filter-option').forEach(cb => {
     cb.onchange = () => {
       const allChecked = [...document.querySelectorAll('.filter-option')].every(cb => cb.checked);
       document.getElementById('filter-all').checked = allChecked;
-      applyFilters(events);
+      applyFilters(events, groupType);
     };
   });
 }
 
-export function applyFilters(events) {
+export function applyFilters(events, groupType='storyLine') {
   const selectedGroups = [...document.querySelectorAll('.filter-option:checked')].map(cb => cb.value);
   if (selectedGroups.length === 0) {
     initTimeline([], true);
@@ -45,6 +45,6 @@ export function applyFilters(events) {
     initTimeline(events, true);
     return;
   }
-  const filtered = events.filter(e => selectedGroups.includes(e.group));
+  const filtered = events.filter(e => selectedGroups.includes(e[groupType]));
   initTimeline(filtered, true);
 }

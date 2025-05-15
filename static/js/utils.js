@@ -4,3 +4,98 @@ export function generateShortId() {
       Math.random().toString(36).substr(2, 5) // 加上随机部分
     );
   }
+
+export const optionsMain = {
+  locale: 'zh',  // 这行很重要，让vis-timeline识别中文
+  // moment: function (date) {
+  //   return moment(date); // 用中文moment处理日期
+  // },
+  stack: true,
+  maxHeight: 1000,
+  horizontalScroll: true,
+  // verticalScroll: true,
+  zoomKey: "ctrlKey",
+  groupOrder:"value",
+  // groupOrder: function (a, b) {
+  //   return a.importance - b.importance;
+  // },
+  zoomMin: 1000 * 60 * 60 * 24 * 15, // 最小缩放粒度为 1 天（以毫秒计）
+  zoomMax: 1000 * 60 * 60 * 24 * 365 * 1, // 可选：最大缩放粒度，例如 10 年
+  // timeAxis: { scale: 'month', step: 1 }, // 默认时间轴显示
+  format: {
+    minorLabels: {
+      day: 'DD日',
+      week: 'DD日',
+      weekday: 'DD日',
+      month: 'MM月',
+      year: 'YYYY年'
+    },
+    majorLabels: {
+      month: 'YYYY年',
+      week: 'YYYY年MM月',
+      weekday: 'YYYY年MM月',
+      day: 'YYYY年MM月',
+    }
+  },
+  editable: {
+    add: false, // 禁用默认添加行为
+    updateTime: true,  // drag items horizontally
+    updateGroup: true, // drag items from one group to another
+    remove: false,       // delete an item by tapping the delete button top right
+    overrideItems: false  // allow these options to override item.editable
+  }
+};
+
+
+export const optionsSide = {
+  editable: false
+};
+
+const groupsTempDefault = [
+  {id: '主线', content: '主线', value: 1}
+];
+const groupsTempJPM = [
+  {id: '主线', content: '主线', value: 1},
+  {id: '潘金莲线', content: '潘金莲线', value: 2},
+  {id: '孟玉楼线', content: '孟玉楼线', value: 3},
+  {id: '狐朋狗友线', content: '狐朋狗友', value: 4},
+  {id: '武松线', content: '武松线', value: 900},
+  {id: '其他支线', content: '其他支线', value: 999}
+];
+
+export function setGroupValue(storyId,rawGroupMap){
+  const res = []
+  const groupsTemp = storyId==='1' ? groupsTempJPM : groupsTempDefault;
+  rawGroupMap.forEach(g => {
+    const match = groupsTemp.find(e => e.id === g.id);
+    g.value = match ? match.value : 998;
+    g.content = match ? match.content : g.content;
+    res.push(g);
+  });
+  return res
+}
+
+const mainCharacterJPM = ['西门庆','潘金莲','孟玉楼','李瓶儿','庞春梅','吴月娘'];
+function splitKeyCharacter(characters){
+  const mainCharacter = mainCharacterJPM
+  const groupSet = new Set();
+  const roles = characters.split(',').map(r => r.trim());
+  roles.forEach(role => {
+    if (mainCharacter.includes(role)){
+      groupSet.add(role);
+    }else{
+      groupSet.add('其他');
+    }
+  });
+  return Array.from(groupSet)
+}
+ // const items = [];
+  // eventsWithContent.forEach(item => {
+  //   const roles = splitKeyCharacter(item.keyCharacter);
+  //   roles.forEach(role => {
+  //     const newItem = {...item};
+  //     newItem.id = `${item.id}-${role}`;
+  //     newItem.group = role;
+  //     items.push(newItem);
+  //   });
+  // });

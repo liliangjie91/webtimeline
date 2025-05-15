@@ -52,7 +52,7 @@ export function bindAddHandlers() {
     };
   }
 
-export function handleAddEventFromDoubleClick(props) {
+export function handleAddEventFromDoubleClick(props,groupType='storyLine') {
   const date = props.time;
   const group = props.group;
   const year = date.getFullYear();
@@ -62,6 +62,6 @@ export function handleAddEventFromDoubleClick(props) {
   const minutes = String(date.getMinutes()).padStart(2, '0');
   document.getElementById('new-start').value = `${year}-${month}-${day}`;
   // document.getElementById('new-start').value = clickedDate.toISOString().slice(0, 16);
-  document.getElementById('new-group').value = group || '';
+  document.getElementById('new-' + groupType).value = group || '';
   document.getElementById('add-popup').classList.remove('hidden');
 }
