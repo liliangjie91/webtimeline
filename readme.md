@@ -20,10 +20,13 @@ webtimeline/
 ├── templates/              # HTML 模板文件
 ├── static/                 # 静态资源文件（CSS、JS）
 ├── data/                   # 存储事件数据的 JSON 文件
+|   └── events_x.json       # 事件文件-[{json},{json},{json}]格式，x对应storys.json中的id。
+|   └── characters_x.json   # 角色文件-[{json},{json},{json}]格式，x对应storys.json中的id。
+|   └── storys.json         # 故事文件-json格式，标明序号与故事关系：{"1":"水浒传","2":"红楼梦"}
 └── readme.md               # 项目说明文件
 ```
 ## 数据
-### 事件数据元素
+### 事件数据元素-events_x.json
 | 字段名         | 类型       | 说明 |
 |----------------|------------|------|
 | `id`           | `number`   | 唯一标识事件的 ID，递增 |
@@ -69,7 +72,7 @@ webtimeline/
     "id": 10029
   }
 ```
-### 角色数据元素
+### 角色数据元素-characters_x.json
 | 字段名         | 类型          | 说明          |
 |----------------|---------------|-------------------------|
 | `id`           | `number`      | 人物的唯一标识符  |
