@@ -20,8 +20,8 @@ webtimeline/
 ├── templates/              # HTML 模板文件
 ├── static/                 # 静态资源文件（CSS、JS）
 ├── data/                   # 存储事件数据的 JSON 文件
-│   ├── events_x.json       # 事件文件 - [{json},{json},{json}] 格式，x 对应 storys.json 中的 id
-│   ├── characters_x.json   # 角色文件 - [{json},{json},{json}] 格式，x 对应 storys.json 中的 id
+│   ├── events_x.json       # 事件文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
+│   ├── characters_x.json   # 角色文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
 │   └── storys.json         # 故事文件 - {"1": "水浒传", "2": "红楼梦"}
 └── readme.md               # 项目说明文件
 ```
@@ -132,9 +132,6 @@ cd webtimeline
 ```bash
 pyhton run.py #在浏览器中打开 http://localhost:5001 查看时间线展示
 ```
-##  示例数据
-
-项目中的 data/ 目录包含示例事件数据，可供参考和测试。
 
 ##  贡献指南
 
