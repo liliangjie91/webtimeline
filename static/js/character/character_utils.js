@@ -1,9 +1,10 @@
-export async function loadCharacterDict(storyId) {
+// 加载角色或物品字典，防重复
+export async function loadInfoDict(storyId, aimType = 'character') {
     try {
-    const response = await fetch(`/api/story/${storyId}/character_dict`);
+    const response = await fetch(`/api/story/${storyId}/${aimType}_dict`);
     return await response.json();
   } catch (error) {
-    console.error('角色字典加载失败:', error);
+    console.error(`${aimType}字典加载失败:`, error);
     return {};
   }
   }

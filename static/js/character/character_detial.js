@@ -1,4 +1,4 @@
-import { loadCharacterDict,uploadImage,imageClickToOpen } from './character_utils.js';
+import { loadInfoDict,uploadImage,imageClickToOpen } from './character_utils.js';
 
 let characterData = {};
 let characterDict = {};
@@ -112,7 +112,7 @@ function renderCharacter(character) {
 
   // 角色关系渲染函数
 async function showRelatedCharacters(related) {
-    characterDict = await loadCharacterDict(storyId);
+    characterDict = await loadInfoDict(storyId);
     // characterDict = await response.json();
     // console.log('renwu dict:', characterDict);
     const relatedEl = document.getElementById('related-characters-block');
