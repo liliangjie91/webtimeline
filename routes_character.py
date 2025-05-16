@@ -2,11 +2,17 @@ from flask import Blueprint, render_template, jsonify, request, abort
 from utils import story_map
 import json
 import os
+from werkzeug.utils import secure_filename
 
 character_bp = Blueprint('character', __name__)
 
 file_folder = 'data'
 file_prifix = 'characters'
+
+IMAGE_FOLDER = 'static/imgs/'
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 def get_file_path(story_id):
     return os.path.join(file_folder, f'{file_prifix}_{story_id}.json')
@@ -97,3 +103,22 @@ def get_character(story_id,character_id):
     if character is None:
         abort(404)
     return jsonify(character)
+
+@character_bp.route("/upload/image", methods=["POST"])
+def upload_character_image():
+    if "image" not in request.files:
+        return jsonify({"status": "error", "message": "No image part"}), 400
+
+    file = request.files["image"]
+    story_id = request.form.get("story_id", "1")
+    aim_id = request.form.get("aim_id", "unknown")
+    aim_type = request.form.get("aim_type", "unknown")
+    if file.filename == "" or not allowed_file(file.filename):
+        return jsonify({"status": "error", "message": "Invalid file"}), 400
+    ext = os.path.splitext(file.filename)[1].lower()
+    filename = secure_filename(f"{aim_type}_{aim_id}{ext}")
+    file_path = os.path.join(IMAGE_FOLDER,str(story_id),filename)
+    file.save(file_path)
+
+    image_url = f"/{file_path}"
+    return jsonify({"status": "success", "image_url": image_url})

@@ -5,6 +5,7 @@
   <title id="main-title">人物详情</title>
   <link rel="stylesheet" href="/static/css/form.css" />
   <link rel="stylesheet" href="/static/css/layout.css" />
+  <link rel="stylesheet" href="/static/css/modal.css" />
   <link rel="stylesheet" href="/static/css/buttons.css" />
   <link rel="stylesheet" href="/static/css/character_detail.css" />
 </head>
@@ -14,8 +15,19 @@
     <!-- 左侧栏 --> 
     <div class="character-side">
       <!-- <button id="back" class="btn btn-success" style="margin-bottom: 15px;"><a href="/" style="text-decoration: none; color: azure;">首页</a></button> -->
-      <p><a href="/story/{{storyId}}/character_list" style="text-decoration: none">{{storyName}}人物</a></p>    
-      <img id="character-img" src="/static/imgs/cover_jmp.jpg" alt="人物图像" />
+      <p><a href="/story/{{storyId}}/character_list" style="text-decoration: none">{{storyName}}人物</a></p>   
+      
+      <!-- 原图与上传按钮 -->
+      <div class="character-img-block">
+        <img id="character-img" src="" alt="人物图像" class="clickable-img" style="cursor: pointer" />
+        
+      </div>
+
+      <!-- 弹窗预览（无上传按钮） -->
+      <div id="img-modal" class="modal hidden" style="background-color: rgb(0 0 0 / 80%);">
+        <img class="modal-content" id="modal-img" style="max-height: 70vh; max-width: 70vw; width: auto; object-fit: contain; padding: 0;">
+      </div>
+
       <h4 style="margin-block-end:5px">相关人物</h4>
       <div id="related-characters-block" class="related-characters">
         <!-- 相关人物列表 -->
@@ -51,6 +63,10 @@
                     <button id="edit-btn" class="btn btn-success">编辑</button>
                     <button id="save-btn" class="btn btn-success hidden">保存</button>
                     <button id="cancel-btn" class="btn btn-success hidden">取消</button>
+                    <div id="image-upload-div" class="image-upload-block hidden">
+                      <input type="file" id="image-upload" accept="image/*" style="display: none;" />
+                      <label for="image-upload" class="btn btn-primary" style="margin-bottom: 0;color: white;">修改图片</label>
+                    </div>
                 </div>
                 <div style="display: flex; gap: 10px;">
                     <button id="delete-btn" class="btn btn-danger hidden">删除</button>
