@@ -1,4 +1,4 @@
-import { loadCharacterDict } from './character_utils.js';
+import { loadCharacterDict,uploadImage,imageClickToOpen } from './character_utils.js';
 
 let characterData = {};
 let characterDict = {};
@@ -234,53 +234,9 @@ function toggleEditable(editing) {
 }
 
 // 图片相关
-const img = document.getElementById("character-img");
-const modal = document.getElementById("img-modal");
-img.addEventListener("click", () => {
-  // modal.style.display = "block";
-  document.getElementById("modal-img").src = img.src;
-  modal.classList.remove('hidden');
-  });
 
-// 点击空白区域关闭（注意别点到 img 上）
-modal.addEventListener("click", (e) => {
-  if (e.target === modal) {
-    modal.classList.add('hidden');
-  }
-});
-
-document.getElementById("image-upload").addEventListener("change", async (event) => {
-  const file = event.target.files[0];
-  if (!file) return;
-
-  const formData = new FormData();
-  formData.append("image", file);
-  formData.append("story_id", storyId);  // 你也可以从JS动态传入
-  formData.append("aim_id", characterId);
-  formData.append("aim_type", "c"); // c for character
-
-  const res = await fetch(`/upload/image`, {
-    method: "POST",
-    body: formData,
-  });
-
-  const result = await res.json();
-  if (result.status === "success") {
-    document.getElementById("character-img").src = result.image_url + `?t=${Date.now()}`;  // 强制刷新缓存
-    // 新的文件路径写入角色json
-    fetch(`/api/story/${storyId}/character/${characterId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({"image":result.image_url})
-    }).then(res => {
-      if (res.ok) {
-        // showSuccessMessage('更新成功');
-        // location.reload();
-      } else {
-        alert('更新失败');
-      }
-    });
-  } else {
-    alert("上传失败：" + result.message);
-  }
-});
+const elementImg = document.getElementById("character-img");
+const elementModal = document.getElementById("img-modal");
+const elementImgInModel = document.getElementById("modal-img")
+imageClickToOpen(elementImg, elementModal, elementImgInModel)
+document.getElementById("image-upload").addEventListener("change", async (event) => uploadImage(event, storyId, characterId, 'character', elementImg));

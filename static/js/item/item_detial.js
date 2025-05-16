@@ -1,3 +1,4 @@
+import { uploadImage, imageClickToOpen } from '../character/character_utils.js';
 
 let itemData = {};
 let itemDict = {};
@@ -91,23 +92,22 @@ function renderItem(item) {
     document.getElementById('detail-item-tags').innerText = safeText(item.tags);
     document.getElementById('detail-item-owner').innerText = safeText(item.owner);
     document.getElementById('detail-item-price').innerText = safeText(item.price);
-    document.getElementById('detail-item-imgUrl').innerText = safeText(item.imgUrl);
     document.getElementById('detail-item-note').innerText = safeText(item.note);
     document.getElementById('detail-item-description').innerText = safeText(item.description);
     document.getElementById('detail-item-mainEvents').innerText = safeText(item.mainEvents);
     document.getElementById('detail-item-related').innerText = safeText(item.related);
 
     const img = document.getElementById('item-img');
-    // img.src = item.image || "/static/imgs/cover_jpm.jpg";
+    img.src = item.image || `/static/imgs/${storyId}/item_default.jpg`;
   
   }
 
 const item_fields = [
-    "name","aliases","firstChapter","category","tags","owner","price","imgUrl","note","description","mainEvents"
+    "name","aliases","firstChapter","category","tags","owner","price","note","description","mainEvents",'related'
 ];
 
 const hidden_fields = [
-   'detail-item-div-imgUrl','detail-item-div-related'
+   'detail-item-div-related','image-upload-div'
 ];
 
 function updateItem(id) {
@@ -160,3 +160,11 @@ function toggleEditable(editing) {
         }
     });
 }
+
+// 图片相关
+
+const elementImg = document.getElementById("item-img");
+const elementModal = document.getElementById("img-modal");
+const elementImgInModel = document.getElementById("modal-img")
+imageClickToOpen(elementImg, elementModal, elementImgInModel)
+document.getElementById("image-upload").addEventListener("change", (event) => uploadImage(event,storyId, itemId, 'item', elementImg));
