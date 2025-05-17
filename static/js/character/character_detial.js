@@ -179,7 +179,7 @@ const character_fields = [
 ];
 
 const hidden_fields = [
-    'detail-character-div-related','detail-character-div-body','image-upload-div'
+    'detail-character-div-related','detail-character-div-body'
 ];
 
 function updateCharacter(id) {

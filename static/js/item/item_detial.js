@@ -107,7 +107,7 @@ const item_fields = [
 ];
 
 const hidden_fields = [
-   'detail-item-div-related','image-upload-div'
+   'detail-item-div-related'
 ];
 
 function updateItem(id) {
