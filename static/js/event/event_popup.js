@@ -1,4 +1,4 @@
-import { loadCharacterDict } from '../character/character_utils.js';
+import { loadInfoDict } from '../character/character_utils.js';
 let selectedItem;
 let dataRef;
 let characterDict = {};
@@ -9,7 +9,7 @@ const eventElements = ['title', 'start','end', 'location', 'keyCharacter', 'char
 const hidden_fields = ["popup-textUrl-div"]
 // 页面加载完成就拉取字典
 document.addEventListener('DOMContentLoaded', () => {
-  loadCharacterDict(storyId).then(data => {
+  loadInfoDict(storyId).then(data => {
     characterDict = data;
   });
 });
@@ -124,9 +124,7 @@ function updateEvent() {
   const sep = /[,，、;；\s]+/
   let updateData = {};
   eventElements.forEach(field => {
-      if(field==='start'){
-        console.log('start')
-      }
+
       const element = document.getElementById(`popup-${field}`);
       if (!element) return;
       let newValue = element.innerText.trim();

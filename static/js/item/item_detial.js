@@ -1,11 +1,18 @@
-import { uploadImage, imageClickToOpen } from '../character/character_utils.js';
+import * as utils from '../character/character_utils.js';
 
 let itemData = {};
-let itemDict = {};
 const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
 const params = new URLSearchParams(window.location.search);
 const itemId = params.get('id');
+const aimType = 'item';
+const itemFields = [
+  "name","aliases","firstChapter","category","tags","owner","price","note","description","mainEvents",'related'
+];
+
+const hiddenFields = [
+ 'detail-item-div-related'
+];
 
 if (!storyId) {
   document.body.innerHTML = '<h2>缺少故事ID</h2>';
@@ -21,7 +28,7 @@ if (!storyId) {
     })
     .then(data => {
       itemData = data;
-      renderItem(data); // 你自定义的渲染函数
+      utils.renderData(itemData, itemFields, storyId, aimType); // 自定义渲染函数
     })
     .catch(err => {
       document.body.innerHTML = `<h2>${err.message}</h2>`;
@@ -30,89 +37,26 @@ if (!storyId) {
 
 // 开始编辑
 document.getElementById('edit-btn').onclick = () => {
-    toggleEditable(true);
+    utils.toggleEditable(true, itemFields, hiddenFields, aimType);
 };
 // 取消编辑
 document.getElementById('cancel-btn').onclick = () => {
-    toggleEditable(false);
+    utils.toggleEditable(false, itemFields, hiddenFields, aimType);
 };
 // 保存编辑
 document.getElementById('save-btn').onclick = () => {
-    
-    const id = itemData.id;
-    const updateData = updateItem(id);
-
-    if (Object.keys(updateData).length === 0) {
-        alert('没有字段被修改');
-        return;
-      }
-    // updateData['id'] = id;
-    updateData['updateTime'] = Date.now();
-
-    fetch(`/api/story/${storyId}/item/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updateData)
-      }).then(res => {
-        if (res.ok) {
-        //   showSuccessMessage('更新成功');
-          location.reload();
-        } else {
-          alert('更新失败');
-        }
-      });
+    const updateData = updateItem();
+    utils.eventSaveData(updateData, itemData.id, storyId, aimType)
   };
-
-// 删除人物
+// 删除
 document.getElementById('delete-btn').onclick = () => {
-    if (confirm("确定删除这个物品吗？")) {
-        fetch(`/story/${storyId}/item/delete`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: itemData.id })
-        }).then(() => {
-        // dataRef.remove(selectedItem.id);
-        // document.getElementById('popup').classList.add('hidden');
-        window.location.href = `/story/${storyId}/item_list`;
-        // location.reload();
-        });
-    }
+    utils.eventDeleteData(itemData.id, storyId, aimType)
 }
 
-// 角色详情渲染函数
-function renderItem(item) {
-    function safeText(value) {
-        return value !== undefined && value !== null && value !== '' ? value : '-';
-    }
-    document.getElementById('main-title').innerText = safeText(item.name)+'-详情';
-    document.getElementById('detail-item-name').innerText = safeText(item.name);
-    document.getElementById('detail-item-aliases').innerText = safeText(item.aliases);
-    document.getElementById('detail-item-firstChapter').innerText = safeText(item.firstChapter);
-    document.getElementById('detail-item-category').innerText = safeText(item.category);
-    document.getElementById('detail-item-tags').innerText = safeText(item.tags);
-    document.getElementById('detail-item-owner').innerText = safeText(item.owner);
-    document.getElementById('detail-item-price').innerText = safeText(item.price);
-    document.getElementById('detail-item-note').innerText = safeText(item.note);
-    document.getElementById('detail-item-description').innerText = safeText(item.description);
-    document.getElementById('detail-item-mainEvents').innerText = safeText(item.mainEvents);
-    document.getElementById('detail-item-related').innerText = safeText(item.related);
-
-    const img = document.getElementById('item-img');
-    img.src = item.image || `/static/imgs/${storyId}/item_default.jpg`;
-  
-  }
-
-const item_fields = [
-    "name","aliases","firstChapter","category","tags","owner","price","note","description","mainEvents",'related'
-];
-
-const hidden_fields = [
-   'detail-item-div-related'
-];
-
-function updateItem(id) {
+// 更新item
+function updateItem() {
     let updateData = {};
-    item_fields.forEach(field => {
+    itemFields.forEach(field => {
         const element = document.getElementById(`detail-item-${field}`);
         if (!element) return;
         let newValue = element.innerText.trim();
@@ -132,39 +76,6 @@ function updateItem(id) {
     return updateData;
 }
 
-function toggleEditable(editing) {
-    // const toggle = val => document.getElementById(val).contentEditable = editing;
-    const toggle = val => {
-        const element = document.getElementById(val);
-        element.contentEditable = editing;
-
-        // 禁用自动滚动行为
-        element.addEventListener('focus', (e) => {
-        e.preventDefault(); // 阻止默认滚动行为
-        });
-    };
-
-    const item_elments = item_fields.map(val => `detail-item-${val}`);
-    // console.log('item_elments:', item_elments);
-    item_elments.forEach(toggle);
-    document.getElementById('edit-btn').classList.toggle('hidden', editing);
-    document.getElementById('save-btn').classList.toggle('hidden', !editing);
-    document.getElementById('cancel-btn').classList.toggle('hidden', !editing);
-    document.getElementById('delete-btn').classList.toggle('hidden', !editing);
-    hidden_fields.forEach(val => {
-        const element = document.getElementById(val);
-        if (editing) {
-            element.classList.remove('hidden');
-        } else {
-            element.classList.add('hidden');
-        }
-    });
-}
-
 // 图片相关
-
-const elementImg = document.getElementById("item-img");
-const elementModal = document.getElementById("img-modal");
-const elementImgInModel = document.getElementById("modal-img")
-imageClickToOpen(elementImg, elementModal, elementImgInModel)
-document.getElementById("image-upload").addEventListener("change", (event) => uploadImage(event,storyId, itemId, 'item', elementImg));
+utils.imageClickToOpen(aimType)
+document.getElementById("image-upload").addEventListener("change", (event) => utils.uploadImage(event,storyId, itemId, aimType));

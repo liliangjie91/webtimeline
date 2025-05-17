@@ -54,7 +54,7 @@ def add_item(story_id):
     new_item = request.json
     file_path = get_file_path(story_id)
     data = load_items(file_path)
-    new_item['id'] = len(data) + 1
+    new_item['id'] = len(data) + 10001
     data.append(new_item)
     save_items(data, file_path)
     return jsonify({"status": "added"})

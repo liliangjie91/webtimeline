@@ -1,11 +1,11 @@
-import { loadCharacterDict } from './character_utils.js';
+import { loadInfoDict } from './character_utils.js';
 let characterDict = {};
 
 const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
 // 页面加载完成就拉取字典
 document.addEventListener('DOMContentLoaded', () => {
-  loadCharacterDict(storyId).then(data => {
+  loadInfoDict(storyId).then(data => {
     characterDict = data;
     // console.log('角色字典加载成功', characterDict);
     // 此处可以调用渲染函数或做其他操作

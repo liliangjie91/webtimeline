@@ -57,9 +57,11 @@ const groupsTempDefault = [
 const groupsTempJPM = [
   {id: '主线', content: '主线', value: 1},
   {id: '潘金莲线', content: '潘金莲线', value: 2},
-  {id: '孟玉楼线', content: '孟玉楼线', value: 3},
-  {id: '狐朋狗友线', content: '狐朋狗友', value: 4},
-  {id: '武松线', content: '武松线', value: 900},
+  {id: '李瓶儿线', content: '李瓶儿线', value: 3},
+  {id: '庞春梅线', content: '庞春梅线', value: 4},
+  {id: '孟玉楼线', content: '孟玉楼线', value: 5},
+  {id: '吴月娘线', content: '吴月娘线', value: 6},
+  {id: '狐朋狗友线', content: '狐朋狗友', value: 7},
   {id: '其他支线', content: '其他支线', value: 999}
 ];
 
@@ -68,8 +70,12 @@ export function setGroupValue(storyId,rawGroupMap){
   const groupsTemp = storyId==='1' ? groupsTempJPM : groupsTempDefault;
   rawGroupMap.forEach(g => {
     const match = groupsTemp.find(e => e.id === g.id);
-    g.value = match ? match.value : 998;
-    g.content = match ? match.content : g.content;
+    if (match){
+      g.value = match.value;
+      g.content = match.content;
+    }else{
+      g.value = 998;
+    }
     res.push(g);
   });
   return res

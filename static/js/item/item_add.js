@@ -1,8 +1,12 @@
-import { loadInfoDict } from '../character/character_utils.js';
+import { bindAddItemHandlers } from '../character/character_utils.js';
 let itemDict = {};
 
 const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
+const aimType = 'item';
+const itemFieldsForAdd = [
+  "name","aliases","firstChapter","category","tags","owner","price","note","description","mainEvents"
+];
 // 页面加载完成就拉取字典
 document.addEventListener('DOMContentLoaded', () => {
   loadInfoDict(storyId, 'item').then(data => {
@@ -12,45 +16,49 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
+async function makeAddData(fieldsForAdd, storyId, aimType) {
+  const resData = {}
+  const infoDict = await loadInfoDict(storyId, aimType);
+  const nameElement = document.getElementById(`new-${aimType}-name`);
+  const sep = /[,，、;；\s]+/
+  if (nameElement && nameElement.value.trim() in infoDict){
+    alert('项目已存在!');
+    return;
+  }
+
+  fieldsForAdd.forEach(f=>{
+    const elementValue = document.getElementById(`new-${aimType}-${f}`).value.trim();
+    if (f in ["note","description","story","firstChapter","firstAge"]) {
+      resData[f] = elementValue;
+      return
+    } else if (f in ["related"]) {
+      resData[f] = elementValue.replaceAll('，',',').replaceAll('；',';').replaceAll('：',':');
+    } else{
+      resData[f] = elementValue.split(sep).map(s => s.trim()).join(',')
+    }
+  })
+  
+  fetch(`/story/${storyId}/${aimType}/add`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(resData)
+  }).then(() => {
+    location.reload(); // 简化操作，重新加载页面
+  });
+}
+
 // 角色添加功能
-export function bindAddItemHandlers() {
-    document.getElementById('add-item-btn').onclick = () => {
-      document.getElementById('add-item-popup').classList.remove('hidden');
+export function bindAddItemHandlers(itemFieldsForAdd, storyId, aimType) {
+    document.getElementById(`add-${aimType}-btn`).onclick = () => {
+      document.getElementById(`add-${aimType}-popup`).classList.remove('hidden');
     };
   
-    document.getElementById('add-item-popup-close').onclick = () => {
-      document.getElementById('add-item-popup').classList.add('hidden');
+    document.getElementById(`add-${aimType}-popup-close`).onclick = () => {
+      document.getElementById(`add-${aimType}-popup`).classList.add('hidden');
     };
   
-    document.getElementById('add-item-form').onsubmit = (e) => {
+    document.getElementById(`add-${aimType}-form`).onsubmit = (e) => {
       e.preventDefault(); // 阻止表单默认提交
-      const name0 = document.getElementById('new-item-name').value.trim();
-      if (name0 in itemDict) {
-        alert('物品已存在，请更换物品');
-        return;
-      }
-      const sep = /[,，、;；\s]+/
-      const itemData = {
-          createTime: Date.now(),
-          updateTime: Date.now(),
-          name: name0,
-          aliases: document.getElementById('new-item-aliases').value.trim().split(sep).map(s => s.trim()).join(','),
-          firstChapter: parseInt(document.getElementById('new-item-firstChapter').value) || null,
-          category: document.getElementById('new-item-category').value.trim(),
-          tags: document.getElementById('new-item-tags').value.trim().split(sep).map(s => s.trim()).join(','),
-          owner: document.getElementById('new-item-owner').value.trim().split(sep).map(s => s.trim()).join(','),
-          price: document.getElementById('new-item-price').value.trim(),
-          note: document.getElementById('new-item-note').value.trim(),
-          description: document.getElementById('new-item-description').value.trim(),
-          mainEvents: document.getElementById('new-item-mainEvents').value.trim().replaceAll('；',';'),
-      };
-      
-      fetch(`/story/${storyId}/item/add`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(itemData)
-      }).then(() => {
-        location.reload(); // 简化操作，重新加载页面
-      });
+      makeAddData(itemFieldsForAdd, storyId, aimType);
     };
   }

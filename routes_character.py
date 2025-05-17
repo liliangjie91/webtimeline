@@ -62,7 +62,7 @@ def add_character(story_id):
     file_path = get_file_path(story_id)
     data = load_characters(file_path)
     length = len(data)
-    new_character['id'] = length + 1
+    new_character['id'] = length + 10001
     data.append(new_character)
     save_characters(data, file_path)
     return jsonify({"status": "added"})
