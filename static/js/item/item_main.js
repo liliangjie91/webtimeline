@@ -1,19 +1,19 @@
-import {bindAddItemHandlers, makeListByGroup} from '../character/character_utils.js'
+import {bindAddEntityHandlers, makeListByGroup} from '../character/character_utils.js'
 
 let allItems = [];
 const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
-const aimType = 'item';
+const EntityType = 'item';
 const itemFieldsForAdd = [
   "name","aliases","firstChapter","category","tags","owner","price","note","description","mainEvents"
 ];
-const apiUrl = `/api/story/${storyId}/item`;
+const apiUrl = `/api/story/${storyId}/${EntityType}`;
 // console.log('apiUrl', apiUrl);
 fetch(apiUrl)
   .then(res => res.json())
   .then(items =>{
     allItems = items;
-    makeListByGroup(allItems, storyId, 'item', 'category');
+    makeListByGroup(allItems, storyId, EntityType, 'category');
 })
 
-bindAddItemHandlers(itemFieldsForAdd, storyId, aimType);
+bindAddEntityHandlers(itemFieldsForAdd, storyId, EntityType);

@@ -89,7 +89,7 @@ export function toggleEditable(editing, fields, hiddenFields, aimType='character
 }
 
 // 新增数据handler
-export function bindAddItemHandlers(itemFieldsForAdd, storyId, aimType) {
+export function bindAddEntityHandlers(itemFieldsForAdd, storyId, aimType) {
   document.getElementById(`add-${aimType}-btn`).onclick = () => {
     document.getElementById(`add-${aimType}-popup`).classList.remove('hidden');
   };

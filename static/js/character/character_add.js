@@ -61,3 +61,7 @@ export function bindAddCharacterHandlers() {
       });
     };
   }
+  const characterFields = [
+    'name', 'aliases', 'gender','zi', 'birth', 'firstAge', 'firstChapter',
+    'hobby', 'nature', 'addr', 'role', 'chara', 'job', 'body', 'note', 'description', 'mainEvents','related'
+  ];
