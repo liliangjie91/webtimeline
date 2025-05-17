@@ -3,17 +3,17 @@ import {bindAddEntityHandlers, makeListByGroup} from '../character/character_uti
 let allItems = [];
 const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
-const EntityType = 'item';
+const entityType = 'item';
 const itemFieldsForAdd = [
   "name","aliases","firstChapter","category","tags","owner","price","note","description","mainEvents"
 ];
-const apiUrl = `/api/story/${storyId}/${EntityType}`;
+const apiUrl = `/api/story/${storyId}/${entityType}`;
 // console.log('apiUrl', apiUrl);
 fetch(apiUrl)
   .then(res => res.json())
   .then(items =>{
     allItems = items;
-    makeListByGroup(allItems, storyId, EntityType, 'category');
+    makeListByGroup(allItems, storyId, entityType, 'category');
 })
 
-bindAddEntityHandlers(itemFieldsForAdd, storyId, EntityType);
+bindAddEntityHandlers(itemFieldsForAdd, storyId, entityType);

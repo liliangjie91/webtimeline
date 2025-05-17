@@ -61,7 +61,7 @@ export async function showRelatedThings(related, storyId = '1', aimType = 'chara
 }
 
 // 设置是否可编辑
-export function toggleEditable(editing, fields, hiddenFields, aimType='character') {
+export function toggleEditable(editing, fields, hiddenFields, aimType='character', prefix = 'detail') {
   const toggle = val => {
       const element = document.getElementById(val);
       // console.log(element);
@@ -72,7 +72,7 @@ export function toggleEditable(editing, fields, hiddenFields, aimType='character
       });
   };
 
-  const aimElements = fields.map(val => `detail-${aimType}-${val}`);
+  const aimElements = fields.map(val => `${prefix}-${aimType}-${val}`);
   aimElements.forEach(toggle);
   document.getElementById('edit-btn').classList.toggle('hidden', editing);
   document.getElementById('save-btn').classList.toggle('hidden', !editing);
@@ -123,6 +123,26 @@ export function eventSaveData(updateData, aimId, storyId = '1', aimType = 'chara
         alert('更新失败');
       }
     });
+}
+
+export function updateEntity(rawData, entityFields, entityType) {
+  let updateData = {};
+  entityFields.forEach(field => {
+      const element = document.getElementById(`detail-${entityType}-${field}`);
+      if (!element) return;
+      let newValue = element.innerText.trim();
+      if (newValue === undefined || newValue === null || newValue in ['-','','(无需)']) {
+          return;
+      }
+      newValue = newValue.trim().replaceAll('；', ';').replaceAll('，', ',').replaceAll('：', ':');
+      
+      const oldValue = (rawData[field] || '').toString().trim();
+      if (newValue !== oldValue) {
+          updateData[field] = field in ['firstAge', 'firstChapter'] ? (parseInt(newValue) || null) : newValue;
+      }
+  });
+
+  return updateData;
 }
 
 // 删除数据
@@ -268,7 +288,8 @@ async function makeAddData(fieldsForAdd, storyId, aimType) {
       resData[f] = elementValue.split(sep).map(s => s.trim()).join(',')
     }
   })
-  
+  resData['createTime'] = Date.now();
+  resData['updateTime'] = Date.now();
   fetch(`/story/${storyId}/${aimType}/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -278,3 +299,14 @@ async function makeAddData(fieldsForAdd, storyId, aimType) {
   });
 }
 
+
+export function handleAddEventFromDoubleClick(props, groupType='storyLine') {
+  const date = props.time;
+  const group = props.group;
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0'); // 月份是从0开始的
+  const day = String(date.getDate()).padStart(2, '0');
+  document.getElementById('new-event-start').value = `${year}-${month}-${day}`;
+  document.getElementById(`new-event-${groupType}`).value = group || '';
+  document.getElementById('add-event-popup').classList.remove('hidden');
+}

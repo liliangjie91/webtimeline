@@ -1,15 +1,16 @@
-import { loadInfoDict } from '../character/character_utils.js';
+import * as utils from '../character/character_utils.js';
 let selectedItem;
 let dataRef;
 let characterDict = {};
 const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
+const entityType = 'event';
 // 事件结构体内含元素
-const eventElements = ['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','storyLine','note','textUrl']
-const hidden_fields = ["popup-textUrl-div"]
+const eventFields = ['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','storyLine','note','textUrl']
+const hiddenFields = ["popup-textUrl-div"]
 // 页面加载完成就拉取字典
 document.addEventListener('DOMContentLoaded', () => {
-  loadInfoDict(storyId).then(data => {
+  utils.loadInfoDict(storyId).then(data => {
     characterDict = data;
   });
 });
@@ -60,6 +61,7 @@ export function bindPopupHandlers() {
   document.getElementById('edit-btn').onclick = () => {
     // document.querySelector('.modal-content').classList.add('editing');
     toggleEditable(true);
+    // utils.toggleEditable(true, eventFields, hiddenFields, entityType);
   };
   // 取消编辑
   document.getElementById('cancel-btn').onclick = () => {
@@ -123,7 +125,7 @@ export function bindPopupHandlers() {
 function updateEvent() {
   const sep = /[,，、;；\s]+/
   let updateData = {};
-  eventElements.forEach(field => {
+  eventFields.forEach(field => {
 
       const element = document.getElementById(`popup-${field}`);
       if (!element) return;
@@ -209,12 +211,12 @@ function toggleEditable(editing) {
       e.preventDefault(); // 阻止默认滚动行为
     });
   };
-  const toggleElements = eventElements.map(val => `popup-${val}`);
+  const toggleElements = eventFields.map(val => `popup-${val}`);
   toggleElements.forEach(toggle);
   document.getElementById('edit-btn').classList.toggle('hidden', editing);
   document.getElementById('save-btn').classList.toggle('hidden', !editing);
   document.getElementById('cancel-btn').classList.toggle('hidden', !editing);
-  hidden_fields.forEach(val => {
+  hiddenFields.forEach(val => {
     const element = document.getElementById(val);
     if (editing) {
         element.classList.remove('hidden');

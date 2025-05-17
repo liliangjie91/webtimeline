@@ -5,16 +5,14 @@ const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
 const params = new URLSearchParams(window.location.search);
 const characterId = params.get('id');
-const aimType = 'character';
+const entityType = 'character';
 const characterFields = [
   'name', 'aliases', 'gender','zi', 'birth', 'firstAge', 'firstChapter',
   'hobby', 'nature', 'addr', 'role', 'chara', 'job', 'body', 'note', 'description', 'mainEvents','related'
 ];
-
 const hiddenFields = [
   'detail-character-div-related','detail-character-div-body'
 ];
-
 
 if (!storyId) {
   document.body.innerHTML = '<h2>缺少故事ID</h2>';
@@ -30,7 +28,7 @@ if (!storyId) {
     })
     .then(data => {
       characterData = data;
-      utils.renderData(characterData, characterFields, storyId, aimType); // 自定义渲染函数
+      utils.renderData(characterData, characterFields, storyId, entityType); // 自定义渲染函数
     })
     .catch(err => {
       document.body.innerHTML = `<h2>${err.message}</h2>`;
@@ -47,36 +45,14 @@ document.getElementById('cancel-btn').onclick = () => {
   };
 // 保存编辑
 document.getElementById('save-btn').onclick = () => {
-    const updateData = updateCharacter();
-    utils.eventSaveData(updateData, characterData.id, storyId, aimType)
+    const updateData = utils.updateEntity(characterData, characterFields, entityType);
+    utils.eventSaveData(updateData, characterData.id, storyId, entityType)
   };
 // 删除人物
 document.getElementById('delete-btn').onclick = () => {
-    utils.eventDeleteData(characterData.id, storyId, aimType);
+    utils.eventDeleteData(characterData.id, storyId, entityType);
   };
 
-function updateCharacter() {
-    let updateData = {};
-    characterFields.forEach(field => {
-        const element = document.getElementById(`detail-character-${field}`);
-        if (!element) return;
-        let newValue = element.innerText.trim();
-        if (newValue === undefined || newValue === null || newValue === '-') {
-            return;
-        }
-        newValue = newValue.trim().replaceAll('；', ';').replaceAll('，', ',').replaceAll('：', ':');
-        
-        const oldValue = (characterData[field] || '').toString().trim();
-        if (newValue !== oldValue) {
-            updateData[field] = field === 'firstAge' || field === 'firstChapter'
-                ? parseInt(newValue) || null
-                : newValue;
-        }
-    });
-
-    return updateData;
-}
-
 // 图片相关
-utils.imageClickToOpen(aimType);
-document.getElementById("image-upload").addEventListener("change", async (event) => utils.uploadImage(event, storyId, characterId, aimType));
+utils.imageClickToOpen(entityType);
+document.getElementById("image-upload").addEventListener("change", async (event) => utils.uploadImage(event, storyId, characterId, entityType));

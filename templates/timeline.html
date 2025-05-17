@@ -34,27 +34,27 @@
     <div id="visualization-selected"></div>
   </div>
   <!-- 添加事件的弹窗 -->
-  <div id="add-popup" class="modal hidden">
+  <div id="add-event-popup" class="modal hidden">
     <div class="modal-content">
-      <span id="add-popup-close" class="close">&times;</span>
+      <span id="add-event-popup-close" class="close">&times;</span>
       <!-- <h2>添加新事件</h2> -->
       <form id="add-event-form" class="form-grid">
-        <div class="form-row full-width"><label for="new-title">标题:</label><input type="text" id="new-title" placeholder="必填" required></div>
-        <div class="form-row"><label for="new-start">起始:</label><input type="text" id="new-start" placeholder="必填: 1111-11-11 08:00或时间留空"required></div>
-        <div class="form-row"><label for="new-start">结束:</label><input type="text" id="new-end" placeholder="可不填"></div>
-        <div class="form-row"><label for="new-location">地点:</label><input type="text" id="new-location"placeholder="发生地点"></div>
-        <div class="form-row"><label for="new-key-character">主角:</label><input type="text" id="new-keyCharacter"placeholder="关键人物"></div>
-        <div class="form-row full-width"><label for="new-people">人物:</label><input type="text" id="new-people" placeholder="所有人物"></div>
-        <div class="form-row"><label for="new-special-day">节日:</label><input type="text" id="new-specialDay" placeholder="特殊节日"></div>
-        <div class="form-row"><label for="new-season">季节:</label><input type="text" id="new-season" placeholder="春夏秋冬"></div>
-        <div class="form-row"><label for="new-weather">天气:</label><input type="text" id="new-weather" placeholder="雨雪晴霜"></div>
-        <div class="form-row"><label for="new-chapter">章节:</label><input type="number" id="new-chapter" placeholder="1"></div>
-        <div class="form-row"><label for="new-category">类别:</label><input type="text" id="new-category" placeholder="情节分类：复仇，家庭等"></div>
-        <div class="form-row"><label for="new-tags">标签:</label><input type="text" id="new-tags" placeholder="情节标签：吃饭，葬礼等"></div>
-        <div class="form-row full-width"><label for="new-note">备注:</label><input type="text" id="new-note" placeholder="备注"></div>
-        <div class="form-row full-width"><label for="new-storyLine">故事线:</label><input type="text" id="new-storyLine" placeholder="必填: 某某线，主线等" required></div>    
-        <!-- <div class="form-row full-width"><span>故事内容:</span><textarea id="new-story" rows="5"></textarea></div> -->
-        <div class="form-row full-width"><label for="new-story">故事内容:</label><textarea id="new-story" rows="5" placeholder="必填" required></textarea></div>
+        <div class="form-row full-width"><label for="new-event-title">标题:</label><input type="text" id="new-event-title" placeholder="必填" required></div>
+        <div class="form-row"><label for="new-event-start">起始:</label><input type="text" id="new-event-start" placeholder="必填: 1111-11-11 08:00或时间留空"required></div>
+        <div class="form-row"><label for="new-event-start">结束:</label><input type="text" id="new-event-end" placeholder="可不填"></div>
+        <div class="form-row"><label for="new-event-location">地点:</label><input type="text" id="new-event-location"placeholder="发生地点"></div>
+        <div class="form-row"><label for="new-event-keyCharacter">主角:</label><input type="text" id="new-event-keyCharacter"placeholder="关键人物"></div>
+        <div class="form-row full-width"><label for="new-event-characters">人物:</label><input type="text" id="new-event-characters" placeholder="所有人物"></div>
+        <div class="form-row"><label for="new-event-special-day">节日:</label><input type="text" id="new-event-specialDay" placeholder="特殊节日"></div>
+        <div class="form-row"><label for="new-event-season">季节:</label><input type="text" id="new-event-season" placeholder="春夏秋冬"></div>
+        <div class="form-row"><label for="new-event-weather">天气:</label><input type="text" id="new-event-weather" placeholder="雨雪晴霜"></div>
+        <div class="form-row"><label for="new-event-chapter">章节:</label><input type="number" id="new-event-chapter" placeholder="1"></div>
+        <div class="form-row"><label for="new-event-category">类别:</label><input type="text" id="new-event-category" placeholder="情节分类：复仇，家庭等"></div>
+        <div class="form-row"><label for="new-event-tags">标签:</label><input type="text" id="new-event-tags" placeholder="情节标签：吃饭，葬礼等"></div>
+        <div class="form-row full-width"><label for="new-event-note">备注:</label><input type="text" id="new-event-note" placeholder="备注"></div>
+        <div class="form-row full-width"><label for="new-event-storyLine">故事线:</label><input type="text" id="new-event-storyLine" placeholder="必填: 某某线，主线等" required></div>    
+        <!-- <div class="form-row full-width"><span>故事内容:</span><textarea id="new-event-story" rows="5"></textarea></div> -->
+        <div class="form-row full-width"><label for="new-event-story">故事内容:</label><textarea id="new-event-story" rows="5" placeholder="必填" required></textarea></div>
         <div class="form-row full-width" style="text-align: right;"><button type="submit" class="btn btn-success">提交</button></div>
       </form>
     </div>

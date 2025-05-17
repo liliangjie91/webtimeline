@@ -1,15 +1,16 @@
 import { initTimeline, setTimelineInstances } from './timeline_init.js';
 import { updateFilterOptions, applyFilters } from './timeline_filters.js';
 import { bindPopupHandlers } from '../event/event_popup.js';
-import { bindAddHandlers } from '../event/event_add.js';
-
+import {bindAddEntityHandlers} from '../character/character_utils.js'
 let allEvents = [];
 let timeline;
 let filteredTimeline;
 // let data;
 const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
-const apiUrl = `/api/story/${storyId}/event`;
+const entityType = 'event';
+const eventFieldsForAdd = ['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','storyLine','note']
+const apiUrl = `/api/story/${storyId}/${entityType}`;
 fetch(apiUrl)
   .then(res => res.json())
   .then(events => {
@@ -23,4 +24,5 @@ fetch(apiUrl)
   });
 
 bindPopupHandlers();
-bindAddHandlers();
+// bindAddHandlers();
+bindAddEntityHandlers(eventFieldsForAdd, storyId, entityType);

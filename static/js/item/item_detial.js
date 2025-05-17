@@ -5,7 +5,7 @@ const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
 const params = new URLSearchParams(window.location.search);
 const itemId = params.get('id');
-const aimType = 'item';
+const entityType = 'item';
 const itemFields = [
   "name","aliases","firstChapter","category","tags","owner","price","note","description","mainEvents",'related'
 ];
@@ -28,7 +28,7 @@ if (!storyId) {
     })
     .then(data => {
       itemData = data;
-      utils.renderData(itemData, itemFields, storyId, aimType); // 自定义渲染函数
+      utils.renderData(itemData, itemFields, storyId, entityType); // 自定义渲染函数
     })
     .catch(err => {
       document.body.innerHTML = `<h2>${err.message}</h2>`;
@@ -37,45 +37,22 @@ if (!storyId) {
 
 // 开始编辑
 document.getElementById('edit-btn').onclick = () => {
-    utils.toggleEditable(true, itemFields, hiddenFields, aimType);
+    utils.toggleEditable(true, itemFields, hiddenFields, entityType);
 };
 // 取消编辑
 document.getElementById('cancel-btn').onclick = () => {
-    utils.toggleEditable(false, itemFields, hiddenFields, aimType);
+    utils.toggleEditable(false, itemFields, hiddenFields, entityType);
 };
 // 保存编辑
 document.getElementById('save-btn').onclick = () => {
-    const updateData = updateItem();
-    utils.eventSaveData(updateData, itemData.id, storyId, aimType)
+    const updateData = utils.updateEntity(itemData, itemFields, entityType);
+    utils.eventSaveData(updateData, itemData.id, storyId, entityType)
   };
 // 删除
 document.getElementById('delete-btn').onclick = () => {
-    utils.eventDeleteData(itemData.id, storyId, aimType)
-}
-
-// 更新item
-function updateItem() {
-    let updateData = {};
-    itemFields.forEach(field => {
-        const element = document.getElementById(`detail-item-${field}`);
-        if (!element) return;
-        let newValue = element.innerText.trim();
-        if (newValue === undefined || newValue === null || newValue === '-') {
-            return;
-        }
-        newValue = newValue.trim().replaceAll('；', ';').replaceAll('，', ',').replaceAll('：', ':');
-        
-        const oldValue = (itemData[field] || '').toString().trim();
-        if (newValue !== oldValue) {
-            updateData[field] = field === 'firstAge' || field === 'firstChapter'
-                ? parseInt(newValue) || null
-                : newValue;
-        }
-    });
-
-    return updateData;
+    utils.eventDeleteData(itemData.id, storyId, entityType)
 }
 
 // 图片相关
-utils.imageClickToOpen(aimType)
-document.getElementById("image-upload").addEventListener("change", (event) => utils.uploadImage(event,storyId, itemId, aimType));
+utils.imageClickToOpen(entityType)
+document.getElementById("image-upload").addEventListener("change", (event) => utils.uploadImage(event,storyId, itemId, entityType));
