@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, jsonify, request
-from utils import story_map
+from services.utils import story_map
 import json
 import os
 
