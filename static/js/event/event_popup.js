@@ -44,7 +44,7 @@ export function bindPopupHandlers() {
     updateData['id'] = eventId;
     updateData['updateTime'] = Date.now();
 
-    fetch(`/story/${storyId}/event/${eventId}`, {
+    fetch(`/api/story/${storyId}/event/${eventId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(updateData)
@@ -82,19 +82,12 @@ export function bindPopupHandlers() {
   };
 }
 
-function dateFormat(dateObj){
-  if (dateObj.getHours() === 0 && dateObj.getMinutes() == 0) {
-    return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
-}
-  return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')} ${String(dateObj.getHours()).padStart(2, '0')}:${String(dateObj.getMinutes()).padStart(2, '0')}`;
-}
-
-// 显示弹出窗口
+//显示弹出窗口
 export function showPopup(item, dataSet) {
   eventData = item;
   dataRef = dataSet;
-  document.getElementById('popup-event-start').innerText = dateFormat(new Date(item.start));
-  document.getElementById('popup-event-end').innerText = item.end ? dateFormat(new Date(item.end)) : '(无需)';
+  document.getElementById('popup-event-start').innerText = utils.dateFormat(new Date(item.start));
+  document.getElementById('popup-event-end').innerText = item.end ? utils.dateFormat(new Date(item.end)) : '(无需)';
 
   document.getElementById('popup-event-title').innerText = item.title || '(无标题)';
   document.getElementById('popup-event-location').innerText = item.location || '';

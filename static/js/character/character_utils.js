@@ -131,7 +131,7 @@ export function updateEntity(rawData, entityFields, entityType, prefix = 'detail
       const element = document.getElementById(`${prefix}-${entityType}-${field}`);
       if (!element) return;
       let newValue = element.innerText.trim();
-      if (newValue === undefined || newValue === null || ['-','(无需)'].includes(newValue)) {
+      if (newValue === undefined || newValue === null || ['-','(无需)','(无)','无'].includes(newValue)) {
           return;
       }
       newValue = newValue.replaceAll('；', ';').replaceAll('，', ',').replaceAll('：', ':');
@@ -205,7 +205,7 @@ export async function uploadImage(event, storyId, entityId, entityType){
     }
   }
 
-function safeText(value) {
+export function safeText(value) {
   return value !== undefined && value !== null && value !== '' ? value : '';
 }
 // 展示数据-角色-物件-事件
@@ -320,7 +320,7 @@ export function handleAddEventFromDoubleClick(props, groupType='storyLine') {
   document.getElementById('add-event-popup').classList.remove('hidden');
 }
 
-function dateFormat(dateObj){
+export function dateFormat(dateObj){
   if (dateObj.getHours() === 0 && dateObj.getMinutes() == 0) {
     return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
 }
