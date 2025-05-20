@@ -1,4 +1,4 @@
-import * as utils from '../character/character_utils.js';
+import * as utils from '../entity/entity_utils.js';
 let eventData = {};
 let dataRef;
 let characterDict = {};

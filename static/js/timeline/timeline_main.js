@@ -1,7 +1,7 @@
 import { initTimeline, setTimelineInstances } from './timeline_init.js';
 import { updateFilterOptions, applyFilters } from './timeline_filters.js';
 import { bindPopupHandlers } from '../event/event_popup.js';
-import {bindAddEntityHandlers} from '../character/character_utils.js'
+import {bindAddEntityHandlers} from '../entity/entity_utils.js'
 let allEvents = [];
 let timeline;
 let filteredTimeline;

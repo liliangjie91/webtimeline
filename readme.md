@@ -13,16 +13,16 @@
 
 ```bash
 webtimeline/
-├── app.py                  # Flask 应用主程序
-├── routes_character.py     # 人物相关路由
-├── routes_timeline.py      # 时间线相关路由
-├── utils.py                # 工具函数
-├── templates/              # HTML 模板文件
-├── static/                 # 静态资源文件（CSS、JS）
-├── data/                   # 存储事件数据的 JSON 文件
-│   ├── events_x.json       # 事件文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
-│   ├── characters_x.json   # 角色文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
-│   └── storys.json         # 故事文件 - {"1": "水浒传", "2": "红楼梦"}
+├── backend/                      # 后端代码目录
+│   ├── app.py                    # Flask 应用主入口
+│   ├── routes/                   # 路由模块
+│   ├── services/                 # 业务逻辑模块
+├── templates/                    # HTML 模板文件
+├── static/                       # 静态资源文件（CSS、JS、图片等）
+├── data/                         # 存储 JSON 数据
+│   ├── characters_x.json         # 事件文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
+│   ├── events_x.json             # 角色文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
+│   └── storys.json               # 故事文件 - {"1": "水浒传", "2": "红楼梦"}
 └── readme.md               # 项目说明文件
 ```
 ## 数据

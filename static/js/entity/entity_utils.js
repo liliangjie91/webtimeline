@@ -287,10 +287,13 @@ async function makeAddData(fieldsForAdd, storyId, entityType) {
   }
 
   fieldsForAdd.forEach(f=>{
-    const elementValue = document.getElementById(`new-${entityType}-${f}`).value.trim();
-    if (["note","description","story","firstChapter","firstAge"].includes(f)) {
+    const element = document.getElementById(`new-${entityType}-${f}`);
+    if (!element) return;
+    const elementValue = element.value.trim();
+    if (["note","description","story",].includes(f)) {
       resData[f] = elementValue;
-      return
+    } else if (["firstChapter","firstAge","chapter"].includes(f)){
+      resData[f] = elementValue ? parseInt(elementValue) : null;
     } else if (["related"].includes(f)) {
       resData[f] = elementValue.replaceAll('，',',').replaceAll('；',';').replaceAll('：',':');
     } else{

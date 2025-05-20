@@ -1,5 +1,5 @@
 import { showPopup } from '../event/event_popup.js';
-import { handleAddEventFromDoubleClick } from '../character/character_utils.js';
+import { handleAddEventFromDoubleClick } from '../entity/entity_utils.js';
 import {optionsSide, optionsMain, setGroupValue} from "../utils.js";
 let timeline, filteredTimeline, allEventsRef;
 const match = window.location.pathname.match(/^\/story\/(\d+)/);

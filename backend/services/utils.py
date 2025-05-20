@@ -13,7 +13,7 @@ def load_story_map():
         with open(story_path, 'r', encoding='utf-8') as f:
             return json.load(f)
     else:
-        return {"1":"金瓶梅"}
+        return story_map
 
 def load_entity_file(filepath):
     if os.path.exists(filepath):
@@ -25,6 +25,7 @@ def load_entity_file(filepath):
 def save_entity_file(data, filepath):
     with open(filepath, 'w', encoding='utf-8') as f:
         json.dump(data, f, ensure_ascii=False, indent=2)
+        
 ############## 增删改查通用方法 ##############
 ## 增
 def add_entity(filepath, new_entity):
