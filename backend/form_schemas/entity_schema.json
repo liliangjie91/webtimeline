@@ -31,5 +31,23 @@
         { "name": "note", "label": "备注", "type": "textarea", "full": true, "placeholder": "备注" , "showOrder":16 },
         { "name": "body", "label": "长相", "type": "text", "full": true, "placeholder": "长相" , "showOrder":17, "hidden": true },
         { "name": "related", "label": "主要关系", "type": "textarea", "full": true, "placeholder": "朋友:xx,xxx;妻子:xx" , "showOrder":18, "hidden": true }
-    ]
+    ],
+    "entity_event":[
+        { "name": "title", "label": "标题", "type": "text", "placeholder": "必填", "full": true , "showOrder":-1},
+        { "name": "start", "label": "起始", "type": "text", "placeholder": "必填: yyyy-mm-dd (hh:mm)" , "showOrder":1},
+        { "name": "end", "label": "结束", "type": "text", "placeholder": "可不填" , "showOrder":1},
+        { "name": "location", "label": "地点", "type": "text", "placeholder": "发生地点" , "showOrder":1},
+        { "name": "keyCharacter", "label": "主角", "type": "text", "placeholder": "关键人物" , "showOrder":1},
+        { "name": "characters", "label": "人物", "type": "text", "placeholder": "所有人物", "full": true , "showOrder":1},
+        { "name": "specialDay", "label": "节日", "type": "text", "placeholder": "特殊节日" , "showOrder":1},
+        { "name": "season", "label": "季节", "type": "text", "placeholder": "春夏秋冬" , "showOrder":1},
+        { "name": "weather", "label": "天气", "type": "text", "placeholder": "雨雪晴霜" , "showOrder":1},
+        { "name": "chapter", "label": "章节", "type": "number", "placeholder": "1" , "showOrder":1},
+        { "name": "category", "label": "类别", "type": "text", "placeholder": "情节分类：复仇，家庭等" , "showOrder":1},
+        { "name": "tags", "label": "标签", "type": "text", "placeholder": "情节标签：吃饭，葬礼等" , "showOrder":1},
+        { "name": "note", "label": "备注", "type": "text", "placeholder": "备注", "full": true , "showOrder":1},
+        { "name": "storyLine", "label": "故事线", "type": "text", "placeholder": "必填: 某某线，主线等", "full": true , "showOrder":1},
+        { "name": "story", "label": "故事内容", "type": "textarea", "placeholder": "必填", "rows": 5, "full": true , "showOrder":1},
+        { "name": "textUrl", "label": "故事原文", "type": "text", "placeholder": "故事原文链接", "full": true , "showOrder":1, "hidden": true}
+        ]
 }

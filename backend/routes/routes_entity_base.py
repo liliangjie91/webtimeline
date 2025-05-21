@@ -34,7 +34,7 @@ def entity_list(story_id, entity_type):
                             formSchema=form_schema)
 
 # 实体详情页
-@entity_bp.route('/story/<story_id>/<entity_type>/1')
+@entity_bp.route('/story/<story_id>/<entity_type>')
 def entity_detail2(story_id, entity_type):
     if story_id not in story_map or entity_type not in mapEntityName:
         return "Invalid story ID or Entity type", 404
@@ -94,7 +94,8 @@ def get_entity(story_id, entity_id, entity_type):
 def get_entity_dict(story_id, entity_type):
     try:
         entitys = utils.load_entity_file(get_file_path(story_id, entity_type))
-        entity_dict = {entity['name']: entity['id'] for entity in entitys}
+        name_key = 'title' if entity_type=='event' else 'name'
+        entity_dict = {entity[name_key]: entity['id'] for entity in entitys}
         return jsonify(entity_dict)
     except Exception as e:
         return jsonify({'error': str(e)}), 500

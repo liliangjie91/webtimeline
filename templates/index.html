@@ -14,17 +14,12 @@
       gap: 1rem;
       flex-wrap: wrap;
     }
-
-    nav a {
-      text-decoration: none;
-      color: #007bff;
-    }
     .root-container {
       margin: 0 20%
     }
     @media (max-width: 600px) {
       h2 {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
       }
       .root-container {
       margin: 0 10%
@@ -43,6 +38,7 @@
     <ul>
       <li>{{s[1]}}:</li>
       <li><a href="/story/{{s[0]}}/timeline">时间线</a></li>
+      <li><a href="/story/{{s[0]}}/event/list">事件列表</a></li>  
       <li><a href="/story/{{s[0]}}/character/list">人物列表</a></li>  
       <li><a href="/story/{{s[0]}}/item/list">物品列表</a></li> 
     </ul>

@@ -17,7 +17,7 @@ const hiddenFieldsItem = [
  'detail-item-div-related'
 ];
 const hiddenFieldsEvent = [
-    "popup-event-textUrl-div"
+    "detail-event-div-textUrl"
 ];
 
 export const mapEntityFields = {

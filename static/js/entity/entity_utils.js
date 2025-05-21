@@ -81,6 +81,9 @@ export function toggleEditable(editing, fields, hiddenFields, entityType='charac
   document.getElementById('save-btn').classList.toggle('hidden', !editing);
   document.getElementById('cancel-btn').classList.toggle('hidden', !editing);
   document.getElementById('delete-btn').classList.toggle('hidden', !editing);
+  // if (entityType === 'event') {
+  //   document.getElementById('view-original-btn').classList.toggle('hidden', !editing);
+  // }
   hiddenFields.forEach(val => {
       const element = document.getElementById(val);
       if (editing) {
@@ -213,11 +216,17 @@ export function safeText(value) {
 }
 // 展示数据-角色-物件-事件
 export function renderData(item, itemFileds, storyId, entityType, showImg = true, showRelated=true) {
-  document.getElementById('main-title').innerText = item.name ? safeText(item.name)+'-详情' : `${entityType}详情`;
-  itemFileds.forEach( f => {
+  document.getElementById('main-title').innerText = item.name ? safeText(item.name)+'-详情' : `${entityType}-详情`;
+
+  itemFileds.forEach( async f => {
     const element = document.getElementById(`detail-${entityType}-${f}`);
     if (!element) {
       console.warn(`Element detail-${entityType}-${f} not found`);
+      return;
+    }
+    if (["keyCharacter"].includes(f)){
+      const infoDict = await loadInfoDict(storyId);
+      makeLinkInSpan(element, item[f] || '', infoDict);
       return;
     }
     element.innerText = safeText(item[f]);
@@ -228,6 +237,12 @@ export function renderData(item, itemFileds, storyId, entityType, showImg = true
   if (showRelated) {
     showRelatedThings(item.related, storyId, entityType);
   }
+  // 如有原文链接，显示按钮
+  if (item.textUrl) {
+    const linkBtn = document.getElementById('view-original-btn');
+    linkBtn.href = item.textUrl;
+    linkBtn.classList.remove('hidden');
+  } 
 }
 
  // 定义打开大图和关闭区域
@@ -275,7 +290,7 @@ export function makeListByGroup(allData, storyId='1', entityType='character', gr
     const subCharacters = grouped[k];
     subCharacters.forEach(c => {
       const li = document.createElement('li');
-      li.innerHTML = `<a href="/story/${storyId}/${entityType}?id=${c.id}">${c.name}</a>`;
+      li.innerHTML = `<a href="/story/${storyId}/${entityType}?id=${c.id}">${c.name ?? c.title}</a>`;
       div02.appendChild(li);
     });
     div.appendChild(div01)

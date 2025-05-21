@@ -35,7 +35,11 @@
 
     <!-- 右侧内容 -->
     <div class="entity-content">
+        {% if entityType == 'event' %}
+          <h2 id="detail-{{ entityType }}-title"></h2>
+          {% else %}
       <h2 id="detail-{{ entityType }}-name"></h2>
+      {% endif %}
       <div class="form-grid">
         {% for field in formSchema %}
         <div class="form-row {% if field.full %}full-width{% endif %} {% if field.hidden %}hidden{% endif %}" id="detail-{{ entityType }}-div-{{ field.name }}">
@@ -57,6 +61,9 @@
           </div>
         </div>
         <div style="display: flex; gap: 10px;">
+          {% if entityType == 'event' %}
+          <a id="view-original-btn" href="#" target="_blank" class="btn btn-primary hidden" style="text-decoration: none;">查看原文</a>
+          {% endif %}
           <button id="delete-btn" class="btn btn-danger hidden">删除</button>
         </div>
       </div>
