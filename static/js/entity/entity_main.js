@@ -9,9 +9,8 @@ const entityType = match[2] ?? 'character';
 
 const entityFields = mapEntityFields[entityType] ?? mapEntityFields['character'];
 const groupKey = mapGroupKeyMain[entityType] ?? 'chara';
-// console.log('entityFields', entityFields);
+
 const apiUrl = `/api/story/${storyId}/${entityType}`;
-// console.log('apiUrl', apiUrl);
 fetch(apiUrl)
   .then(res => res.json())
   .then(entitys =>{

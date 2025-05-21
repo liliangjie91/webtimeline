@@ -35,11 +35,11 @@ if (!storyId) {
 
 // 开始编辑
 document.getElementById('edit-btn').onclick = () => {
-  utils.toggleEditable(true, entityFields, hiddenFields);
+  utils.toggleEditable(true, entityFields, hiddenFields, entityType);
   };
 // 取消编辑
 document.getElementById('cancel-btn').onclick = () => {
-  utils.toggleEditable(false, entityFields, hiddenFields);
+  utils.toggleEditable(false, entityFields, hiddenFields, entityType);
   };
 // 保存编辑
 document.getElementById('save-btn').onclick = () => {

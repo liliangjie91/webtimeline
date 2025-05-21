@@ -259,10 +259,10 @@ export function makeListByGroup(allData, storyId='1', entityType='character', gr
     const div = document.createElement('div');
     const div01 = document.createElement('div');
     const div02 = document.createElement('ul');
-    div.className = `${entityType}-sublist`;
+    div.className = `entity-sublist`;
     div01.innerHTML = `<b>${k}</b>`
-    div01.className = `${entityType}-nametitle`;
-    div02.className = `${entityType}-namelist`;
+    div01.className = `entity-nametitle`;
+    div02.className = `entity-namelist`;
     // const li = document.createElement('li');
     const subCharacters = grouped[k];
     subCharacters.forEach(c => {

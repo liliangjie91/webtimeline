@@ -1,0 +1,12 @@
+[
+  { "name": "name", "label": "物品", "type": "text", "placeholder": "物品" },
+  { "name": "aliases", "label": "别名", "type": "text", "placeholder": "别名" },
+  { "name": "firstChapter", "label": "出场章节", "type": "number", "placeholder": "初次出场章节" },
+  { "name": "owner", "label": "所有者", "type": "text", "placeholder": "所有者/制作者" },
+  { "name": "category", "label": "类别", "type": "text", "placeholder": "食物,首饰,日用品" },
+  { "name": "tags", "label": "标签", "type": "text", "placeholder": "扇子,汤类" },
+  { "name": "price", "label": "价格", "type": "text", "placeholder": "几两银子" },
+  { "name": "mainEvents", "label": "关联事件", "type": "text", "placeholder": "关联事件" },
+  { "name": "description", "label": "简介", "type": "textarea", "full": true, "rows": 3, "placeholder": "外观功能描述" },
+  { "name": "note", "label": "备注", "type": "textarea", "full": true, "rows": 3, "placeholder": "备注" }
+]

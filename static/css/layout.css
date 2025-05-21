@@ -5,3 +5,7 @@ body {
     background: #bed6cc; /* 灰白背景 */
 }
   
+a {
+    text-decoration: none;
+    color: #007bff;
+}

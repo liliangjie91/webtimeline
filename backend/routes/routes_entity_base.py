@@ -7,21 +7,37 @@ entity_bp = Blueprint('entity', __name__)
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 FILE_FOLDER = os.path.join(BASE_DIR, 'data')
 IMAGE_FOLDER = os.path.join(BASE_DIR, 'static/imgs/')
+FORMSCHEMA_FOLDER = os.path.join(BASE_DIR, 'backend/form_schemas/')
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 story_map = utils.story_map
-
+mapEntityName = {
+    'character':'人物',
+    'item':'物品',
+    'event':'事件',
+}
 def allowed_image_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_IMAGE_EXTENSIONS
 
 def get_file_path(story_id, entity_type='item'):
     return os.path.join(FILE_FOLDER, f'{entity_type}s_{story_id}.json')
 
-# 实体列表-首页
+# 实体列表-首页2
 @entity_bp.route('/story/<story_id>/<entity_type>/list')
 def entity_list(story_id, entity_type):
     if story_id not in story_map:
         return "Invalid story ID", 404
-    return render_template(f'{entity_type}_list.html', storyName=story_map[story_id])
+    form_schema = utils.load_entity_file(os.path.join(FORMSCHEMA_FOLDER, f'{entity_type}.json'))
+    return render_template('base_entity_list.html', 
+                           storyName=story_map[story_id],
+                            entityName=mapEntityName[entity_type],
+                            entityType=entity_type,
+                            formSchema=form_schema)
+# # 实体列表-首页
+# @entity_bp.route('/story/<story_id>/<entity_type>/list')
+# def entity_list(story_id, entity_type):
+#     if story_id not in story_map:
+#         return "Invalid story ID", 404
+#     return render_template(f'{entity_type}_list.html', storyName=story_map[story_id])
 
 # 实体详情页
 @entity_bp.route('/story/<story_id>/<entity_type>')

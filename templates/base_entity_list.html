@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/css/layout.css" />
+    <link rel="stylesheet" href="/static/css/modal.css" />
+    <link rel="stylesheet" href="/static/css/buttons.css" />
+    <link rel="stylesheet" href="/static/css/form.css">
+    <!-- <link rel="stylesheet" href="/static/css/character_detail.css" /> -->
+    <title>{{ storyName }} - {{ entityName }}列表</title>
+    <style>
+    .entity-list-container{padding: 10px;border: 3px double #454949;}
+    .entity-namelist{
+      display: flex;
+      list-style: none;
+      gap: 20px;
+      padding: 0 10px;
+      flex-wrap: wrap;
+      border-bottom: 1px dotted #454949; 
+      margin: 10px 5px;
+    } 
+    .entity-nametitle{padding: 0 5px;}
+    @media (max-width: 600px) {
+      body {
+        font-size: 1.3rem;
+      }
+    }
+    </style>
+</head>
+<body>
+    <div class="entity-container" style="margin: 0 auto; max-width: 1000px;">
+      
+    <h2>{{storyName}} - {{ entityName }}列表</h2>
+    <button id="back" class="btn btn-success" style="margin-bottom: 15px;"><a href="/" style="text-decoration: none; color: azure;">首页</a></button>
+    <button id="add-{{ entityType }}-btn" class="btn btn-primary" style="margin-bottom: 15px;">新增{{ entityName }}</button>
+    
+    <div id="{{ entityType }}-list" class="entity-list-container"></div>
+
+      <!-- 添加人物的弹窗 -->
+    <div id="add-{{ entityType }}-popup" class="modal hidden">
+        <div class="modal-content">
+        <span id="add-{{ entityType }}-popup-close" class="close">&times;</span>
+        <form id="add-{{ entityType }}-form" class="form-grid">
+            {% for field in formSchema %}
+                <div class="form-row {% if field.full %}full-width{% endif %}">
+                <label for="new-{{ entityType }}-{{ field.name }}">{{ field.label }}:</label>
+                {% if field.type == 'textarea' %}
+                    <textarea id="new-{{ entityType }}-{{ field.name }}" rows="3" placeholder="{{ field.placeholder }}"></textarea>
+                {% else %}
+                    <input type="{{ field.type }}" id="new-{{ entityType }}-{{ field.name }}" placeholder="{{ field.placeholder }}">
+                {% endif %}
+                </div>
+            {% endfor %}
+            <div class="form-row full-width" style="text-align: right;"><button type="submit" class="btn btn-success">保存</button></div>
+        </form>
+        </div>
+    </div>
+
+  </div>
+    <!-- 脚本 -->
+  <script type="module" src="/static/js/entity/entity_main.js"></script>
+</body>
+</html>
