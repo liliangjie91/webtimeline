@@ -21,30 +21,32 @@ def allowed_image_file(filename):
 def get_file_path(story_id, entity_type='item'):
     return os.path.join(FILE_FOLDER, f'{entity_type}s_{story_id}.json')
 
-# 实体列表-首页2
+# 实体列表-首页
 @entity_bp.route('/story/<story_id>/<entity_type>/list')
 def entity_list(story_id, entity_type):
-    if story_id not in story_map:
-        return "Invalid story ID", 404
-    form_schema = utils.load_entity_file(os.path.join(FORMSCHEMA_FOLDER, f'{entity_type}.json'))
-    return render_template('base_entity_list.html', 
-                           storyName=story_map[story_id],
+    if story_id not in story_map or entity_type not in mapEntityName:
+        return "Invalid story ID or Entity type", 404
+    form_schema = utils.load_entity_file(os.path.join(FORMSCHEMA_FOLDER, f'entity_schema.json'))[f'entity_{entity_type}']
+    return render_template( 'base_entity_list.html', 
+                            storyName=story_map[story_id],
                             entityName=mapEntityName[entity_type],
                             entityType=entity_type,
                             formSchema=form_schema)
-# # 实体列表-首页
-# @entity_bp.route('/story/<story_id>/<entity_type>/list')
-# def entity_list(story_id, entity_type):
-#     if story_id not in story_map:
-#         return "Invalid story ID", 404
-#     return render_template(f'{entity_type}_list.html', storyName=story_map[story_id])
 
 # 实体详情页
-@entity_bp.route('/story/<story_id>/<entity_type>')
-def entity_detail(story_id, entity_type):
-    if story_id not in story_map:
-        return "Invalid story ID", 404
-    return render_template(f'{entity_type}_detail.html', storyId=story_id, storyName=story_map[story_id])
+@entity_bp.route('/story/<story_id>/<entity_type>/1')
+def entity_detail2(story_id, entity_type):
+    if story_id not in story_map or entity_type not in mapEntityName:
+        return "Invalid story ID or Entity type", 404
+    form_schema = utils.load_entity_file(os.path.join(FORMSCHEMA_FOLDER, f'entity_schema.json'))[f'entity_{entity_type}']
+    form_schema = [field for field in form_schema if field.get('showOrder', 0) >= 0]
+    form_schema.sort(key=lambda x: x['showOrder'])
+    return render_template( 'base_entity_detail.html', 
+                            storyId = story_id,
+                            storyName=story_map[story_id],
+                            entityName=mapEntityName[entity_type],
+                            entityType=entity_type,
+                            formSchema=form_schema)
 
 # 添加实体
 @entity_bp.route('/story/<story_id>/<entity_type>/add', methods=['POST'])
@@ -66,6 +68,7 @@ def update_entity(story_id, entity_id, entity_type):
     entity_new = request.json
     utils.update_entity(get_file_path(story_id, entity_type), entity_id, entity_new)
     return jsonify({"status": "success"})
+
 
 ######## 字典接口 ########
 # 获取全部实体

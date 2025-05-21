@@ -12,6 +12,7 @@ const entityId = params.get('id');
 const entityFields = mapEntityFields[entityType] ?? mapEntityFields['character'];
 const hiddenFields = mapEntityHiddenElement[entityType] ?? mapEntityHiddenElement['character'];
 
+document.addEventListener('DOMContentLoaded', () => {
 if (!storyId) {
   document.body.innerHTML = '<h2>缺少故事ID</h2>';
 } else if (!entityId) {
@@ -54,3 +55,4 @@ document.getElementById('delete-btn').onclick = () => {
 // 图片相关
 utils.imageClickToOpen(entityType);
 document.getElementById("image-upload").addEventListener("change", async (event) => utils.uploadImage(event, storyId, entityId, entityType));
+})

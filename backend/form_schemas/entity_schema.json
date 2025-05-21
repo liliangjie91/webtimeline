@@ -1,0 +1,35 @@
+{
+    "entity_item":[
+        { "name": "name", "label": "物品", "type": "text", "placeholder": "物品" , "showOrder":1 },
+        { "name": "aliases", "label": "别名", "type": "text", "placeholder": "别名" , "showOrder":2 },
+        { "name": "firstChapter", "label": "出场章节", "type": "number", "placeholder": "初次出场章节" , "showOrder":3 },
+        { "name": "owner", "label": "所有者", "type": "text", "placeholder": "所有者/制作者" , "showOrder":4 },
+        { "name": "category", "label": "类别", "type": "text", "placeholder": "食物,首饰,日用品" , "showOrder":5 },
+        { "name": "tags", "label": "标签", "type": "text", "placeholder": "扇子,汤类" , "showOrder":6 },
+        { "name": "price", "label": "价格", "type": "text", "placeholder": "几两银子" , "showOrder":7 },
+        { "name": "mainEvents", "label": "关联事件", "type": "text", "placeholder": "关联事件" , "showOrder":8 },
+        { "name": "description", "label": "简介", "type": "textarea", "full": true, "rows": 3, "placeholder": "外观功能描述" , "showOrder":9 },
+        { "name": "note", "label": "备注", "type": "textarea", "full": true, "rows": 3, "placeholder": "备注" , "showOrder":10 },
+        { "name": "related", "label": "相关物品", "type": "textarea", "full": true, "placeholder": "同品类:xx,xxx" , "showOrder":11, "hidden": true }
+    ],
+    "entity_character":[
+        { "name": "name", "label": "姓名", "type": "text", "placeholder": "姓名" , "showOrder":-1 },
+        { "name": "aliases", "label": "别名", "type": "text", "placeholder": "外号等" , "showOrder":1 },
+        { "name": "zi", "label": "字号", "type": "text", "placeholder": "字号" , "showOrder":2 },
+        { "name": "gender", "label": "性别", "type": "text", "placeholder": "男/女" , "showOrder":3 },
+        { "name": "birth", "label": "生日", "type": "date", "placeholder": "生日" , "showOrder":4 },
+        { "name": "firstAge", "label": "出场年龄", "type": "number", "placeholder": "初次出场年龄" , "showOrder":5 },
+        { "name": "firstChapter", "label": "出场章节", "type": "number", "placeholder": "初次出场章节" , "showOrder":6 },
+        { "name": "hobby", "label": "爱好", "type": "text", "placeholder": "爱好" , "showOrder":7 },
+        { "name": "nature", "label": "性格", "type": "text", "placeholder": "性格" , "showOrder":8 },
+        { "name": "addr", "label": "住址", "type": "text", "placeholder": "住址" , "showOrder":9 },
+        { "name": "role", "label": "身份", "type": "text", "placeholder": "xxx之妾,xxx之仆" , "showOrder":10 },
+        { "name": "chara", "label": "角色", "type": "text", "placeholder": "所属群体：西门庆家人" , "showOrder":12 },
+        { "name": "job", "label": "职业", "type": "text", "placeholder": "主职业/官职" , "showOrder":13 },
+        { "name": "description", "label": "简介", "type": "textarea", "full": true, "placeholder": "简介" , "showOrder":14 },
+        { "name": "mainEvents", "label": "主要事件", "type": "textarea", "full": true, "rows": 5, "placeholder": "主要事件" , "showOrder":15 },
+        { "name": "note", "label": "备注", "type": "textarea", "full": true, "placeholder": "备注" , "showOrder":16 },
+        { "name": "body", "label": "长相", "type": "text", "full": true, "placeholder": "长相" , "showOrder":17, "hidden": true },
+        { "name": "related", "label": "主要关系", "type": "textarea", "full": true, "placeholder": "朋友:xx,xxx;妻子:xx" , "showOrder":18, "hidden": true }
+    ]
+}

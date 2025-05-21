@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <title id="main-title">{{ entityName }}详情</title>
+  <link rel="stylesheet" href="/static/css/form.css" />
+  <link rel="stylesheet" href="/static/css/layout.css" />
+  <link rel="stylesheet" href="/static/css/modal.css" />
+  <link rel="stylesheet" href="/static/css/buttons.css" />
+  <link rel="stylesheet" href="/static/css/entity_detail.css" />
+  <style>
+    body {
+      margin-top: 0;
+      padding-top: 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="entity-container">
+    <!-- 左侧栏 -->
+    <div class="entity-side">
+      <p><a href="/story/{{ storyId }}/{{ entityType }}/list" style="text-decoration: none">{{ storyName }}{{ entityName }}</a></p>
+      <div class="entity-img-block">
+        <img id="{{ entityType }}-img" src="" alt="{{ entityName }}图像" class="clickable-img" style="cursor: pointer" />
+      </div>
+
+      <!-- 弹窗预览 -->
+      <div id="img-modal" class="modal hidden" style="background-color: rgb(0 0 0 / 80%)">
+        <img class="modal-content" id="modal-img" style="max-height: 70vh; max-width: 70vw; width: auto; object-fit: contain;" />
+      </div>
+
+      <h4 style="margin-block-end:5px">相关{{ entityName }}</h4>
+      <div id="related-{{ entityType }}s-block" class="related-items"></div>
+    </div>
+
+    <!-- 右侧内容 -->
+    <div class="entity-content">
+      <h2 id="detail-{{ entityType }}-name"></h2>
+      <div class="form-grid">
+        {% for field in formSchema %}
+        <div class="form-row {% if field.full %}full-width{% endif %} {% if field.hidden %}hidden{% endif %}" id="detail-{{ entityType }}-div-{{ field.name }}">
+          <label>{{ field.label }}:</label>
+          <span id="detail-{{ entityType }}-{{ field.name }}"></span>
+        </div>
+        {% endfor %}
+      </div>
+
+      <!-- 按钮区 -->
+      <div class="form-row full-width" style="margin-top: 10px; display: flex; flex-direction: row; justify-content: space-between">
+        <div style="display: flex; gap: 10px;">
+          <button id="edit-btn" class="btn btn-success">编辑</button>
+          <button id="save-btn" class="btn btn-success hidden">保存</button>
+          <button id="cancel-btn" class="btn btn-success hidden">取消</button>
+          <div id="image-upload-div" class="image-upload-block">
+            <input type="file" id="image-upload" accept="image/*" style="display: none;" />
+            <label for="image-upload" class="btn btn-primary" style="margin-bottom: 0; color: white;">修改图片</label>
+          </div>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <button id="delete-btn" class="btn btn-danger hidden">删除</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/static/js/entity/entity_detail.js"></script>
+</body>
+</html>

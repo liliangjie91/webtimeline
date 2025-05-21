@@ -44,7 +44,7 @@
         <span id="add-{{ entityType }}-popup-close" class="close">&times;</span>
         <form id="add-{{ entityType }}-form" class="form-grid">
             {% for field in formSchema %}
-                <div class="form-row {% if field.full %}full-width{% endif %}">
+                <div class="form-row {% if field.full or field.name=='job' %}full-width{% endif %}">
                 <label for="new-{{ entityType }}-{{ field.name }}">{{ field.label }}:</label>
                 {% if field.type == 'textarea' %}
                     <textarea id="new-{{ entityType }}-{{ field.name }}" rows="3" placeholder="{{ field.placeholder }}"></textarea>

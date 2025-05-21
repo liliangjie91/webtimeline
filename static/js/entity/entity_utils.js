@@ -64,7 +64,10 @@ export async function showRelatedThings(related, storyId = '1', entityType = 'ch
 export function toggleEditable(editing, fields, hiddenFields, entityType='character', prefix = 'detail') {
   const toggle = val => {
       const element = document.getElementById(val);
-      // console.log(element);
+      if (!element) {
+        console.warn(`Element ${val} not found`);
+        return;
+      }
       element.contentEditable = editing;
       // 禁用自动滚动行为
       element.addEventListener('focus', (e) => {
@@ -212,7 +215,12 @@ export function safeText(value) {
 export function renderData(item, itemFileds, storyId, entityType, showImg = true, showRelated=true) {
   document.getElementById('main-title').innerText = item.name ? safeText(item.name)+'-详情' : `${entityType}详情`;
   itemFileds.forEach( f => {
-    document.getElementById(`detail-${entityType}-${f}`).innerText = safeText(item[f]);
+    const element = document.getElementById(`detail-${entityType}-${f}`);
+    if (!element) {
+      console.warn(`Element detail-${entityType}-${f} not found`);
+      return;
+    }
+    element.innerText = safeText(item[f]);
   })
   if (showImg) {
     document.getElementById(`${entityType}-img`).src = item.image || `/static/imgs/${storyId}/${entityType}_default.jpg`;
