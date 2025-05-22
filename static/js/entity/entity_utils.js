@@ -1,3 +1,5 @@
+import {generateShortId, safeText, dateFormat} from '../utils.js';
+
 // 加载角色或物品字典，防重复
 export async function loadInfoDict(storyId, entityType = 'character') {
     try {
@@ -211,9 +213,6 @@ export async function uploadImage(event, storyId, entityId, entityType){
     }
   }
 
-export function safeText(value) {
-  return value !== undefined && value !== null && value !== '' ? value : '';
-}
 // 展示数据-角色-物件-事件
 export function renderData(item, itemFileds, storyId, entityType, showImg = true, showRelated=true) {
   document.getElementById('main-title').innerText = item.name ? safeText(item.name)+'-详情' : `${entityType}-详情`;
@@ -224,7 +223,7 @@ export function renderData(item, itemFileds, storyId, entityType, showImg = true
       console.warn(`Element detail-${entityType}-${f} not found`);
       return;
     }
-    if (["keyCharacter"].includes(f)){
+    if (["keyCharacter","owner"].includes(f)){
       const infoDict = await loadInfoDict(storyId);
       makeLinkInSpan(element, item[f] || '', infoDict);
       return;
@@ -325,6 +324,7 @@ async function makeAddData(fieldsForAdd, storyId, entityType) {
   })
   resData['createTime'] = Date.now();
   resData['updateTime'] = Date.now();
+  resData['shortId'] = generateShortId();
   fetch(`/story/${storyId}/${entityType}/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -344,13 +344,6 @@ export function handleAddEventFromDoubleClick(props, groupType='storyLine') {
   document.getElementById('new-event-start').value = `${year}-${month}-${day}`;
   document.getElementById(`new-event-${groupType}`).value = group || '';
   document.getElementById('add-event-popup').classList.remove('hidden');
-}
-
-export function dateFormat(dateObj){
-  if (dateObj.getHours() === 0 && dateObj.getMinutes() == 0) {
-    return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
-}
-  return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')} ${String(dateObj.getHours()).padStart(2, '0')}:${String(dateObj.getMinutes()).padStart(2, '0')}`;
 }
 
 // 匹配内容改为超链接

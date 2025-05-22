@@ -5,6 +5,17 @@ export function generateShortId() {
     );
   }
 
+export function safeText(value) {
+  return value !== undefined && value !== null && value !== '' ? value : '';
+}
+
+export function dateFormat(dateObj){
+  if (dateObj.getHours() === 0 && dateObj.getMinutes() == 0) {
+    return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')}`;
+}
+  return `${dateObj.getFullYear()}-${String(dateObj.getMonth() + 1).padStart(2, '0')}-${String(dateObj.getDate()).padStart(2, '0')} ${String(dateObj.getHours()).padStart(2, '0')}:${String(dateObj.getMinutes()).padStart(2, '0')}`;
+}
+
 export const optionsMain = {
   // locale: 'zh',  // 这行很重要，让vis-timeline识别中文
   // moment: function (date) {

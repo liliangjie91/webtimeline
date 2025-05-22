@@ -1,4 +1,7 @@
 import * as utils from '../entity/entity_utils.js';
+import { dateFormat} from '../utils.js';
+import {mapEntityFields, mapEntityHiddenElement} from '../entity/entity_config.js';
+
 let eventData = {};
 let dataRef;
 let characterDict = {};
@@ -6,8 +9,11 @@ const match = window.location.pathname.match(/^\/story\/(\d+)/);
 const storyId = match[1];
 const entityType = 'event';
 // 事件结构体内含元素
-const eventFields = ['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','storyLine','note','textUrl']
-const hiddenFields = ["popup-event-textUrl-div"]
+const eventFields = mapEntityFields[entityType];
+//['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','storyLine','note','textUrl']
+const hiddenFields = mapEntityHiddenElement[entityType];
+//["popup-event-textUrl-div"]
+
 // 页面加载完成就拉取字典
 document.addEventListener('DOMContentLoaded', () => {
   utils.loadInfoDict(storyId).then(data => {
@@ -86,10 +92,10 @@ export function bindPopupHandlers() {
 export function showPopup(item, dataSet) {
   eventData = item;
   dataRef = dataSet;
-  document.getElementById('popup-event-start').innerText = utils.dateFormat(new Date(item.start));
-  document.getElementById('popup-event-end').innerText = item.end ? utils.dateFormat(new Date(item.end)) : '(无需)';
+  document.getElementById('popup-event-start').innerText = dateFormat(new Date(item.start));
+  document.getElementById('popup-event-end').innerText = item.end ? dateFormat(new Date(item.end)) : '(无需)';
 
-  document.getElementById('popup-event-title').innerText = item.title || '(无标题)';
+  document.getElementById('popup-event-title').innerText = item.title || '';
   document.getElementById('popup-event-location').innerText = item.location || '';
   // 主角链接处理
   utils.makeLinkInSpan(document.getElementById('popup-event-keyCharacter'), item.keyCharacter || '', characterDict);
