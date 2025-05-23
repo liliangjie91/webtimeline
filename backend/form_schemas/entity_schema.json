@@ -1,6 +1,6 @@
 {
     "entity_item":[
-        { "name": "name", "label": "物品", "type": "text", "placeholder": "物品" , "showOrder":1 },
+        { "name": "name", "label": "物品", "type": "text", "placeholder": "物品" , "showOrder":-1 },
         { "name": "aliases", "label": "别名", "type": "text", "placeholder": "别名" , "showOrder":2 },
         { "name": "firstChapter", "label": "出场章节", "type": "number", "placeholder": "初次出场章节" , "showOrder":3 },
         { "name": "owner", "label": "所有者", "type": "text", "placeholder": "所有者/制作者" , "showOrder":4 },
@@ -8,7 +8,7 @@
         { "name": "tags", "label": "标签", "type": "text", "placeholder": "扇子,汤类" , "showOrder":6 },
         { "name": "price", "label": "价格", "type": "text", "placeholder": "几两银子" , "showOrder":7 },
         { "name": "mainEvents", "label": "关联事件", "type": "text", "placeholder": "关联事件" , "showOrder":8 },
-        { "name": "description", "label": "简介", "type": "textarea", "full": true, "rows": 3, "placeholder": "外观功能描述" , "showOrder":9 },
+        { "name": "description", "label": "简介", "type": "textarea", "full": true, "rows": 5, "placeholder": "外观功能描述" , "showOrder":9 },
         { "name": "note", "label": "备注", "type": "textarea", "full": true, "rows": 3, "placeholder": "备注" , "showOrder":10 },
         { "name": "related", "label": "相关物品", "type": "textarea", "full": true, "placeholder": "同品类:xx,xxx" , "showOrder":11, "hidden": true }
     ],
@@ -26,11 +26,11 @@
         { "name": "role", "label": "身份", "type": "text", "placeholder": "xxx之妾,xxx之仆" , "showOrder":10 },
         { "name": "chara", "label": "角色", "type": "text", "placeholder": "所属群体：西门庆家人" , "showOrder":12 },
         { "name": "job", "label": "职业", "type": "text", "placeholder": "主职业/官职" , "showOrder":13 },
-        { "name": "description", "label": "简介", "type": "textarea", "full": true, "placeholder": "简介" , "showOrder":14 },
-        { "name": "mainEvents", "label": "主要事件", "type": "textarea", "full": true, "rows": 5, "placeholder": "主要事件" , "showOrder":15 },
-        { "name": "note", "label": "备注", "type": "textarea", "full": true, "placeholder": "备注" , "showOrder":16 },
-        { "name": "body", "label": "长相", "type": "text", "full": true, "placeholder": "长相" , "showOrder":17, "hidden": true },
-        { "name": "related", "label": "主要关系", "type": "textarea", "full": true, "placeholder": "朋友:xx,xxx;妻子:xx" , "showOrder":18, "hidden": true }
+        { "name": "body", "label": "长相", "type": "text", "full": true, "placeholder": "长相" , "showOrder":14, "hidden": true },
+        { "name": "description", "label": "简介", "type": "textarea", "full": true, "rows": 5, "placeholder": "简介" , "showOrder":15 },
+        { "name": "mainEvents", "label": "主要事件", "type": "textarea", "full": true, "rows": 2, "placeholder": "主要事件" , "showOrder":16 },
+        { "name": "note", "label": "备注", "type": "textarea", "full": true, "rows": 2,"placeholder": "备注" , "showOrder":17 },
+        { "name": "related", "label": "主要关系", "type": "textarea", "full": true,"rows": 2, "placeholder": "朋友:xx,xxx;妻子:xx" , "showOrder":18, "hidden": true }
     ],
     "entity_event":[
         { "name": "title", "label": "标题", "type": "text", "placeholder": "必填", "full": true , "showOrder":-1},
@@ -45,9 +45,19 @@
         { "name": "chapter", "label": "章节", "type": "number", "placeholder": "1" , "showOrder":1},
         { "name": "category", "label": "类别", "type": "text", "placeholder": "情节分类：复仇，家庭等" , "showOrder":1},
         { "name": "tags", "label": "标签", "type": "text", "placeholder": "情节标签：吃饭，葬礼等" , "showOrder":1},
-        { "name": "note", "label": "备注", "type": "text", "placeholder": "备注", "full": true , "showOrder":1},
         { "name": "storyLine", "label": "故事线", "type": "text", "placeholder": "必填: 某某线，主线等", "full": true , "showOrder":1},
+        { "name": "note", "label": "备注", "type": "textarea", "placeholder": "备注",  "rows": 2,"full": true , "showOrder":1},
         { "name": "story", "label": "故事内容", "type": "textarea", "placeholder": "必填", "rows": 5, "full": true , "showOrder":1},
         { "name": "textUrl", "label": "故事原文", "type": "text", "placeholder": "故事原文链接", "full": true , "showOrder":1, "hidden": true}
+    ],
+    "entity_text":[
+        { "name": "title", "label": "标题", "type": "text", "placeholder": "作品标题", "full": true ,"showOrder":-1},
+        { "name": "content", "label": "正文", "type": "textarea", "placeholder": "完整内容", "full": true, "rows": 5 },
+        { "name": "author", "label": "作者", "type": "text", "placeholder": "作品作者" },
+        { "name": "firstChapter", "label": "出现章节", "type": "number", "placeholder": "首次出现章节" },
+        { "name": "category", "label": "分类", "type": "text", "placeholder": "如：诗、词、书信、公告等" },
+        { "name": "tags", "label": "标签", "type": "text", "placeholder": "情感、主题等标签" },
+        { "name": "description", "label": "简介", "type": "textarea", "placeholder": "简要说明", "full": true, "rows": 4 },
+        { "name": "note", "label": "备注", "type": "textarea", "placeholder": "其他补充信息", "full": true, "rows": 2 }
         ]
 }

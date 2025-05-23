@@ -35,14 +35,14 @@
 
     <!-- 右侧内容 -->
     <div class="entity-content">
-        {% if entityType == 'event' %}
+        {% if entityType == 'event' or entityType == 'text' %}
           <h2 id="detail-{{ entityType }}-title"></h2>
           {% else %}
-      <h2 id="detail-{{ entityType }}-name"></h2>
-      {% endif %}
+          <h2 id="detail-{{ entityType }}-name"></h2>
+        {% endif %}
       <div class="form-grid">
         {% for field in formSchema %}
-        <div class="form-row {% if field.full %}full-width{% endif %} {% if field.hidden %}hidden{% endif %}" id="detail-{{ entityType }}-div-{{ field.name }}">
+        <div class="form-row {% if field.full or field.name =='mainEvents' %}full-width{% endif %} {% if field.hidden %}hidden{% endif %}" id="detail-{{ entityType }}-div-{{ field.name }}">
           <label>{{ field.label }}:</label>
           <span id="detail-{{ entityType }}-{{ field.name }}"></span>
         </div>

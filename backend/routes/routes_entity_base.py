@@ -14,6 +14,7 @@ mapEntityName = {
     'character':'人物',
     'item':'物品',
     'event':'事件',
+    'text':'诗词',
 }
 def allowed_image_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_IMAGE_EXTENSIONS
@@ -40,7 +41,7 @@ def entity_detail2(story_id, entity_type):
         return "Invalid story ID or Entity type", 404
     form_schema = utils.load_entity_file(os.path.join(FORMSCHEMA_FOLDER, f'entity_schema.json'))[f'entity_{entity_type}']
     form_schema = [field for field in form_schema if field.get('showOrder', 0) >= 0]
-    form_schema.sort(key=lambda x: x['showOrder'])
+    # form_schema.sort(key=lambda x: x['showOrder'])
     return render_template( 'base_entity_detail.html', 
                             storyId = story_id,
                             storyName=story_map[story_id],
@@ -94,7 +95,7 @@ def get_entity(story_id, entity_id, entity_type):
 def get_entity_dict(story_id, entity_type):
     try:
         entitys = utils.load_entity_file(get_file_path(story_id, entity_type))
-        name_key = 'title' if entity_type=='event' else 'name'
+        name_key = 'title' if entity_type in ['event', 'text'] else 'name'
         entity_dict = {entity[name_key]: entity['id'] for entity in entitys}
         return jsonify(entity_dict)
     except Exception as e:

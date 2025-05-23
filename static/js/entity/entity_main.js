@@ -8,7 +8,7 @@ const storyId = match[1];
 const entityType = match[2] ?? 'character';
 
 const entityFields = mapEntityFields[entityType] ?? mapEntityFields['character'];
-const groupKey = mapGroupKeyMain[entityType] ?? 'chara';
+const groupKey = mapGroupKeyMain[entityType] ?? 'category';
 
 const apiUrl = `/api/story/${storyId}/${entityType}`;
 fetch(apiUrl)

@@ -185,7 +185,7 @@ export async function uploadImage(event, storyId, entityId, entityType){
     formData.append("image", file);
     formData.append("story_id", storyId);  // 你也可以从JS动态传入
     formData.append("entity_id", entityId);
-    formData.append("entity_type", entityType[0]); // c for item
+    formData.append("entity_type", entityType[0]); // c for character, i for item, e for event
   
     const res = await fetch(`/upload/image`, {
       method: "POST",
@@ -231,7 +231,7 @@ export function renderData(item, itemFileds, storyId, entityType, showImg = true
     element.innerText = safeText(item[f]);
   })
   if (showImg) {
-    document.getElementById(`${entityType}-img`).src = item.image || `/static/imgs/${storyId}/${entityType}_default.jpg`;
+    document.getElementById(`${entityType}-img`).src = item.image || `/static/imgs/${storyId}/default.jpg`;
   }
   if (showRelated) {
     showRelatedThings(item.related, storyId, entityType);
@@ -302,7 +302,7 @@ async function makeAddData(fieldsForAdd, storyId, entityType) {
   const resData = {}
   const infoDict = await loadInfoDict(storyId, entityType);
   const nameElement = document.getElementById(`new-${entityType}-name`);
-  const sep = /[,，、;；\s]+/
+  const sep = /[,，、;；]+/
   if (nameElement && nameElement.value.trim() in infoDict){
     alert('项目已存在!');
     return;
@@ -312,7 +312,7 @@ async function makeAddData(fieldsForAdd, storyId, entityType) {
     const element = document.getElementById(`new-${entityType}-${f}`);
     if (!element) return;
     const elementValue = element.value.trim();
-    if (["note","description","story",].includes(f)) {
+    if (["note","description","story","content"].includes(f)) {
       resData[f] = elementValue;
     } else if (["firstChapter","firstAge","chapter"].includes(f)){
       resData[f] = elementValue ? parseInt(elementValue) : null;
