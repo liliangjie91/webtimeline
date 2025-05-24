@@ -11,8 +11,8 @@ const entityType = 'event';
 // 事件结构体内含元素
 const eventFields = mapEntityFields[entityType];
 //['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','storyLine','note','textUrl']
-const hiddenFields = mapEntityHiddenElement[entityType];
-//["popup-event-textUrl-div"]
+// const hiddenFields = mapEntityHiddenElement[entityType];
+const hiddenFields = ["popup-event-textUrl-div"]
 
 // 页面加载完成就拉取字典
 document.addEventListener('DOMContentLoaded', () => {

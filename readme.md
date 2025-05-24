@@ -15,6 +15,7 @@
 webtimeline/
 ├── backend/                      # 后端代码目录
 │   ├── app.py                    # Flask 应用主入口
+│   ├── schemas/                  # 配置文件
 │   ├── routes/                   # 路由模块
 │   ├── services/                 # 业务逻辑模块
 ├── templates/                    # HTML 模板文件
@@ -22,6 +23,8 @@ webtimeline/
 ├── data/                         # 存储 JSON 数据
 │   ├── characters_x.json         # 事件文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
 │   ├── events_x.json             # 角色文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
+│   ├── items_x.json              # 物品文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
+│   ├── texts_x.json              # 角色文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
 │   └── storys.json               # 故事文件 - {"1": "水浒传", "2": "红楼梦"}
 └── readme.md               # 项目说明文件
 ```
@@ -32,7 +35,7 @@ webtimeline/
 | `id`           | `number`   | 唯一标识事件的 ID，递增 |
 | `shortId`      | `string`   | 类似uuid，根据时间戳生成，唯一 |
 | `start`        | `string`   | 时间-事件开始时间，格式为 `YYYY-MM-DD` |
-| `end`         |`string/null`| 时间-事件结束时间，可选，支持时间段事件 |
+| `end`          |`string/null`| 时间-事件结束时间，可选，支持时间段事件 |
 | `specialDay`   | `string`   | 时间-特殊节日或纪念日，如“元宵节”、“新年”等 |
 | `season`       | `string`   | 时间-季节（春、夏、秋、冬） |
 | `weather`      | `string`   | 时间-天气情况，如“晴”、“雨”、“大雪” |

@@ -30,7 +30,7 @@ export const optionsMain = {
   // groupOrder: function (a, b) {
   //   return a.importance - b.importance;
   // },
-  zoomMin: 1000 * 60 * 60 * 24 * 15, // 最小缩放粒度为 1 天（以毫秒计）
+  zoomMin: 1000 * 60 * 60 * 24 * 10, // 最小缩放粒度为 1 天（以毫秒计）
   zoomMax: 1000 * 60 * 60 * 24 * 365 * 5, // 可选：最大缩放粒度，例如 10 年
   // timeAxis: { scale: 'month', step: 1 }, // 默认时间轴显示
   format: {

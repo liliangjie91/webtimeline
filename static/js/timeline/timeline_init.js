@@ -40,9 +40,9 @@ export function initTimeline(events, isFiltered = false, groupType = 'storyLine'
   }
 
   if (events.length > 0) {
-    const start = new Date(events[0].start);
+    const start = new Date(events[events.length-1].start);
     const bufferDay =  24 * 60 * 60 * 1000;
-    timelineInstance.setWindow(new Date(start.getTime()-20*bufferDay), new Date(start.getTime() + 180 * bufferDay));
+    timelineInstance.setWindow(new Date(start.getTime()-150*bufferDay), new Date(start.getTime() + 150 * bufferDay));
   }
 
   timelineInstance.on('doubleClick', props => {
