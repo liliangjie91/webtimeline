@@ -24,7 +24,7 @@ webtimeline/
 │   ├── characters_x.json         # 事件文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
 │   ├── events_x.json             # 角色文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
 │   ├── items_x.json              # 物品文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
-│   ├── texts_x.json              # 角色文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
+│   ├── texts_x.json              # 诗词文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
 │   └── storys.json               # 故事文件 - {"1": "水浒传", "2": "红楼梦"}
 └── readme.md               # 项目说明文件
 ```

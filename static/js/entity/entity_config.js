@@ -43,3 +43,8 @@ export const mapEntityHiddenElement = {
   'event' : hiddenFieldsEvent,
   'text' : hiddenFieldsText
 };
+
+export const mapStoryTOCUrl = {
+  '1' : "/static/novel/jpm/text/part0000.html",
+  '2' : "/static/novel/hlm/text/text00001.html",
+};

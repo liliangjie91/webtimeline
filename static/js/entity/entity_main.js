@@ -1,5 +1,5 @@
 import {makeListByGroup, bindAddEntityHandlers} from './entity_utils.js'
-import {mapEntityFields, mapGroupKeyMain} from './entity_config.js';
+import {mapEntityFields, mapGroupKeyMain, mapStoryTOCUrl} from './entity_config.js';
 
 let allEntity = [];
 // let data;
@@ -17,5 +17,6 @@ fetch(apiUrl)
     allEntity = entitys;
     makeListByGroup(allEntity, storyId, entityType, groupKey);
 })
-
+const novalBtn = document.getElementById("novel-toc-link");
+novalBtn.href = mapStoryTOCUrl[storyId] ?? `/static/novel/${storyId}/text/text00001.html`;
 bindAddEntityHandlers(entityFields, storyId, entityType);
