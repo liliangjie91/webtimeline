@@ -2,6 +2,7 @@ from flask import Flask,render_template
 from routes.routes_timeline import timeline_bp
 from routes.routes_entity_base import entity_bp
 from services.utils import story_map, load_story_map
+from services.db_models import db
 import os
 
 def create_app():
@@ -12,6 +13,16 @@ def create_app():
         template_folder=os.path.join(BASE_DIR, 'templates'),
         static_folder=os.path.join(BASE_DIR, 'static')
     )
+
+    # 数据库配置
+    DB_PATH = os.path.join(BASE_DIR, 'data/data.db')  # 数据库文件路径
+    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+    db.init_app(app)
+    with app.app_context():
+        db.create_all()  # 创建所有模型中定义的表（包括 events 表）
+        # print("数据库表创建成功")
 
     # 注册蓝图
     app.register_blueprint(timeline_bp)

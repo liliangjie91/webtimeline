@@ -50,7 +50,7 @@
         { "name": "story", "label": "故事内容", "type": "textarea", "placeholder": "必填", "rows": 5, "full": true , "showOrder":1},
         { "name": "textUrl", "label": "故事原文", "type": "text", "placeholder": "故事原文链接", "full": true , "showOrder":1, "hidden": true}
     ],
-    "entity_text":[
+    "entity_poem":[
         { "name": "title", "label": "标题", "type": "text", "placeholder": "作品标题", "full": true ,"showOrder":-1},
         { "name": "content", "label": "正文", "type": "textarea", "placeholder": "完整内容", "full": true, "rows": 5 },
         { "name": "author", "label": "作者", "type": "text", "placeholder": "作品作者" },

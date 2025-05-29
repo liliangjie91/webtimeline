@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <title id="main-title">{{ entityName }}详情</title>
+  <title id="main-title">{{ entityName }} | {{storyName}}</title>
   <link rel="stylesheet" href="/static/css/form.css" />
   <link rel="stylesheet" href="/static/css/layout.css" />
   <link rel="stylesheet" href="/static/css/modal.css" />
@@ -35,7 +35,7 @@
 
     <!-- 右侧内容 -->
     <div class="entity-content">
-        {% if entityType == 'event' or entityType == 'text' %}
+        {% if entityType == 'event' or entityType == 'poem' %}
           <h2 id="detail-{{ entityType }}-title"></h2>
           {% else %}
           <h2 id="detail-{{ entityType }}-name"></h2>

@@ -215,8 +215,9 @@ export async function uploadImage(event, storyId, entityId, entityType){
 
 // 展示数据-角色-物件-事件
 export function renderData(item, itemFileds, storyId, entityType, showImg = true, showRelated=true) {
-  document.getElementById('main-title').innerText = item.name ? safeText(item.name)+'-详情' : `${entityType}-详情`;
-
+  const rawMainTitle = document.getElementById('main-title').innerText;
+  const curName = item.name ?? item.title;
+  document.getElementById('main-title').innerText = curName ? `${curName} | ${rawMainTitle}` : rawMainTitle;
   itemFileds.forEach( async f => {
     const element = document.getElementById(`detail-${entityType}-${f}`);
     if (!element) {

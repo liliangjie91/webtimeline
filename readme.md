@@ -17,16 +17,18 @@ webtimeline/
 │   ├── app.py                    # Flask 应用主入口
 │   ├── schemas/                  # 配置文件
 │   ├── routes/                   # 路由模块
-│   ├── services/                 # 业务逻辑模块
+│   └── services/                 # 业务逻辑模块
 ├── templates/                    # HTML 模板文件
 ├── static/                       # 静态资源文件（CSS、JS、图片等）
 ├── data/                         # 存储 JSON 数据
-│   ├── characters_x.json         # 事件文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
-│   ├── events_x.json             # 角色文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
-│   ├── items_x.json              # 物品文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
-│   ├── texts_x.json              # 诗词文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
-│   └── storys.json               # 故事文件 - {"1": "水浒传", "2": "红楼梦"}
-└── readme.md               # 项目说明文件
+│   ├── data.db                   # 数据库文件 - 内含各种entity表 USE_DB = True 时使用
+│   ├── storys.json               # 故事文件 - {"1": "水浒传", "2": "红楼梦"}
+│   └── json/                     # 故事json文件夹
+│       ├── characters_x.json     # 事件文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
+│       ├── events_x.json         # 角色文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
+│       ├── items_x.json          # 物品文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
+│       └── poems_x.json          # 诗词文件 - [{json},{json},{json}] 格式，x对应storys.json中的id
+└── readme.md                     # 项目说明文件
 ```
 ## 数据
 ### 事件数据元素-events_x.json
@@ -123,6 +125,27 @@ webtimeline/
     "related": "朋友:武大",
     "id": 26
   }
+```
+## 数据库
+使用sqlite
+
+### 是否使用数据库
+编辑`backend/services/utils.py`中
+`USE_DB = True  # 是否使用数据库`
+如不使用数据库，则使用data/json中的json文件
+
+### 数据导入导出
+```bash
+# json文件数据导入数据库
+# 进入serveces文件夹
+cd backend/services
+
+python db_import_export.py --mode import --entity event --story 1 --file ../../data/events_1.json
+python db_import_export.py --mode import --entity character --story 1 --file ../../data/characters_1.json
+
+# 数据库导出到json文件 或 csv文件
+python db_import_export.py --mode export --entity character --story 1 --file ../../data/characters_test_1.json
+python db_import_export.py --mode export --entity character --story 1 --file ../../data/characters_test_1.csv
 ```
 
 ## 克隆项目
