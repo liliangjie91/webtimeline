@@ -3,7 +3,7 @@ import os,json
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
 
-USE_DB = False  # 是否使用数据库
+USE_DB = True  # 是否使用数据库
 DB_FILE= os.path.join(DATA_DIR, 'data.db')
 
 story_path = os.path.join(DATA_DIR, 'storys.json')
