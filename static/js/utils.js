@@ -24,6 +24,7 @@ export const optionsMain = {
   stack: true,
   maxHeight: 1000,
   horizontalScroll: true,
+  orientation: 'top',
   // verticalScroll: true,
   zoomKey: "ctrlKey",
   groupOrder:"value",
@@ -72,7 +73,8 @@ const groupsTempJPM = [
   {id: '庞春梅线', content: '庞春梅线', value: 4},
   {id: '孟玉楼线', content: '孟玉楼线', value: 5},
   {id: '吴月娘线', content: '吴月娘线', value: 6},
-  {id: '狐朋狗友线', content: '狐朋狗友', value: 7},
+  {id: '陈敬济线', content: '陈敬济线', value: 7},
+  {id: '狐朋狗友线', content: '狐朋狗友', value: 8},
   {id: '其他支线', content: '其他支线', value: 999}
 ];
 

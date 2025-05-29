@@ -13,12 +13,7 @@ FORMSCHEMA_FOLDER = os.path.join(BASE_DIR, 'backend/form_schemas/')
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 USE_DB = utils.USE_DB  # 是否使用数据库
 story_map = utils.story_map
-mapEntityName = {
-    'character':'人物',
-    'item':'物品',
-    'event':'事件',
-    'poem':'诗词',
-}
+mapEntityName = utils.mapEntityName
 
 def allowed_image_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_IMAGE_EXTENSIONS

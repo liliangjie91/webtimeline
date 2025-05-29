@@ -43,6 +43,7 @@ export function initTimeline(events, isFiltered = false, groupType = 'storyLine'
     const start = new Date(events[events.length-1].start);
     const bufferDay =  24 * 60 * 60 * 1000;
     timelineInstance.setWindow(new Date(start.getTime()-150*bufferDay), new Date(start.getTime() + 150 * bufferDay));
+    // timelineInstance.focus(events[events.length-1]);
   }
 
   timelineInstance.on('doubleClick', props => {

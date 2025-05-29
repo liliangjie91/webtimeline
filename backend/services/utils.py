@@ -11,6 +11,14 @@ story_map = {
     '1': '金瓶梅',
     '2': '红楼梦'
 }
+
+mapEntityName = {
+    'character':'人物',
+    'item':'物品',
+    'event':'事件',
+    'poem':'诗词',
+}
+
 def load_story_map():
     if os.path.exists(story_path):
         with open(story_path, 'r', encoding='utf-8') as f:
