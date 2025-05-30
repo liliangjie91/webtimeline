@@ -162,9 +162,22 @@ class Poem(BaseModel,EntityMixin):
     description = db.Column(db.Text)
     note = db.Column(db.Text)
     
+# 故事实体，小说或影视剧，红楼梦，水浒传等。即    
+class Story(BaseModel,EntityMixin):
+    __tablename__ = 'storys'
+
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200))
+    author = db.Column(db.String(100))
+    category = db.Column(db.String(100))
+    tags = db.Column(db.String(200))
+    description = db.Column(db.Text)
+    note = db.Column(db.Text)
+
 mapEntityClassName = {
     'event': Event,
     'character': Character,
     'item': Item,
-    'poem': Poem
+    'poem': Poem,
+    'story': Story
 }

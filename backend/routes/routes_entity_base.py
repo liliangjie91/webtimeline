@@ -28,7 +28,7 @@ def entity_list(story_id, entity_type):
         return "Invalid story ID or Entity type", 404
     form_schema = utils.load_json_file(os.path.join(FORMSCHEMA_FOLDER, f'entity_schema.json'))[f'entity_{entity_type}']
     return render_template( 'base_entity_list.html', 
-                            storyName=story_map[story_id],
+                            storyName='全部故事' if entity_type=='story' else story_map[story_id],
                             entityName=mapEntityName[entity_type],
                             entityType=entity_type,
                             formSchema=form_schema)

@@ -17,6 +17,7 @@ mapEntityName = {
     'item':'物品',
     'event':'事件',
     'poem':'诗词',
+    'story':'故事',
 }
 
 def load_story_map():
