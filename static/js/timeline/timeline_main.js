@@ -6,11 +6,11 @@ let allEvents = [];
 let timeline;
 let filteredTimeline;
 // let data;
-const match = window.location.pathname.match(/^\/story\/(\d+)/);
-const storyId = match[1];
+const params = new URLSearchParams(window.location.search);
+const storyId = params.get('story_id');
 const entityType = 'event';
 const eventFieldsForAdd = ['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','storyLine','note']
-const apiUrl = `/api/story/${storyId}/${entityType}`;
+const apiUrl = `/api/story/${entityType}?story_id=${storyId}`;
 fetch(apiUrl)
   .then(res => res.json())
   .then(events => {

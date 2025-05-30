@@ -12,6 +12,9 @@ const eventFields = [
 const poemFields = [
   "title","author","category","tags","firstChapter","description","content","note"
 ];
+const storyFields = [
+  "title","author","compositionTime","category","tags","keyCharacter","description","note"
+];
 const hiddenFieldsCharacter = [
   'detail-character-div-related','detail-character-div-body'
 ];
@@ -23,18 +26,22 @@ const hiddenFieldsEvent = [
 ];
 const hiddenFieldsPoem = []
 
+const hiddenFieldsStory = []
+
 export const mapEntityFields = {
   'item' : itemFields,
   'character' : characterFields,
   'event' : eventFields,
-  'poem' : poemFields
+  'poem' : poemFields,
+  'story' : storyFields
 };
 
 export const mapGroupKeyMain = {
   'item' : 'category',
   'character' : 'chara',
   'event' : 'chapter',
-  'poem' : 'category'
+  'poem' : 'category',
+  'story' : 'category'
 }
 
 export const mapEntityHiddenElement = {

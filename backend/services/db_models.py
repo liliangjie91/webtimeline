@@ -169,10 +169,17 @@ class Story(BaseModel,EntityMixin):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200))
     author = db.Column(db.String(100))
+    compositionTime = db.Column(db.String(100))           # 创作时间
     category = db.Column(db.String(100))
     tags = db.Column(db.String(200))
+    keyCharacter = db.Column(db.String)           # 主角
     description = db.Column(db.Text)
     note = db.Column(db.Text)
+
+    @classmethod
+    def get_id_title_dict(cls):
+        result = cls.query.with_entities(cls.id, cls.title).filter_by(isDeleted=False).all()
+        return {str(id):title for id, title in result}
 
 mapEntityClassName = {
     'event': Event,

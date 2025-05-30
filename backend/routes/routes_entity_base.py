@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request, abort
 from werkzeug.utils import secure_filename
+from services.utils import load_story_map
 import services.utils as utils
 import services.db_utils as db_utils
 import os,json
@@ -12,7 +13,7 @@ IMAGE_FOLDER = os.path.join(BASE_DIR, 'static/imgs/')
 FORMSCHEMA_FOLDER = os.path.join(BASE_DIR, 'backend/form_schemas/')
 ALLOWED_IMAGE_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 USE_DB = utils.USE_DB  # 是否使用数据库
-story_map = utils.story_map
+# story_map = load_story_map()  # 从数据库或文件加载故事映射
 mapEntityName = utils.mapEntityName
 
 def allowed_image_file(filename):
@@ -22,90 +23,98 @@ def get_file_path(story_id, entity_type='item'):
     return os.path.join(FILE_FOLDER, f'{entity_type}s_{story_id}.json')
 
 # 实体列表-首页
-@entity_bp.route('/story/<story_id>/<entity_type>/list')
-def entity_list(story_id, entity_type):
-    if story_id not in story_map or entity_type not in mapEntityName:
+@entity_bp.route('/story/<entity_type>/list')
+def entity_list(entity_type):
+    story_id = request.args.get('story_id','0')  # 默认故事ID为0
+    story_map = load_story_map()  # 从数据库或文件加载故事映射
+    if (story_id not in story_map and story_id != '0') or entity_type not in mapEntityName:
         return "Invalid story ID or Entity type", 404
     form_schema = utils.load_json_file(os.path.join(FORMSCHEMA_FOLDER, f'entity_schema.json'))[f'entity_{entity_type}']
     return render_template( 'base_entity_list.html', 
-                            storyName='全部故事' if entity_type=='story' else story_map[story_id],
+                            storyName='全部' if story_id=='0' else story_map[story_id],
                             entityName=mapEntityName[entity_type],
                             entityType=entity_type,
                             formSchema=form_schema)
 
 # 实体详情页
-@entity_bp.route('/story/<story_id>/<entity_type>')
-def entity_detail2(story_id, entity_type):
-    if story_id not in story_map or entity_type not in mapEntityName:
+@entity_bp.route('/story/<entity_type>')
+def entity_detail(entity_type):
+    story_id = request.args.get('story_id','0')
+    entity_id = request.args.get('entity_id')
+    story_map = load_story_map()  # 从数据库或文件加载故事映射
+    if (story_id not in story_map and story_id != '0') or entity_type not in mapEntityName:
         return "Invalid story ID or Entity type", 404
     form_schema = utils.load_json_file(os.path.join(FORMSCHEMA_FOLDER, f'entity_schema.json'))[f'entity_{entity_type}']
     form_schema = [field for field in form_schema if field.get('showOrder', 0) >= 0]
     # form_schema.sort(key=lambda x: x['showOrder'])
     return render_template( 'base_entity_detail.html', 
                             storyId = story_id,
-                            storyName=story_map[story_id],
+                            storyName='全部' if story_id=='0' else story_map[story_id],
                             entityName=mapEntityName[entity_type],
                             entityType=entity_type,
+                            entityId=entity_id,
                             formSchema=form_schema)
 
+######## api接口 ########
 # 添加实体
-@entity_bp.route('/story/<story_id>/<entity_type>/add', methods=['POST'])
-def add_entity(story_id, entity_type):
-    new_entity = request.json
-    result = db_utils.add_entity(story_id, entity_type, new_entity) if USE_DB else utils.add_entity(get_file_path(story_id, entity_type), new_entity)
+@entity_bp.route('/api/story/<entity_type>/add', methods=['POST'])
+def add_entity(entity_type):
+    req_data = request.json
+    entity_new = req_data.get('entity_new', {})
+    story_id = req_data.get('story_id')
+    result = db_utils.add_entity(story_id, entity_type, entity_new) if USE_DB else utils.add_entity(get_file_path(story_id, entity_type), entity_new)
     return jsonify(result)
 
 # 删除实体
-@entity_bp.route('/story/<story_id>/<entity_type>/delete', methods=['POST'])
-def delete_entity(story_id, entity_type):
+@entity_bp.route('/api/story/<entity_type>/delete', methods=['POST'])
+def delete_entity(entity_type):
     req_data = request.json
-    entity_id = req_data.get("id")
+    entity_id = req_data.get("entity_id")
+    story_id = req_data.get('story_id', '1')
     result = db_utils.delete_entity(story_id, entity_type, entity_id) if USE_DB else utils.delete_entity(get_file_path(story_id, entity_type), entity_id)
     return jsonify(result)
 
 # 更新实体
-@entity_bp.route('/api/story/<story_id>/<entity_type>/<int:entity_id>', methods=['PATCH'])
-def update_entity(story_id, entity_id, entity_type):
-    entity_new = request.json
+@entity_bp.route('/api/story/<entity_type>', methods=['PATCH'])
+def update_entity(entity_type):
+    req_data = request.json
+    entity_new = req_data.get('entity_new', {})
+    story_id = req_data.get('story_id')
+    entity_id = req_data.get('entity_id')
     result = db_utils.update_entity(story_id, entity_type, entity_id, entity_new) if USE_DB else utils.update_entity(get_file_path(story_id, entity_type), entity_id, entity_new)
     return jsonify(result)
 
-
-######## 字典接口 ########
-# 获取全部实体
-@entity_bp.route('/api/story/<story_id>/<entity_type>')
-def get_entity_all(story_id, entity_type):
-    try:
-        entitys = db_utils.get_entity_all(story_id, entity_type) if USE_DB else utils.load_json_file(get_file_path(story_id, entity_type))
-        return jsonify(entitys)
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
-
-# 获取单个实体
-@entity_bp.route('/api/story/<story_id>/<entity_type>/<int:entity_id>')
-def get_entity(story_id, entity_id, entity_type):
-    if USE_DB:
-        entity = db_utils.get_entity(story_id, entity_type, entity_id)
+# 获取实体
+@entity_bp.route('/api/story/<entity_type>')
+def get_entity(entity_type):
+    story_id = request.args.get('story_id', '1')
+    entity_id = request.args.get('entity_id')
+    content_type = request.args.get('type', 'all')
+    if not entity_id:
+        entity = get_entity_dict(story_id, entity_type) if content_type == 'dict' else get_entity_all(story_id, entity_type)
     else:
-        entitys = utils.load_json_file(get_file_path(story_id, entity_type))
-        entity = next((i for i in entitys if i['id'] == entity_id), None)
+        entity = get_entity_one(story_id, entity_type, entity_id)
     if entity is None:
         abort(404)
     return jsonify(entity)
 
-# 获取实体字典（name -> id）
-@entity_bp.route('/api/story/<story_id>/<entity_type>/dict')
+def get_entity_one(story_id, entity_type, entity_id):
+    if USE_DB:
+        return db_utils.get_entity(story_id, entity_type, entity_id)
+    else:
+        entitys = utils.load_json_file(get_file_path(story_id, entity_type))
+        return next((i for i in entitys if i['id'] == entity_id), None)
+    
+def get_entity_all(story_id, entity_type):
+    return db_utils.get_entity_all(story_id, entity_type) if USE_DB else utils.load_json_file(get_file_path(story_id, entity_type))
+
 def get_entity_dict(story_id, entity_type):
-    try:
-        if USE_DB:
-            entity_dict = db_utils.get_entity_all(story_id, entity_type, content_type='dict')
-        else:
-            entitys = utils.load_json_file(get_file_path(story_id, entity_type))
-            name_key = 'title' if entity_type in ['event', 'text'] else 'name'
-            entity_dict = {entity[name_key]: entity['id'] for entity in entitys}
-        return jsonify(entity_dict)
-    except Exception as e:
-        return jsonify({'error': str(e)}), 500
+    if USE_DB:
+        return db_utils.get_entity_all(story_id, entity_type, content_type='dict')
+    else:
+        entitys = utils.load_json_file(get_file_path(story_id, entity_type))
+        name_key = 'title' if entity_type in ['event', 'text'] else 'name'
+        return {entity[name_key]: entity['id'] for entity in entitys}
 
 # 上传图片
 @entity_bp.route("/upload/image", methods=["POST"])

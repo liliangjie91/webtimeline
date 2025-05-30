@@ -1,7 +1,7 @@
 import { initTimeline } from './timeline_init.js';
 import {setGroupValue} from "../utils.js";
-const match = window.location.pathname.match(/^\/story\/(\d+)/);
-const storyId = match[1];
+const params = new URLSearchParams(window.location.search);
+const storyId = params.get('story_id');
 
 export function updateFilterOptions(events, groupType='storyLine') {
   const container = document.getElementById('filter-group');

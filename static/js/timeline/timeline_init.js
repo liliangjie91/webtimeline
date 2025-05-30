@@ -2,8 +2,8 @@ import { showPopup } from '../event/event_popup.js';
 import { handleAddEventFromDoubleClick } from '../entity/entity_utils.js';
 import {optionsSide, optionsMain, setGroupValue} from "../utils.js";
 let timeline, filteredTimeline, allEventsRef;
-const match = window.location.pathname.match(/^\/story\/(\d+)/);
-const storyId = match[1];
+const params = new URLSearchParams(window.location.search);
+const storyId = params.get('story_id');
 
 export function setTimelineInstances(t, f, events) {
   timeline = t;

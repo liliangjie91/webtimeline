@@ -63,8 +63,10 @@
     "entity_story":[
         { "name": "title", "label": "标题", "type": "text", "placeholder": "作品标题", "full": true ,"showOrder":-1},
         { "name": "author", "label": "作者", "type": "text", "placeholder": "作品作者" },
-        { "name": "category", "label": "分类", "type": "text", "placeholder": "如：诗、词、书信、公告等" },
-        { "name": "tags", "label": "标签", "type": "text", "placeholder": "情感、主题等标签" },
+        { "name": "compositionTime", "label": "创作时期", "type": "text", "placeholder": "创作时间/朝代" },
+        { "name": "category", "label": "分类", "type": "text", "placeholder": "文学,历史" },
+        { "name": "tags", "label": "标签", "type": "text", "placeholder": "世俗,悬疑" },
+        { "name": "keyCharacter", "label": "主角", "type": "text", "placeholder": "主要角色" , "full": true, "showOrder":1},
         { "name": "description", "label": "简介", "type": "textarea", "placeholder": "简要说明", "full": true, "rows": 4 },
         { "name": "note", "label": "备注", "type": "textarea", "placeholder": "其他补充信息", "full": true, "rows": 2 }
         ]

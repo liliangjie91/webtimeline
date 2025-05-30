@@ -1,17 +1,16 @@
 import * as utils from '../entity/entity_utils.js';
 import { dateFormat} from '../utils.js';
-import {mapEntityFields, mapEntityHiddenElement} from '../entity/entity_config.js';
+import {mapEntityFields} from '../entity/entity_config.js';
 
 let eventData = {};
 let dataRef;
 let characterDict = {};
-const match = window.location.pathname.match(/^\/story\/(\d+)/);
-const storyId = match[1];
+const params = new URLSearchParams(window.location.search);
+const storyId = params.get('story_id');
 const entityType = 'event';
 // 事件结构体内含元素
 const eventFields = mapEntityFields[entityType];
 //['title', 'start','end', 'location', 'keyCharacter', 'characters', 'story','category','tags','chapter','season','specialDay','weather','storyLine','note','textUrl']
-// const hiddenFields = mapEntityHiddenElement[entityType];
 const hiddenFields = ["popup-event-textUrl-div"]
 
 // 页面加载完成就拉取字典
@@ -47,13 +46,13 @@ export function bindPopupHandlers() {
         alert('没有字段被修改');
         return;
       }
-    updateData['id'] = eventId;
+    // updateData['id'] = eventId;
     updateData['updateTime'] = Date.now();
 
-    fetch(`/api/story/${storyId}/event/${eventId}`, {
+    fetch(`/api/story/event`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updateData)
+      body: JSON.stringify({entity_new:updateData, story_id: storyId, entity_id: eventId})
     }).then(() => {
       if (typeof(eventData.id)==='string'){
         location.reload();
@@ -61,6 +60,7 @@ export function bindPopupHandlers() {
         if ('title' in updateData){
         updateData['content'] = updateData.title;
         }
+        updateData['id'] = eventId;
         dataRef.update(updateData);
         utils.toggleEditable(false, eventFields, hiddenFields, entityType, 'popup');
         document.getElementById('popup-event').classList.add('hidden');
@@ -75,10 +75,10 @@ export function bindPopupHandlers() {
   // 删除事件
   document.getElementById('delete-btn').onclick = () => {
     if (confirm("确定删除这个事件吗？")) {
-      fetch(`/story/${storyId}/event/delete`, {
+      fetch(`/api/story/event/delete`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: eventData.id })
+        body: JSON.stringify({ entity_id: eventData.id, story_id: storyId})
       }).then(() => {
         dataRef.remove(eventData.id);
         document.getElementById('popup-event').classList.add('hidden');

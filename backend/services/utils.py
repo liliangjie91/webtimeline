@@ -1,4 +1,5 @@
 import os,json
+from .db_models import Story
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
@@ -6,8 +7,8 @@ DATA_DIR = os.path.join(BASE_DIR, 'data')
 USE_DB = True  # 是否使用数据库
 DB_FILE= os.path.join(DATA_DIR, 'data.db')
 
-story_path = os.path.join(DATA_DIR, 'storys.json')
-story_map = {
+story_path = os.path.join(DATA_DIR, 'json/story_map.json')
+story_map_default = {
     '1': '金瓶梅',
     '2': '红楼梦'
 }
@@ -21,11 +22,16 @@ mapEntityName = {
 }
 
 def load_story_map():
-    if os.path.exists(story_path):
-        with open(story_path, 'r', encoding='utf-8') as f:
-            return json.load(f)
+    res_map = {}
+    if USE_DB:
+        res_map = Story.get_id_title_dict()
     else:
-        return story_map
+        if os.path.exists(story_path):
+            with open(story_path, 'r', encoding='utf-8') as f:
+                res_map = json.load(f)
+    if not res_map:
+        res_map = story_map_default
+    return res_map
 
 def load_json_file(filepath):
     if os.path.exists(filepath):

@@ -1,7 +1,7 @@
 from flask import Flask,render_template
 from routes.routes_timeline import timeline_bp
 from routes.routes_entity_base import entity_bp
-from services.utils import story_map, load_story_map
+from services.utils import load_story_map
 from services.db_models import db
 import os
 
@@ -18,6 +18,7 @@ def create_app():
     DB_PATH = os.path.join(BASE_DIR, 'data/data.db')  # 数据库文件路径
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    # app.config['SQLALCHEMY_ECHO'] = True # 调试时打印SQL语句
 
     db.init_app(app)
     with app.app_context():

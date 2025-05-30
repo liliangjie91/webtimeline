@@ -19,7 +19,7 @@
   <div class="entity-container">
     <!-- 左侧栏 -->
     <div class="entity-side">
-      <p><a href="/story/{{ storyId }}/{{ entityType }}/list" style="text-decoration: none">{{ storyName }}{{ entityName }}</a></p>
+      <p><a href="/story/{{ entityType }}/list?story_id={{ storyId }}" style="text-decoration: none">返回{{ entityName }}列表</a></p>
       <div class="entity-img-block">
         <img id="{{ entityType }}-img" src="" alt="{{ entityName }}图像" class="clickable-img" style="cursor: pointer" />
       </div>
@@ -28,17 +28,25 @@
       <div id="img-modal" class="modal hidden" style="background-color: rgb(0 0 0 / 80%)">
         <img class="modal-content" id="modal-img" style="max-height: 70vh; max-width: 70vw; width: auto; object-fit: contain;" />
       </div>
-
+      {% if entityType == 'story'%}
+      <ul style="padding: 20px;">  
+        <li><a href="/story/timeline?story_id={{entityId}}">时间线</a></li>
+        <li><a href="/story/event/list?story_id={{entityId}}">事件列表</a></li>  
+        <li><a href="/story/character/list?story_id={{entityId}}">人物列表</a></li>  
+        <li><a href="/story/item/list?story_id={{entityId}}">物品列表</a></li> 
+        <li><a href="/story/poem/list?story_id={{entityId}}">诗词列表</a></li> 
+      </ul>
+      {% endif %}
       <h4 style="margin-block-end:5px">相关{{ entityName }}</h4>
       <div id="related-{{ entityType }}s-block" class="related-items"></div>
     </div>
 
     <!-- 右侧内容 -->
     <div class="entity-content">
-        {% if entityType == 'event' or entityType == 'poem' %}
-          <h2 id="detail-{{ entityType }}-title"></h2>
-          {% else %}
+        {% if entityType == 'character' or entityType == 'item' %}
           <h2 id="detail-{{ entityType }}-name"></h2>
+          {% else %}
+          <h2 id="detail-{{ entityType }}-title"></h2>
         {% endif %}
       <div class="form-grid">
         {% for field in formSchema %}

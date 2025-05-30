@@ -3,7 +3,7 @@ import {generateShortId, safeText, dateFormat} from '../utils.js';
 // 加载角色或物品字典，防重复
 export async function loadInfoDict(storyId, entityType = 'character') {
     try {
-    const response = await fetch(`/api/story/${storyId}/${entityType}/dict`);
+    const response = await fetch(`/api/story/${entityType}?story_id=${storyId}&type=dict`);
     return await response.json();
   } catch (error) {
     console.error(`${entityType}字典加载失败:`, error);
@@ -42,7 +42,7 @@ export async function showRelatedThings(related, storyId = '1', entityType = 'ch
       if (!name) return;
       if (infoDict[name]) {
         const link = document.createElement('a');
-        link.href = `/story/${storyId}/${entityType}?id=${infoDict[name]}`;
+        link.href = `/story/${entityType}?story_id=${storyId}&entity_id=${infoDict[name]}`;
         link.textContent = name;
         link.className = 'relation-person';
         link.style.textDecoration = 'none';
@@ -120,10 +120,10 @@ export function eventSaveData(updateData, entityId, storyId = '1', entityType = 
     return;
   }
   updateData['updateTime'] = Date.now();
-  fetch(`/api/story/${storyId}/${entityType}/${entityId}`, {
+  fetch(`/api/story/${entityType}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(updateData)
+      body: JSON.stringify({entity_new :updateData, story_id: storyId, entity_id: entityId})
     }).then(res => {
       if (res.ok) {
         location.reload();
@@ -165,12 +165,12 @@ export function updateEntity(rawData, entityFields, entityType, prefix = 'detail
 // 删除数据
 export function eventDeleteData(entityId, storyId = '1', entityType = 'character'){
   if (confirm("确定删除吗？")) {
-    fetch(`/story/${storyId}/${entityType}/delete`, {
+    fetch(`/api/story/${entityType}/delete`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id: entityId })
+      body: JSON.stringify({ entity_id: entityId, story_id: storyId })
     }).then(() => {
-      window.location.href = `/story/${storyId}/${entityType}/list`;
+      window.location.href = `/story/${entityType}/list?story_id=${storyId}`;
     });
   }
 }
@@ -196,10 +196,10 @@ export async function uploadImage(event, storyId, entityId, entityType){
     if (result.status === "success") {
       elementImg.src = result.image_url + `?t=${Date.now()}`;  // 强制刷新缓存
       // 新的文件路径写入角色json
-      fetch(`/api/story/${storyId}/${entityType}/${entityId}`, {
+      fetch(`/api/story/${entityType}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({"image":result.image_url})
+        body: JSON.stringify({entity_new:{"image":result.image_url}, story_id: storyId, entity_id: entityId})
       }).then(res => {
         if (res.ok) {
           // showSuccessMessage('更新成功');
@@ -290,7 +290,7 @@ export function makeListByGroup(allData, storyId='1', entityType='character', gr
     const subCharacters = grouped[k];
     subCharacters.forEach(c => {
       const li = document.createElement('li');
-      li.innerHTML = `<a href="/story/${storyId}/${entityType}?id=${c.id}">${c.name ?? c.title}</a>`;
+      li.innerHTML = `<a href="/story/${entityType}?story_id=${storyId}&entity_id=${c.id}">${c.name ?? c.title}</a>`;
       div02.appendChild(li);
     });
     div.appendChild(div01)
@@ -326,10 +326,10 @@ async function makeAddData(fieldsForAdd, storyId, entityType) {
   resData['createTime'] = Date.now();
   resData['updateTime'] = Date.now();
   resData['shortId'] = generateShortId();
-  fetch(`/story/${storyId}/${entityType}/add`, {
+  fetch(`/api/story/${entityType}/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(resData)
+    body: JSON.stringify({entity_new:resData, story_id: storyId})
   }).then(() => {
     location.reload(); // 简化操作，重新加载页面
   });
@@ -357,7 +357,7 @@ export function makeLinkInSpan(spanName, textNames, dataDict, storyId='1', entit
         if (dataDict[name]) {
           // 如果字典里有这个名字
           const link = document.createElement('a');
-          link.href = `/story/${storyId}/${entityType}?id=${dataDict[name]}`; // 用ID跳转
+          link.href = `/story/${entityType}?story_id=${storyId}&entity_id=${dataDict[name]}`; // 用ID跳转
           link.textContent = name;
           link.style.textDecoration = 'none';
           link.target = '_blank'; // 在新标签页打开

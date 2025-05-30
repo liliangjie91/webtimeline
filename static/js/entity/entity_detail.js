@@ -3,14 +3,14 @@ import {mapEntityFields, mapEntityHiddenElement} from './entity_config.js';
 
 let entityData = {};
 
-const match = window.location.pathname.match(/^\/story\/(\d+)(?:\/([a-zA-Z_]+))?/);
-const storyId = match[1];
-const entityType = match[2] ?? 'character';
+const match = window.location.pathname.match(/^\/story\/([a-zA-Z_]+)?/);
+const entityType = match[1] ?? 'character';
 const params = new URLSearchParams(window.location.search);
-const entityId = params.get('id');
+const storyId = params.get('story_id');
+const entityId = params.get('entity_id');
 
 const entityFields = mapEntityFields[entityType] ?? mapEntityFields['character'];
-const hiddenFields = mapEntityHiddenElement[entityType] ?? mapEntityHiddenElement['character'];
+const hiddenFields = mapEntityHiddenElement[entityType] ?? [];
 
 document.addEventListener('DOMContentLoaded', () => {
 if (!storyId) {
@@ -18,7 +18,7 @@ if (!storyId) {
 } else if (!entityId) {
   document.body.innerHTML = '<h2>缺少项目ID</h2>';
 } else {
-  fetch(`/api/story/${storyId}/${entityType}/${entityId}`)
+  fetch(`/api/story/${entityType}?story_id=${storyId}&entity_id=${entityId}`)
     .then(res => {
       if (!res.ok) {
         throw new Error('项目不存在');

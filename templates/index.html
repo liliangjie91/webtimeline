@@ -4,8 +4,9 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>故事线管理器</title>
+  <title>首页 | 故事线管理器</title>
   <link rel="stylesheet" href="/static/css/layout.css" />
+  <link rel="stylesheet" href="/static/css/buttons.css" />
   <style>
     nav ul {
       list-style: none;
@@ -33,16 +34,16 @@
   
   <div class="root-container">
   <h3>时间线管理器</h3>
-  <button id="add-story-btn" class="btn btn-primary" style="margin-bottom: 25px;">新增故事</button>
+  <button id="all-story-btn" class="btn btn-success" style="margin-bottom: 15px;"><a id="all-story-link" href="/story/story/list" target="_blank" style="text-decoration: none; color: azure;">全部故事</a></button>
   <nav>
     {% for s in storys %}
     <div>《{{s[1]}}》:</div>
     <ul>  
-      <li><a href="/story/{{s[0]}}/timeline">时间线</a></li>
-      <li><a href="/story/{{s[0]}}/event/list">事件列表</a></li>  
-      <li><a href="/story/{{s[0]}}/character/list">人物列表</a></li>  
-      <li><a href="/story/{{s[0]}}/item/list">物品列表</a></li> 
-      <li><a href="/story/{{s[0]}}/poem/list">诗词列表</a></li> 
+      <li><a href="/story/timeline?story_id={{s[0]}}">时间线</a></li>
+      <li><a href="/story/event/list?story_id={{s[0]}}">事件列表</a></li>  
+      <li><a href="/story/character/list?story_id={{s[0]}}">人物列表</a></li>  
+      <li><a href="/story/item/list?story_id={{s[0]}}">物品列表</a></li> 
+      <li><a href="/story/poem/list?story_id={{s[0]}}">诗词列表</a></li> 
     </ul>
     {% endfor %}
   </nav>
