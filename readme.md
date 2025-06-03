@@ -127,11 +127,11 @@ webtimeline/
   }
 ```
 ## 数据库
-使用sqlite
+使用SQLite
 
 ### 是否使用数据库
-编辑`backend/services/utils.py`中
-`USE_DB = True  # 是否使用数据库`
+编辑`backend/services/utils.py`中  
+`USE_DB = True  # 是否使用数据库`  
 如不使用数据库，则使用data/json中的json文件
 
 ### 数据导入导出
