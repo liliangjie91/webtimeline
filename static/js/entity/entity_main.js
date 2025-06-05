@@ -24,4 +24,21 @@ if (entityType === 'story') {
   novalBtn.href = mapStoryTOCUrl[storyId] ?? `/static/novel/${storyId}/text/text00001.html`;
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const templateDataRaw = sessionStorage.getItem('template_entity');
+  if (templateDataRaw) {
+    const templateData = JSON.parse(templateDataRaw);
+    sessionStorage.removeItem('template_entity'); // 用完即清
+    document.getElementById(`add-${entityType}-btn`).click();
+
+    // 填充字段
+    for (const key in templateData) {
+      const inputEl = document.getElementById(`new-${entityType}-${key}`);
+      if (inputEl && (inputEl.tagName === 'INPUT' || inputEl.tagName === 'TEXTAREA')) {
+        inputEl.value = templateData[key] ?? '';
+      }
+    }
+  }
+});
+
 bindAddEntityHandlers(entityFields, storyId, entityType);

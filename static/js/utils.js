@@ -58,6 +58,10 @@ export const optionsMain = {
   }
 };
 
+export const optionsSimple = {
+  editable: false,
+  maxHeight: 500,
+};
 
 export const optionsSide = {
   editable: false

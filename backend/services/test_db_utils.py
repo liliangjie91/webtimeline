@@ -50,7 +50,8 @@ with app.app_context():
 
     # res = db_utils.get_entity(1, 'item', 10001)
     # print("查询结果:", res)  # 打印单条记录
-    print(mapEntityClassName['story'].get_all(0))
-    print(mapEntityClassName['story'].get_title_id_dict(0))
-    print(mapEntityClassName['story'].get_id_title_dict())
+    # print(mapEntityClassName['story'].get_all(0))
+    # print(mapEntityClassName['story'].get_title_id_dict(0))
+    print(mapEntityClassName['event'].get_event_for_character(1, '庞春梅'))
+    # python -m backend.services.test_db_utils
 

@@ -24,6 +24,11 @@ export function bindPopupHandlers() {
   document.getElementById('popup-event-close').onclick = () => {
     document.getElementById('popup-event').classList.add('hidden');
   };
+  // 跳转详情页 
+  document.getElementById('detail-btn').onclick = () => {
+    const targetUrl = `/story/${entityType}?story_id=${storyId}&entity_id=${eventData.id}`;
+    window.location.href = targetUrl;
+  };
   // 开始编辑
   document.getElementById('edit-btn').onclick = () => {
     utils.toggleEditable(true, eventFields, hiddenFields, entityType, 'popup');

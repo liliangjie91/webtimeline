@@ -1,6 +1,6 @@
 import { showPopup } from '../event/event_popup.js';
 import { handleAddEventFromDoubleClick } from '../entity/entity_utils.js';
-import {optionsSide, optionsMain, setGroupValue} from "../utils.js";
+import {optionsSide, optionsSimple, optionsMain, setGroupValue} from "../utils.js";
 let timeline, filteredTimeline, allEventsRef;
 const params = new URLSearchParams(window.location.search);
 const storyId = params.get('story_id');
@@ -21,14 +21,14 @@ export function initTimeline(events, isFiltered = false, groupType = 'storyLine'
   }
 
   // const groupsByKeyCharacter = [...mainCharacter, '其他'].map(g => ({ id: g, content: g }));
-  const groupsSide = [...new Set(events.map(e => e.storyLine))].map(g => ({ id: g, content: g }));
+  const groupsSide = [...new Set(events.map(e => e[groupType]))].map(g => ({ id: g, content: g }));
   const groupsValue = setGroupValue(storyId, groupsSide);
 
   const eventsWithContent = events.map(item => ({
     ...item,
     end: (item.end && item.end.trim()) ? item.end : null,
     content: item.title,
-    group: item.storyLine ? item.storyLine : null
+    group: item[groupType] ?? null
   }));
  
   const timelineData = new vis.DataSet(eventsWithContent);
@@ -39,12 +39,7 @@ export function initTimeline(events, isFiltered = false, groupType = 'storyLine'
     timelineInstance.setGroups(groupsSide);
   }
 
-  if (events.length > 0) {
-    const start = new Date(events[events.length-1].start);
-    const bufferDay =  24 * 60 * 60 * 1000;
-    timelineInstance.setWindow(new Date(start.getTime()-150*bufferDay), new Date(start.getTime() + 150 * bufferDay));
-    // timelineInstance.focus(events[events.length-1]);
-  }
+  setTimelineWindow(timelineInstance, events)
 
   timelineInstance.on('doubleClick', props => {
     if (props.item) {
@@ -68,4 +63,41 @@ export function initTimeline(events, isFiltered = false, groupType = 'storyLine'
     timeline = timelineInstance;
   }
   return { globalTimeline: timeline, filtered: filteredTimeline };
+}
+
+export function initTimelineSimple(events, groupType = 'storyLine', containerName='sub-timeline-visual') {
+  const container = document.getElementById(containerName);
+  
+  const groupsSide = [...new Set(events.map(e => e[groupType]))].map(g => ({ id: g, content: g }));
+  const groupsValue = setGroupValue(storyId, groupsSide);
+
+  const eventsWithContent = events.map(item => ({
+    ...item,
+    end: (item.end && item.end.trim()) ? item.end : null,
+    content: item.title,
+    group: item[groupType] ?? null
+  }));
+ 
+  const timelineData = new vis.DataSet(eventsWithContent);
+  const timelineInstance = new vis.Timeline(container, timelineData, optionsMain);
+  timelineInstance.setOptions(optionsSimple);
+  timelineInstance.setGroups(new vis.DataSet(groupsValue));
+
+  setTimelineWindow(timelineInstance, events)
+
+  timelineInstance.on('doubleClick', props => {
+    if (props.item) {
+        const item = timelineData.get(props.item);
+        const targetUrl = `/story/event?story_id=${storyId}&entity_id=${item.id}`;
+        window.location.href = targetUrl;
+    } 
+  });
+}
+
+function setTimelineWindow(timelineInstance, events) {
+  if (events.length > 0) {
+    const start = new Date(events[events.length-1].start);
+    const bufferDay =  24 * 60 * 60 * 1000;
+    timelineInstance.setWindow(new Date(start.getTime()-150*bufferDay), new Date(start.getTime() + 150 * bufferDay));
+  }
 }

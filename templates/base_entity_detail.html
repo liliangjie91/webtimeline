@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <title id="main-title">{{ entityName }} | {{storyName}}</title>
+  <link rel="stylesheet" href="/static/lib/vis-timeline/vis-timeline-graph2d.min.css" />
+  <script src="/static/lib/vis-timeline/vis-timeline-graph2d.min.js"></script> 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/locale/zh-cn.min.js"></script>
   <link rel="stylesheet" href="/static/css/form.css" />
   <link rel="stylesheet" href="/static/css/layout.css" />
   <link rel="stylesheet" href="/static/css/modal.css" />
@@ -12,6 +16,9 @@
     body {
       margin-top: 0;
       padding-top: 0;
+    }
+    .vis-item {
+      cursor: pointer;
     }
   </style>
 </head>
@@ -67,6 +74,7 @@
             <input type="file" id="image-upload" accept="image/*" style="display: none;" />
             <label for="image-upload" class="btn btn-primary" style="margin-bottom: 0; color: white;">修改图片</label>
           </div>
+          <button id="template-create-btn" class="btn btn-primary">复制新建</button>
         </div>
         <div style="display: flex; gap: 10px;">
           {% if entityType == 'event' %}
@@ -76,6 +84,10 @@
         </div>
       </div>
     </div>
+  </div>
+  <div id="sub-timeline-container" class="entity-container hidden" style="display: block;border: 0">
+    <div id="sub-timeline-title" style="margin: 0 20px;"></div>
+    <div id="sub-timeline-visual" style="margin: 10px;height: 500px;"></div>
   </div>
 
   <script type="module" src="/static/js/entity/entity_detail.js"></script>

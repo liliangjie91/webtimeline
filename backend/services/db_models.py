@@ -92,6 +92,13 @@ class Event(BaseModel,EntityMixin):
     note = db.Column(db.Text)                     # 备注
     story = db.Column(db.Text)                    # 故事内容
     textUrl = db.Column(db.String)                # 原文链接（可隐藏）
+
+    @classmethod
+    def get_event_for_character(cls, story_id, character_name):
+        keys = ['id', 'title', 'start', 'end', 'storyLine', 'storyId']
+        columns = [getattr(cls, key) for key in keys]
+        result = cls.query.with_entities(*columns).filter_by(storyId=story_id, isDeleted=False).filter(cls.keyCharacter.like(f'%{character_name}%')).all()
+        return [dict(zip(keys, row)) for row in result]
     
 
 class Character(BaseModel,EntityMixin):

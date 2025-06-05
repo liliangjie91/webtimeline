@@ -24,3 +24,7 @@ def get_entity_all(story_id, entity_type, content_type='all'):
 def get_entity(story_id, entity_type, entity_id):
     model_class = mapEntityClassName[entity_type]
     return model_class.get_one(int(story_id), int(entity_id))
+
+def get_event_for_character(story_id, character_name):
+    """根据角色名获取事件"""
+    return mapEntityClassName['event'].get_event_for_character(int(story_id), character_name)

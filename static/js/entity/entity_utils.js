@@ -302,7 +302,9 @@ export function makeListByGroup(allData, storyId='1', entityType='character', gr
 async function makeAddData(fieldsForAdd, storyId, entityType) {
   const resData = {}
   const infoDict = await loadInfoDict(storyId, entityType);
-  const nameElement = document.getElementById(`new-${entityType}-name`);
+  
+  const elementName = ["character","item"].includes(entityType) ? 'name' : 'title';
+  const nameElement = document.getElementById(`new-${entityType}-${elementName}`);
   const sep = /[,，、;；]+/
   if (nameElement && nameElement.value.trim() in infoDict){
     alert('项目已存在!');
@@ -383,3 +385,15 @@ export function makeLinkInSpan(spanName, textNames, dataDict, storyId='1', entit
     spanName.innerText = '';
   }
 }
+
+export function calculateAge(eventDate, birthDate){
+  const event = new Date(eventDate);
+  const birth = new Date(birthDate);
+  let age = event.getFullYear() - birth.getFullYear();
+  const eventMonthDay = event.getMonth() * 100 + event.getDate();
+  const birthMonthDay = birth.getMonth() * 100 + birth.getDate();
+  if (eventMonthDay < birthMonthDay) {
+    age -= 1;
+  }
+  return age;
+};

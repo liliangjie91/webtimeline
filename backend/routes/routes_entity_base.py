@@ -90,7 +90,11 @@ def get_entity(entity_type):
     story_id = request.args.get('story_id', '1')
     entity_id = request.args.get('entity_id')
     content_type = request.args.get('type', 'all')
-    if not entity_id:
+    ext_chara_name = request.args.get('character_name')
+    if ext_chara_name and entity_type == 'event':
+        # 特殊处理：根据角色名获取角色ID
+        entity = get_event_for_character(story_id, ext_chara_name)
+    elif not entity_id:
         entity = get_entity_dict(story_id, entity_type) if content_type == 'dict' else get_entity_all(story_id, entity_type)
     else:
         entity = get_entity_one(story_id, entity_type, entity_id)
@@ -115,6 +119,9 @@ def get_entity_dict(story_id, entity_type):
         entitys = utils.load_json_file(get_file_path(story_id, entity_type))
         name_key = 'title' if entity_type in ['event', 'text'] else 'name'
         return {entity[name_key]: entity['id'] for entity in entitys}
+
+def get_event_for_character(story_id, character_name):
+    return db_utils.get_event_for_character(story_id, character_name)
 
 # 上传图片
 @entity_bp.route("/upload/image", methods=["POST"])
