@@ -133,21 +133,43 @@ webtimeline/
 编辑`backend/services/utils.py`中  
 `USE_DB = True  # 是否使用数据库`  
 如不使用数据库，则使用data/json中的json文件
-
+### 数据库测试
+```bash
+# 修改backend/services/test_db_utils.py文件中测试内容
+# 在项目根目录运行
+# 在项目根目录运行
+python -m backend.services.test_db_utils
+```
 ### 数据导入导出
 ```bash
 # json文件数据导入数据库
-# 进入serveces文件夹
-cd backend/services
-
-python db_import_export.py --mode import --entity event --story 1 --file ../../data/events_1.json
-python db_import_export.py --mode import --entity character --story 1 --file ../../data/characters_1.json
+# 在项目根目录运行
+# 在项目根目录运行
+python -m backend.services.db_import_export --mode import --entity event --story 1 --file data/events_1.json
+python -m backend.services.db_import_export --mode import --entity character --story 1 --file data/characters_1.json
 
 # 数据库导出到json文件 或 csv文件
-python db_import_export.py --mode export --entity character --story 1 --file ../../data/characters_test_1.json
-python db_import_export.py --mode export --entity character --story 1 --file ../../data/characters_test_1.csv
+# 注意，导出数据为全部数据，即包括"isDeleted"=true的数据
+# 在项目根目录运行
+# 在项目根目录运行
+python -m backend.services.db_import_export --mode export --entity character --story 1 --file data/characters_test_2.json
+python -m backend.services.db_import_export --mode export --entity character --story 1 --file data/characters_test_1.csv
+python -m backend.services.db_import_export --mode export --entity story --story 0 --file data/test_storys_1.json #导出所有故事
 ```
-
+### 修改数据库表结构
+#### 初始化
+项目使用flask-migrate管理表结构变更
+```bash
+# 根目录
+FLASK_APP=backend.app flask db init # 初始化数据库管理文件夹
+```
+#### 修改结构
+在db_models.py中修改model结构  
+之后运行如下命令  
+``` bash
+FLASK_APP=backend.app flask db migrate -m "xxx" # 生成迁移脚本 会在migrations/versions文件夹下生成一个新的.py文件，里面包含两个函数upgrade， downgrade
+FLASK_APP=backend.app flask db upgrade     # 更新数据库，即调用migrations/versions中最新.py文件的upgrade函数。 该函数可生成后自己修改。
+```
 ## 克隆项目
 ```bash
 git clone https://github.com/liliangjie91/webtimeline.git
@@ -156,7 +178,10 @@ cd webtimeline
 
 ## 运行项目
 ```bash
-pyhton run.py #在浏览器中打开 http://localhost:5001 查看时间线展示
+# 在项目根目录运行
+pyhton -m backend.run #在浏览器中打开 http://localhost:5001 查看时间线展示
+# 或运行
+FLASK_APP=backend.app flask run -p 5001 --debug
 ```
 
 ##  贡献指南

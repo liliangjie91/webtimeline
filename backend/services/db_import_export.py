@@ -1,11 +1,11 @@
 import argparse
 import json, os, csv
 from flask import Flask
-from db_models import db, mapEntityClassName  # 假设你有这些模型
+from backend.services.db_models import db, mapEntityClassName  # 假设你有这些模型
 
 # 获取 data.db 的绝对路径（父目录）
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
-DB_PATH = os.path.join(BASE_DIR, 'test.db')
+DB_PATH = os.path.join(BASE_DIR, 'data/data.db')
 # 初始化 Flask 应用
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'

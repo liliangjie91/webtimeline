@@ -1,8 +1,9 @@
 from flask import Flask,render_template
-from routes.routes_timeline import timeline_bp
-from routes.routes_entity_base import entity_bp
-from services.utils import load_story_map
-from services.db_models import db
+from flask_migrate import Migrate
+from backend.routes.routes_timeline import timeline_bp
+from backend.routes.routes_entity_base import entity_bp
+from backend.services.utils import load_story_map
+from backend.services.db_models import db
 import os
 
 def create_app():
@@ -21,6 +22,7 @@ def create_app():
     # app.config['SQLALCHEMY_ECHO'] = True # 调试时打印SQL语句
 
     db.init_app(app)
+    migrate = Migrate(app, db)
     with app.app_context():
         db.create_all()  # 创建所有模型中定义的表（包括 events 表）
         # print("数据库表创建成功")

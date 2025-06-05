@@ -1,8 +1,8 @@
 from flask import Blueprint, render_template, jsonify, request, abort
 from werkzeug.utils import secure_filename
-from services.utils import load_story_map
-import services.utils as utils
-import services.db_utils as db_utils
+from backend.services.utils import load_story_map
+import backend.services.utils as utils
+import backend.services.db_utils as db_utils
 import os,json
 
 entity_bp = Blueprint('entity', __name__)

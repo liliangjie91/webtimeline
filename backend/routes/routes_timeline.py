@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, jsonify, request
-from services.utils import load_story_map
-import json
-import os
+from backend.services.utils import load_story_map
+import json, os
 
 timeline_bp = Blueprint('timeline', __name__)
 

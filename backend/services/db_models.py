@@ -86,7 +86,9 @@ class Event(BaseModel,EntityMixin):
     category = db.Column(db.String)               # 情节分类
     tags = db.Column(db.String)                   # 标签
     storyLine = db.Column(db.String)              # 故事线
-    storyLevel = db.Column(db.Integer)            # 故事等级     
+    eventLevel = db.Column(db.Integer)            # 故事等级
+    parentEvent = db.Column(db.String)            # 父事件
+    childEvent = db.Column(db.String)             # 子事件   
     note = db.Column(db.Text)                     # 备注
     story = db.Column(db.Text)                    # 故事内容
     textUrl = db.Column(db.String)                # 原文链接（可隐藏）
