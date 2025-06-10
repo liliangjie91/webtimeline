@@ -28,3 +28,7 @@ def get_entity(story_id, entity_type, entity_id):
 def get_event_for_character(story_id, character_name):
     """根据角色名获取事件"""
     return mapEntityClassName['event'].get_event_for_character(int(story_id), character_name)
+
+def get_node4network(story_id):
+    """获取网络图节点数据"""
+    return mapEntityClassName['character'].get_node4network(int(story_id))

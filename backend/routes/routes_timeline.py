@@ -15,4 +15,7 @@ def index():
 @timeline_bp.route('/story/network')
 def network():
     story_id = request.args.get('story_id', '1')
-    return render_template('network.html')
+    story_map = load_story_map()
+    if story_id not in story_map:
+        return "Invalid story ID", 404
+    return render_template('network.html', storyName = story_map[story_id])

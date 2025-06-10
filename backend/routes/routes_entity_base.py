@@ -92,11 +92,13 @@ def get_entity(entity_type):
     content_type = request.args.get('type', 'all')
     ext_chara_name = request.args.get('character_name')
     if ext_chara_name and entity_type == 'event':
-        # 特殊处理：根据角色名获取角色ID
+        # 根据角色名获取涉及该角色的事件，用于角色详情页
         entity = get_event_for_character(story_id, ext_chara_name)
     elif not entity_id:
+        # 如果没有指定entity_id，则获取所有实体 所有字段 或 name-id字段(content_type == 'dict')
         entity = get_entity_dict(story_id, entity_type) if content_type == 'dict' else get_entity_all(story_id, entity_type)
     else:
+        # 如果指定了entity_id，则获取单个实体所有字段
         entity = get_entity_one(story_id, entity_type, entity_id)
     if entity is None:
         abort(404)
@@ -122,6 +124,16 @@ def get_entity_dict(story_id, entity_type):
 
 def get_event_for_character(story_id, character_name):
     return db_utils.get_event_for_character(story_id, character_name)
+
+# 获取实体
+@entity_bp.route('/api/network')
+def get_node():
+    story_id = request.args.get('story_id', '1')
+    characters = db_utils.get_node4network(story_id) #if USE_DB else utils.get_node4network(get_file_path(story_id, entity_type))
+    network_data = utils.generate_edges_from_characters(characters)
+    if network_data is None:
+        abort(404)
+    return jsonify(network_data)
 
 # 上传图片
 @entity_bp.route("/upload/image", methods=["POST"])

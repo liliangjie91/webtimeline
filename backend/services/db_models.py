@@ -132,6 +132,12 @@ class Character(BaseModel,EntityMixin):
     def get_title_id_dict(cls, story_id):
         result = cls.query.with_entities(cls.name, cls.id).filter_by(storyId=story_id, isDeleted=False).all()
         return {name: id for name, id in result}
+    
+        
+    @classmethod
+    def get_node4network(cls, story_id):
+        result = cls.query.with_entities(cls.name, cls.id, cls.chara, cls.related).filter_by(storyId=story_id, isDeleted=False).all()
+        return [{'id':id, 'name':name, 'chara':chara, 'related':related} for name, id, chara, related in result]
 
 
 class Item(BaseModel,EntityMixin):
