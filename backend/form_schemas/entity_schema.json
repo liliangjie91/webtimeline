@@ -24,7 +24,7 @@
         { "name": "nature", "label": "性格", "type": "text", "placeholder": "性格" , "showOrder":8 },
         { "name": "addr", "label": "住址", "type": "text", "placeholder": "住址" , "showOrder":9 },
         { "name": "role", "label": "身份", "type": "text", "placeholder": "xxx之妾,xxx之仆" , "showOrder":10 },
-        { "name": "categoryFrist", "label": "一级分类", "type": "text", "placeholder": "西门府，西门庆朋友" , "showOrder":12 },
+        { "name": "categoryFirst", "label": "一级分类", "type": "text", "placeholder": "西门府，西门庆朋友" , "showOrder":12 },
         { "name": "categorySecond", "label": "二级分类", "type": "text", "placeholder": "一级分类下的细分" , "showOrder":13 },
         { "name": "characterLevel", "label": "角色等级", "type": "number", "placeholder": "1-10越大越重要" , "showOrder":15 },
         { "name": "job", "label": "职业", "type": "text", "placeholder": "主职业/官职" , "showOrder":23 },

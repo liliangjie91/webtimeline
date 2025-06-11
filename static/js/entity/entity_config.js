@@ -3,7 +3,7 @@ const itemFields = [
 ];
 const characterFields = [
   'name', 'aliases', 'gender','zi', 'birth', 'firstAge', 'firstChapter',
-  'hobby', 'nature', 'addr', 'role','categoryFrist','categorySecond','characterLevel', 'job', 'body', 'note', 'description', 'mainEvents','related'
+  'hobby', 'nature', 'addr', 'role','categoryFirst','categorySecond','characterLevel', 'job', 'body', 'note', 'description', 'mainEvents','related'
 ];
 const eventFields = [
   'title', 'start','end', 'location', 'keyCharacter', 'characters', 'story', 'eventLevel','parentEvent','childEvent',

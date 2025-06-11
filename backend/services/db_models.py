@@ -118,7 +118,7 @@ class Character(BaseModel,EntityMixin):
     addr = db.Column(db.String(200))
     role = db.Column(db.String(200))
     chara = db.Column(db.String(100))  # 所属群体
-    categoryFrist = db.Column(db.String(200))   # 一级分类 如 西门府；西门庆朋友；妓院
+    categoryFirst = db.Column(db.String(200))   # 一级分类 如 西门府；西门庆朋友；妓院
     categorySecond = db.Column(db.String(200))  # 二级分类 如 西门庆家人，西门庆丫头；西门庆结拜兄弟，西门庆同僚；李家妓院，韩家妓院等
     characterLevel = db.Column(db.Integer)      # 角色等级
     job = db.Column(db.String(100))
@@ -136,11 +136,10 @@ class Character(BaseModel,EntityMixin):
         result = cls.query.with_entities(cls.name, cls.id).filter_by(storyId=story_id, isDeleted=False).all()
         return {name: id for name, id in result}
     
-        
     @classmethod
     def get_node4network(cls, story_id):
-        result = cls.query.with_entities(cls.name, cls.id, cls.chara, cls.categoryFrist, cls.categorySecond, cls.related).filter_by(storyId=story_id, isDeleted=False).all()
-        return [{'id':id, 'name':name, 'chara':chara,'categoryFirst':categoryFrist,'categorySecond':categorySecond, 'related':related} for name, id, chara,categoryFrist,categorySecond, related in result]
+        result = cls.query.with_entities(cls.id, cls.name, cls.categoryFirst, cls.categorySecond, cls.related).filter_by(storyId=story_id, isDeleted=False).all()
+        return [{'id':id, 'name':name, 'categoryFirst':categoryFirst,'categorySecond':categorySecond, 'related':related} for id, name, categoryFirst, categorySecond, related in result]
 
 
 class Item(BaseModel,EntityMixin):
