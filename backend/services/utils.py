@@ -79,38 +79,54 @@ def update_entity(filepath, entity_id, entity_new):
 # 根据角色数据生成edges数据：角色数据有realted字段，表示与其他角色的关系
 def generate_edges_from_characters(characters):
     # print(characters)
-    nodes = [{'data':{'id':'c{}'.format(char['id']), 'label':char['name'], 'parent':char['chara']}} for char in characters]
-    edges = []
+    nodes, edges = [], []
     set_edge_ids = set()
-    map_name_id = {char['name']: char['id'] for char in characters}
+    map_name_id = {char['name']: 'c{}'.format(char['id']) for char in characters}
+    map_parent_id,map_grandparent_id = {},{}
     for char in characters:
         char_id = 'c{}'.format(char['id'])
+        char_name = char['name']
+        char_parent = char['categorySecond']
+        char_grandparent = char['categoryFirst']
         related = char.get('related', "").strip().replace('\n', '')
-        if related:
-            relations = related.split(';')
-            for rel in relations:
-                if rel.strip():
-                    rel_parts = rel.split(':')
-                    if len(rel_parts) == 2:
-                        rel_type, target_name_str = rel_parts
-                        target_names = target_name_str.strip().split(',')
-                        rel_type = rel_type.strip()
-                        for target_name in target_names:
-                            target_name = target_name.strip()
-                            # 如果目标名称在角色列表中，则添加边
-                            if target_name in map_name_id:
-                                target_id = 'c{}'.format(map_name_id[target_name])
-                                edge_id = char_id+'-'+target_id
-                                edge_id_mirro = target_id+'-'+char_id
-                                if edge_id_mirro in set_edge_ids:
-                                    continue
-                                edges.append({'data':{
-                                    'id':edge_id,
-                                    'source': char_id,
-                                    'target': target_id,
-                                    'type': rel_type,
-                                    'label': rel_type
-                                }})
-                                set_edge_ids.add(edge_id)
+        # 设置祖父节点map-categoryFirst
+        if char_grandparent and (char_grandparent not in map_grandparent_id):
+            next_gradparent_id = 'gp{:03d}'.format(len(map_grandparent_id))
+            map_grandparent_id[char_grandparent] = next_gradparent_id
+            nodes.append({'data':{'id':next_gradparent_id, 'label':char_grandparent}})
+        # 设置父节点map-categorySecond
+        if char_parent and (char_parent not in map_parent_id):
+            next_parent_id = 'p{:03d}'.format(len(map_parent_id))
+            map_parent_id[char_parent] = next_parent_id
+            if char_grandparent:
+                nodes.append({'data':{'id':next_parent_id, 'label':char_parent, 'parent':map_grandparent_id[char_grandparent]}})
+            else:
+                nodes.append({'data':{'id':next_parent_id, 'label':char_parent}})
+        # 设置node节点
+        if char_parent:
+            nodes.append({'data':{'id':char_id, 'label':char_name, 'parent':map_parent_id[char_parent]}})
+        else:
+            nodes.append({'data':{'id':char_id, 'label':char_name}})
+        # 设置edge
+        if not related:
+            continue
+        relations = related.split(';')
+        for rel in relations:
+            if rel.strip() and len(rel.split(':')) == 2:
+                rel_type, target_name_str = rel.split(':')
+                target_names = target_name_str.strip().split(',')
+                rel_type = rel_type.strip()
+                for target_name in target_names:
+                    target_name = target_name.strip()
+                    # 如果目标名称在角色列表中，则添加边
+                    if target_name not in map_name_id:
+                        continue
+                    target_id = map_name_id[target_name]
+                    edge_id = char_id+'-'+target_id
+                    edge_id_mirro = target_id+'-'+char_id
+                    if edge_id_mirro in set_edge_ids:
+                        continue
+                    edges.append({'data':{'id':edge_id,'source': char_id,'target': target_id,'label': rel_type}})
+                    set_edge_ids.add(edge_id)
                         
     return {'nodes': nodes, 'edges': edges}

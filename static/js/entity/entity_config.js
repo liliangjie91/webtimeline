@@ -3,10 +3,10 @@ const itemFields = [
 ];
 const characterFields = [
   'name', 'aliases', 'gender','zi', 'birth', 'firstAge', 'firstChapter',
-  'hobby', 'nature', 'addr', 'role', 'chara', 'job', 'body', 'note', 'description', 'mainEvents','related'
+  'hobby', 'nature', 'addr', 'role','categoryFrist','categorySecond','characterLevel', 'job', 'body', 'note', 'description', 'mainEvents','related'
 ];
 const eventFields = [
-  'title', 'start','end', 'location', 'keyCharacter', 'characters', 'story',
+  'title', 'start','end', 'location', 'keyCharacter', 'characters', 'story', 'eventLevel','parentEvent','childEvent',
   'category','tags','chapter','season','specialDay','weather','storyLine','note','textUrl'
 ];
 const poemFields = [
