@@ -59,6 +59,10 @@ export const optionsMain = {
 };
 
 export const optionsSimple = {
+    tooltip: {
+    // followMouse: true,
+    overflowMethod: 'cap', // 控制边缘情况
+  },
   editable: false,
   maxHeight: 500,
 };

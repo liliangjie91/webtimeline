@@ -36,25 +36,27 @@ if (!storyId) {
       const apiUrl = `/api/story/event?story_id=${storyId}&character_name=${encodeURIComponent(entityData.name)}`;
       fetch(apiUrl)
         .then(res => res.json())
-        .then(events => {
-          if (events.length > 0){
-            document.getElementById('sub-timeline-container').classList.remove('hidden');
-            if (entityData.birth){
-              // 如果有出生日期，过滤掉出生日期之前的事件
-              events.forEach(element => {
-                const age = utils.calculateAge(element.start, entityData.birth);
-                element.title = element.end ? `${element.title} | ${age}岁起` :  `${element.title} | ${age}岁`;
-              });
-            }
-            document.getElementById('sub-timeline-title').innerHTML = `<h4>  ${entityData.name}时间线</h4>`;
-            initTimelineSimple(events);
-          }
-        });
+        .then(events => {initTimeline4Character(events)});
       }
     })
     .catch(err => {
       document.body.innerHTML = `<h2>${err.message}</h2>`;
     });
+}
+
+function initTimeline4Character(events){
+    if (events.length > 0){
+      document.getElementById('sub-timeline-container').classList.remove('hidden');
+      if (entityData.birth){
+        // 计算年龄
+        events.forEach(element => {
+          const age = utils.calculateAge(element.start, entityData.birth);
+          element.title = element.end ? `${element.title} | ${age}岁起` :  `${element.title} | ${age}岁`;
+        });
+      }
+      document.getElementById('sub-timeline-title').innerHTML = `<h4>  ${entityData.name}时间线</h4>`;
+      initTimelineSimple(events);
+    }
 }
 
 // 开始编辑

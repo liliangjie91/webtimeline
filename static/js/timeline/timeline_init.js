@@ -75,6 +75,7 @@ export function initTimelineSimple(events, groupType = 'storyLine', containerNam
     ...item,
     end: (item.end && item.end.trim()) ? item.end : null,
     content: item.title,
+    title: `${item.title}<br>${item.story.replace(/[。\n]+/g, '<br>')}`,
     group: item[groupType] ?? null
   }));
  

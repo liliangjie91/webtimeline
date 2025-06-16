@@ -95,7 +95,7 @@ class Event(BaseModel,EntityMixin):
 
     @classmethod
     def get_event_for_character(cls, story_id, character_name):
-        keys = ['id', 'title', 'start', 'end', 'storyLine', 'storyId']
+        keys = ['id', 'title', 'start', 'end', 'storyLine', 'storyId','story']
         columns = [getattr(cls, key) for key in keys]
         result = cls.query.with_entities(*columns).filter_by(storyId=story_id, isDeleted=False).filter(cls.keyCharacter.like(f'%{character_name}%')).all()
         return [dict(zip(keys, row)) for row in result]
@@ -138,8 +138,10 @@ class Character(BaseModel,EntityMixin):
     
     @classmethod
     def get_node4network(cls, story_id):
-        result = cls.query.with_entities(cls.id, cls.name, cls.categoryFirst, cls.categorySecond, cls.related).filter_by(storyId=story_id, isDeleted=False).all()
-        return [{'id':id, 'name':name, 'categoryFirst':categoryFirst,'categorySecond':categorySecond, 'related':related} for id, name, categoryFirst, categorySecond, related in result]
+        keys = ['id', 'name', 'categoryFirst', 'categorySecond', 'related']
+        columns = [getattr(cls, key) for key in keys]
+        result = cls.query.with_entities(*columns).filter_by(storyId=story_id, isDeleted=False).all()
+        return [dict(zip(keys, row)) for row in result]
 
 
 class Item(BaseModel,EntityMixin):

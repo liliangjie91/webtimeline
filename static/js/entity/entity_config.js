@@ -38,7 +38,7 @@ export const mapEntityFields = {
 
 export const mapGroupKeyMain = {
   'item' : 'category',
-  'character' : 'chara',
+  'character' : 'categorySecond',
   'event' : 'chapter',
   'poem' : 'category',
   'story' : 'category'
