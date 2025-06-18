@@ -99,12 +99,12 @@ def generate_edges_from_characters(characters):
         related = char.get('related', "").strip().replace('\n', '')
         # 设置祖父节点map-categoryFirst
         if char_grandparent and (char_grandparent not in map_grandparent_id):
-            next_gradparent_id = 'gp{:03d}'.format(len(map_grandparent_id))
+            next_gradparent_id = 'gp{:03d}'.format(len(map_grandparent_id)+1)
             map_grandparent_id[char_grandparent] = next_gradparent_id
             nodes.append({'data':{'id':next_gradparent_id, 'label':char_grandparent}})
         # 设置父节点map-categorySecond
         if char_parent and (char_parent not in map_parent_id):
-            next_parent_id = 'p{:03d}'.format(len(map_parent_id))
+            next_parent_id = 'p{:03d}'.format(len(map_parent_id)+1)
             map_parent_id[char_parent] = next_parent_id
             if char_grandparent:
                 nodes.append({'data':{'id':next_parent_id, 'label':char_parent, 'parent':map_grandparent_id[char_grandparent]}})
