@@ -3,12 +3,12 @@ import {generateShortId, safeText, dateFormat} from '../utils.js';
 // 加载角色或物品字典，防重复
 export async function loadInfoDict(storyId, entityType = 'character') {
     try {
-    const response = await fetch(`/api/story/${entityType}?story_id=${storyId}&type=dict`);
-    return await response.json();
-  } catch (error) {
-    console.error(`${entityType}字典加载失败:`, error);
-    return {};
-  }
+      const response = await fetch(`/api/story/${entityType}?story_id=${storyId}&type=dict`);
+      return await response.json();
+    } catch (error) {
+      console.error(`${entityType}字典加载失败:`, error);
+      return {};
+    }
   }
 
 // 展示 关联内容-关联角色/关联物品/关联事件
@@ -214,7 +214,7 @@ export async function uploadImage(event, storyId, entityId, entityType){
   }
 
 // 展示数据-角色-物件-事件
-export function renderData(item, itemFileds, storyId, entityType, showImg = true, showRelated=true) {
+export function renderData(item, itemFileds, storyId, entityType, entityId=null, showImg = true, showRelated=true) {
   const rawMainTitle = document.getElementById('main-title').innerText;
   const curName = item.name ?? item.title;
   document.getElementById('main-title').innerText = curName ? `${curName} | ${rawMainTitle}` : rawMainTitle;
@@ -225,7 +225,12 @@ export function renderData(item, itemFileds, storyId, entityType, showImg = true
       return;
     }
     if (["keyCharacter","owner"].includes(f)){
-      const infoDict = await loadInfoDict(storyId);
+      // 针对storyId=0的请求做适配
+      let idForCheck = storyId;
+      if (storyId==='0' && entityId){
+        idForCheck = entityId;
+      }
+      const infoDict = await loadInfoDict(idForCheck);
       makeLinkInSpan(element, item[f] || '', infoDict);
       return;
     }
@@ -328,6 +333,20 @@ async function makeAddData(fieldsForAdd, storyId, entityType) {
   resData['createTime'] = Date.now();
   resData['updateTime'] = Date.now();
   resData['shortId'] = generateShortId();
+  if (entityType==='relation'){
+    const characterDict = await loadInfoDict(storyId, 'character');
+    const names = resData['title'].split('-');
+    resData['sourceName']=names[0];
+    resData['targetName']=names[1];
+    if ((resData['sourceName'] in characterDict) && (resData['targetName'] in characterDict)){
+      const sourceId = characterDict[resData['sourceName']];
+      const targetId = characterDict[resData['targetName']];
+      resData['rid'] = `c${sourceId}-c${targetId}`
+    }else{
+      alert('请确认人物已存在');
+      return;
+    }
+  }
   fetch(`/api/story/${entityType}/add`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

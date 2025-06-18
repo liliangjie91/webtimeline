@@ -9,17 +9,22 @@ const entityType = match[1] ?? 'character';
 const params = new URLSearchParams(window.location.search);
 const storyId = params.get('story_id');
 const entityId = params.get('entity_id');
+const rId = params.get('rid');
 
 const entityFields = mapEntityFields[entityType] ?? mapEntityFields['character'];
 const hiddenFields = mapEntityHiddenElement[entityType] ?? [];
+let targetUrl = `/api/story/${entityType}?story_id=${storyId}&entity_id=${entityId}`
+if (rId){
+  targetUrl = `/api/story/${entityType}?story_id=${storyId}&rid=${rId}`
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 if (!storyId) {
   document.body.innerHTML = '<h2>缺少故事ID</h2>';
-} else if (!entityId) {
+} else if (!entityId && !rId) {
   document.body.innerHTML = '<h2>缺少项目ID</h2>';
 } else {
-  fetch(`/api/story/${entityType}?story_id=${storyId}&entity_id=${entityId}`)
+  fetch(targetUrl)
     .then(res => {
       if (!res.ok) {
         throw new Error('项目不存在');
@@ -28,23 +33,24 @@ if (!storyId) {
     })
     .then(data => {
       entityData = data;
-      utils.renderData(entityData, entityFields, storyId, entityType); // 自定义渲染函数
+      utils.renderData(entityData, entityFields, storyId, entityType, entityId); // 自定义渲染函数
     })
     .then(() => {
-      if (entityType === 'character') {
+      if (entityType === 'character' || entityType === 'relation') {
         // 加载人物时间线
-      const apiUrl = `/api/story/event?story_id=${storyId}&character_name=${encodeURIComponent(entityData.name)}`;
-      fetch(apiUrl)
-        .then(res => res.json())
-        .then(events => {initTimeline4Character(events)});
-      }
+        const extCharaName = entityType === 'character' ? entityData.name : entityData.title;
+        const apiUrl = `/api/story/event?story_id=${storyId}&character_name=${encodeURIComponent(extCharaName)}`;
+        fetch(apiUrl)
+          .then(res => res.json())
+          .then(events => {initTimeline4Character(events,extCharaName)});
+        }
     })
     .catch(err => {
       document.body.innerHTML = `<h2>${err.message}</h2>`;
     });
 }
 
-function initTimeline4Character(events){
+function initTimeline4Character(events,extCharaName){
     if (events.length > 0){
       document.getElementById('sub-timeline-container').classList.remove('hidden');
       if (entityData.birth){
@@ -54,7 +60,7 @@ function initTimeline4Character(events){
           element.title = element.end ? `${element.title} | ${age}岁起` :  `${element.title} | ${age}岁`;
         });
       }
-      document.getElementById('sub-timeline-title').innerHTML = `<h4>  ${entityData.name}时间线</h4>`;
+      document.getElementById('sub-timeline-title').innerHTML = `<h4>  ${extCharaName}时间线</h4>`;
       initTimelineSimple(events);
     }
 }

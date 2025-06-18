@@ -37,12 +37,13 @@
   <button id="all-story-btn" class="btn btn-success" style="margin-bottom: 15px;"><a id="all-story-link" href="/story/story/list" target="_blank" style="text-decoration: none; color: azure;">全部故事</a></button>
   <nav>
     {% for s in storys %}
-    <div>《{{s[1]}}》:</div>
+    <div style="border-top: 1px solid #457070;padding-top: 10px;"><a href="story/story?story_id=0&entity_id={{s[0]}}" style="color: chocolate;">《{{s[1]}}》</a>:</div>
     <ul>  
       <li><a href="/story/timeline?story_id={{s[0]}}">时间线</a></li>
-      <li><a href="/story/network?story_id={{s[0]}}">人物关系</a></li>
+      <li><a href="/story/network?story_id={{s[0]}}">关系图谱</a></li>
       <li><a href="/story/event/list?story_id={{s[0]}}">事件列表</a></li>  
       <li><a href="/story/character/list?story_id={{s[0]}}">人物列表</a></li>  
+      <li><a href="/story/relation/list?story_id={{s[0]}}">关系列表</a></li>
       <li><a href="/story/item/list?story_id={{s[0]}}">物品列表</a></li> 
       <li><a href="/story/poem/list?story_id={{s[0]}}">诗词列表</a></li> 
     </ul>

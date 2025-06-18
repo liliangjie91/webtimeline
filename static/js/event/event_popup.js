@@ -14,11 +14,11 @@ const eventFields = mapEntityFields[entityType];
 const hiddenFields = ["popup-event-textUrl-div"]
 
 // 页面加载完成就拉取字典
-document.addEventListener('DOMContentLoaded', () => {
-  utils.loadInfoDict(storyId).then(data => {
-    characterDict = data;
-  });
-});
+// document.addEventListener('DOMContentLoaded', () => {
+//   utils.loadInfoDict(storyId).then(data => {
+//     characterDict = data;
+//   });
+// });
 
 export function bindPopupHandlers() {
   document.getElementById('popup-event-close').onclick = () => {
@@ -94,9 +94,10 @@ export function bindPopupHandlers() {
 }
 
 //显示弹出窗口
-export function showPopup(item, dataSet) {
+export async function showPopup(item, dataSet) {
   eventData = item;
   dataRef = dataSet;
+  characterDict = await utils.loadInfoDict(storyId);
   document.getElementById('popup-event-start').innerText = dateFormat(new Date(item.start));
   document.getElementById('popup-event-end').innerText = item.end ? dateFormat(new Date(item.end)) : '(无需)';
 

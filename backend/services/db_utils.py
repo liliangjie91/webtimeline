@@ -32,3 +32,7 @@ def get_event_for_character(story_id, character_name):
 def get_node4network(story_id):
     """获取网络图节点数据"""
     return mapEntityClassName['character'].get_node4network(int(story_id))
+
+def get_relation(story_id, entity_id, rid):
+    modelClass = mapEntityClassName['relation']
+    return modelClass.get_one(int(story_id), 0, rid=rid) if rid else modelClass.get_one(int(story_id), int(entity_id))

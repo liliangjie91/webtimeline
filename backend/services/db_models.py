@@ -1,4 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import or_, and_
+from flask import jsonify, abort
 import time
 
 db = SQLAlchemy()
@@ -25,17 +27,16 @@ class EntityMixin:
     @classmethod
     def get_one(cls, story_id, entity_id):
         result = cls.query.filter_by(storyId=story_id, id=int(entity_id), isDeleted=False).first()
-        return result.to_dict_all()
-
+        return result.to_dict_all() if result else None
     @classmethod
     def get_all(cls, story_id):
         result = cls.query.filter_by(storyId=story_id, isDeleted=False).all()
-        return [obj.to_dict_all() for obj in result]
+        return [obj.to_dict_all() for obj in result] if result else None
     
     @classmethod
     def get_title_id_dict(cls, story_id):
         result = cls.query.with_entities(cls.title, cls.id).filter_by(storyId=story_id, isDeleted=False).all()
-        return {title: id for title, id in result}
+        return {title: id for title, id in result} if result else None
     
     @classmethod
     def add(cls, story_id, data):
@@ -49,7 +50,7 @@ class EntityMixin:
     def delete(cls, story_id, entity_id, soft_delete=True):
         entity = cls.query.filter_by(storyId=story_id, id=entity_id).first()
         if not entity:
-            return {"status": "not found"}, 404
+            return None
         if soft_delete:
             entity.isDeleted = True
             entity.deletedTime = int(time.time() * 1000)
@@ -67,8 +68,10 @@ class EntityMixin:
             db.session.commit()
             return {"status": "success"}
         else:
-            return {"status": "not found"}, 404
-
+            return None
+        
+######## entity实体 ##########
+# 事件
 class Event(BaseModel,EntityMixin):
     __tablename__ = 'events'
 
@@ -97,10 +100,12 @@ class Event(BaseModel,EntityMixin):
     def get_event_for_character(cls, story_id, character_name):
         keys = ['id', 'title', 'start', 'end', 'storyLine', 'storyId','story']
         columns = [getattr(cls, key) for key in keys]
-        result = cls.query.with_entities(*columns).filter_by(storyId=story_id, isDeleted=False).filter(cls.keyCharacter.like(f'%{character_name}%')).all()
+        name_list = character_name if isinstance(character_name, list) else [character_name]
+        like_conditions = [cls.keyCharacter.like(f'%{name}%') for name in name_list]
+        result = cls.query.with_entities(*columns).filter_by(storyId=story_id, isDeleted=False).filter(and_(*like_conditions)).all()
         return [dict(zip(keys, row)) for row in result]
     
-
+# 角色
 class Character(BaseModel,EntityMixin):
     __tablename__ = 'characters'
 
@@ -143,7 +148,7 @@ class Character(BaseModel,EntityMixin):
         result = cls.query.with_entities(*columns).filter_by(storyId=story_id, isDeleted=False).all()
         return [dict(zip(keys, row)) for row in result]
 
-
+# 物品
 class Item(BaseModel,EntityMixin):
     __tablename__ = 'items'
 
@@ -168,6 +173,7 @@ class Item(BaseModel,EntityMixin):
         result = cls.query.with_entities(cls.name, cls.id).filter_by(storyId=story_id, isDeleted=False).all()
         return {name: id for name, id in result}
 
+# 诗词文书等
 class Poem(BaseModel,EntityMixin):
     __tablename__ = 'poems'
 
@@ -181,6 +187,31 @@ class Poem(BaseModel,EntityMixin):
     description = db.Column(db.Text)
     note = db.Column(db.Text)
     
+# 关系
+class Relation(BaseModel,EntityMixin):
+    __tablename__ = 'relations'
+
+    id = db.Column(db.Integer, primary_key=True)
+    rid = db.Column(db.String, unique=True) # 如“c10001-c10003”
+    title = db.Column(db.String(100)) # "武松-武大"
+    sourceName = db.Column(db.String(100)) # "武松"
+    targetName = db.Column(db.String(100)) # “武大”
+    category = db.Column(db.String(100))
+    tags = db.Column(db.String(200))
+    rType = db.Column(db.String(100)) # “cc”=character-character
+    mainEvents = db.Column(db.Text)
+    description = db.Column(db.Text)
+    note = db.Column(db.Text)
+
+    @classmethod
+    def get_one(cls, story_id, entity_id, rid=''):
+        if rid:
+            result = cls.query.filter_by(storyId=story_id, rid=rid, isDeleted=False).first()
+        else:
+            result = cls.query.filter_by(storyId=story_id, id=int(entity_id), isDeleted=False).first()
+        return result.to_dict_all()
+
+
 # 故事实体，小说或影视剧，红楼梦，水浒传等。即    
 class Story(BaseModel,EntityMixin):
     __tablename__ = 'storys'
@@ -205,5 +236,6 @@ mapEntityClassName = {
     'character': Character,
     'item': Item,
     'poem': Poem,
+    'relation': Relation,
     'story': Story
 }

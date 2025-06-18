@@ -29,7 +29,7 @@ def entity_list(entity_type):
     story_map = load_story_map()  # 从数据库或文件加载故事映射
     if (story_id not in story_map and story_id != '0') or entity_type not in mapEntityName:
         return "Invalid story ID or Entity type", 404
-    form_schema = utils.load_json_file(os.path.join(FORMSCHEMA_FOLDER, f'entity_schema.json'))[f'entity_{entity_type}']
+    form_schema = utils.load_json_file(os.path.join(FORMSCHEMA_FOLDER, f'entity_schema.json'))[f'{entity_type}']["schema"]
     return render_template( 'base_entity_list.html', 
                             storyName='全部' if story_id=='0' else story_map[story_id],
                             entityName=mapEntityName[entity_type],
@@ -44,7 +44,7 @@ def entity_detail(entity_type):
     story_map = load_story_map()  # 从数据库或文件加载故事映射
     if (story_id not in story_map and story_id != '0') or entity_type not in mapEntityName:
         return "Invalid story ID or Entity type", 404
-    form_schema = utils.load_json_file(os.path.join(FORMSCHEMA_FOLDER, f'entity_schema.json'))[f'entity_{entity_type}']
+    form_schema = utils.load_json_file(os.path.join(FORMSCHEMA_FOLDER, f'entity_schema.json'))[f'{entity_type}']["schema"]
     form_schema = [field for field in form_schema if field.get('showOrder', 0) >= 0]
     # form_schema.sort(key=lambda x: x['showOrder'])
     return render_template( 'base_entity_detail.html', 
@@ -63,7 +63,7 @@ def add_entity(entity_type):
     entity_new = req_data.get('entity_new', {})
     story_id = req_data.get('story_id')
     result = db_utils.add_entity(story_id, entity_type, entity_new) if USE_DB else utils.add_entity(get_file_path(story_id, entity_type), entity_new)
-    return jsonify(result)
+    return make_response(result)
 
 # 删除实体
 @entity_bp.route('/api/story/<entity_type>/delete', methods=['POST'])
@@ -72,7 +72,7 @@ def delete_entity(entity_type):
     entity_id = req_data.get("entity_id")
     story_id = req_data.get('story_id', '1')
     result = db_utils.delete_entity(story_id, entity_type, entity_id) if USE_DB else utils.delete_entity(get_file_path(story_id, entity_type), entity_id)
-    return jsonify(result)
+    return make_response(result)
 
 # 更新实体
 @entity_bp.route('/api/story/<entity_type>', methods=['PATCH'])
@@ -82,27 +82,29 @@ def update_entity(entity_type):
     story_id = req_data.get('story_id')
     entity_id = req_data.get('entity_id')
     result = db_utils.update_entity(story_id, entity_type, entity_id, entity_new) if USE_DB else utils.update_entity(get_file_path(story_id, entity_type), entity_id, entity_new)
-    return jsonify(result)
+    return make_response(result)
 
 # 获取实体
 @entity_bp.route('/api/story/<entity_type>')
 def get_entity(entity_type):
     story_id = request.args.get('story_id', '1')
     entity_id = request.args.get('entity_id')
+    rid = request.args.get('rid') # relation rid
     content_type = request.args.get('type', 'all')
     ext_chara_name = request.args.get('character_name')
-    if ext_chara_name and entity_type == 'event':
+    if entity_type == 'relation' and rid:
+        entity = db_utils.get_relation(story_id, entity_id, rid)
+    elif ext_chara_name and entity_type == 'event':
         # 根据角色名获取涉及该角色的事件，用于角色详情页
-        entity = get_event_for_character(story_id, ext_chara_name)
+        chara_names = ext_chara_name.split('-')
+        entity = get_event_for_character(story_id, chara_names)
     elif not entity_id:
         # 如果没有指定entity_id，则获取所有实体 所有字段 或 name-id字段(content_type == 'dict')
         entity = get_entity_dict(story_id, entity_type) if content_type == 'dict' else get_entity_all(story_id, entity_type)
     else:
         # 如果指定了entity_id，则获取单个实体所有字段
         entity = get_entity_one(story_id, entity_type, entity_id)
-    if entity is None:
-        abort(404)
-    return jsonify(entity)
+    return make_response(entity)
 
 def get_entity_one(story_id, entity_type, entity_id):
     if USE_DB:
@@ -125,15 +127,13 @@ def get_entity_dict(story_id, entity_type):
 def get_event_for_character(story_id, character_name):
     return db_utils.get_event_for_character(story_id, character_name)
 
-# 获取实体
+# 获取实体-关系网络数据
 @entity_bp.route('/api/network')
 def get_node():
     story_id = request.args.get('story_id', '1')
     characters = db_utils.get_node4network(story_id) #if USE_DB else utils.get_node4network(get_file_path(story_id, entity_type))
     network_data = utils.generate_edges_from_characters(characters)
-    if network_data is None:
-        abort(404)
-    return jsonify(network_data)
+    return make_response(network_data)
 
 # 上传图片
 @entity_bp.route("/upload/image", methods=["POST"])
@@ -154,3 +154,12 @@ def upload_image():
 
     image_url = f"/static/imgs/{story_id}/{filename}"
     return jsonify({"status": "success", "image_url": image_url})
+
+
+########### utils ###########
+def make_response(res):
+    # 安全返回
+    if not res:
+        abort(404)
+    else:
+        return jsonify(res)

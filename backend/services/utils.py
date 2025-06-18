@@ -3,7 +3,7 @@ from .db_models import Story
 
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 DATA_DIR = os.path.join(BASE_DIR, 'data')
-
+FORMSCHEMA_FILE = os.path.join(BASE_DIR, 'backend/form_schemas/entity_schema.json')
 USE_DB = True  # 是否使用数据库
 DB_FILE= os.path.join(DATA_DIR, 'data.db')
 
@@ -13,13 +13,26 @@ story_map_default = {
     '2': '红楼梦'
 }
 
-mapEntityName = {
-    'character':'人物',
-    'item':'物品',
-    'event':'事件',
-    'poem':'诗词',
-    'story':'故事',
-}
+# mapEntityName = {
+#     'character':'人物',
+#     'item':'物品',
+#     'event':'事件',
+#     'poem':'诗词',
+#     'story':'故事',
+# }
+def load_json_file(filepath):
+    if os.path.exists(filepath):
+        with open(filepath, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    else:
+        return []
+def getMapEntityName():
+    schemaData = load_json_file(FORMSCHEMA_FILE)
+    res = {}
+    for sj in schemaData:
+        res[sj]=schemaData[sj]['name']
+    return res
+mapEntityName = getMapEntityName()
 
 def load_story_map():
     res_map = {}
@@ -33,12 +46,7 @@ def load_story_map():
         res_map = story_map_default
     return res_map
 
-def load_json_file(filepath):
-    if os.path.exists(filepath):
-        with open(filepath, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    else:
-        return []
+
 
 def save_entity_file(data, filepath):
     with open(filepath, 'w', encoding='utf-8') as f:

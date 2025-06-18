@@ -1,19 +1,31 @@
 const itemFields = [
-  'name','aliases','firstChapter','category','tags','owner','price','note','description','mainEvents','related'
+  'name','aliases','firstChapter','category','tags',
+  'owner','price','note','description','mainEvents',
+  'related'
 ];
 const characterFields = [
-  'name', 'aliases', 'gender','zi', 'birth', 'firstAge', 'firstChapter',
-  'hobby', 'nature', 'addr', 'role','categoryFirst','categorySecond','characterLevel', 'job', 'body', 'note', 'description', 'mainEvents','related'
+  'name', 'aliases', 'gender','zi', 'birth', 
+  'firstAge', 'firstChapter', 'hobby', 'nature', 'addr', 
+  'role','categoryFirst','categorySecond','characterLevel', 'job', 
+  'body', 'note', 'description', 'mainEvents','related'
 ];
 const eventFields = [
-  'title', 'start','end', 'location', 'keyCharacter', 'characters', 'story', 'eventLevel','parentEvent','childEvent',
-  'category','tags','chapter','season','specialDay','weather','storyLine','note','textUrl'
+  'title', 'start','end', 'location', 'keyCharacter', 
+  'characters', 'story', 'eventLevel','parentEvent','childEvent',
+  'category','tags','chapter','season','specialDay',
+  'weather','storyLine','note','textUrl'
 ];
 const poemFields = [
-  "title","author","category","tags","firstChapter","description","content","note"
+  "title","author","category","tags","firstChapter",
+  "description","content","note"
+];
+const relationFields = [
+  "title","category","tags","rType","mainEvents",
+  "description","note"
 ];
 const storyFields = [
-  "title","author","compositionTime","category","tags","keyCharacter","description","note"
+  "title","author","compositionTime","category","tags",
+  "keyCharacter","description","note"
 ];
 const hiddenFieldsCharacter = [
   'detail-character-div-related','detail-character-div-body'
@@ -33,6 +45,7 @@ export const mapEntityFields = {
   'character' : characterFields,
   'event' : eventFields,
   'poem' : poemFields,
+  'relation':relationFields,
   'story' : storyFields
 };
 

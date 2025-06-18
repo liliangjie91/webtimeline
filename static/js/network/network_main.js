@@ -45,7 +45,7 @@ function bindNetworkEvents(cy) {
     const edge = evt.target;
     const relationId = edge.data('id');
     if (relationId) {
-      window.location.href = `/story/relation?story_id=${storyId}&entity_id=${relationId}`;
+      window.location.href = `/story/relation?story_id=${storyId}&rid=${relationId}`;
     }
   });
 
