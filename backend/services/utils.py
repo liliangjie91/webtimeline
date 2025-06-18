@@ -134,7 +134,7 @@ def generate_edges_from_characters(characters):
                     edge_id_mirro = target_id+'-'+char_id
                     if edge_id_mirro in set_edge_ids:
                         continue
-                    edges.append({'data':{'id':edge_id,'source': char_id,'target': target_id,'label': rel_type}})
+                    edges.append({'data':{'id':edge_id,'source': char_id,'target': target_id,'label': rel_type, 'title': f'{char_name}-{target_name}'}})
                     set_edge_ids.add(edge_id)
                         
     return {'nodes': nodes, 'edges': edges}

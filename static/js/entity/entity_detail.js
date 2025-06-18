@@ -9,6 +9,7 @@ const entityType = match[1] ?? 'character';
 const params = new URLSearchParams(window.location.search);
 const storyId = params.get('story_id');
 const entityId = params.get('entity_id');
+const rTitle = params.get('title');
 const rId = params.get('rid');
 
 const entityFields = mapEntityFields[entityType] ?? mapEntityFields['character'];
@@ -27,7 +28,14 @@ if (!storyId) {
   fetch(targetUrl)
     .then(res => {
       if (!res.ok) {
-        throw new Error('项目不存在');
+        if (entityType==='relation' && rTitle){
+          const hrefYes = `/story/relation/list?story_id=${storyId}`;
+          const hrefNo = `/story/network?story_id=${storyId}`;
+          sessionStorage.setItem('template_entity', JSON.stringify({ title: rTitle, story_id: storyId, hrefYes:hrefYes, hrefNo:hrefNo }));
+          window.location.href = '/blank';
+        }else{
+          throw new Error('项目不存在');
+        }
       }
       return res.json();
     })

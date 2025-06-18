@@ -19,3 +19,7 @@ def network():
     if story_id not in story_map:
         return "Invalid story ID", 404
     return render_template('network.html', storyName = story_map[story_id])
+
+@timeline_bp.route('/blank')
+def blank():
+    return render_template('blank.html')

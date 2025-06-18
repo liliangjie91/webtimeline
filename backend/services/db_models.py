@@ -209,6 +209,8 @@ class Relation(BaseModel,EntityMixin):
             result = cls.query.filter_by(storyId=story_id, rid=rid, isDeleted=False).first()
         else:
             result = cls.query.filter_by(storyId=story_id, id=int(entity_id), isDeleted=False).first()
+        if not result:
+            return None
         return result.to_dict_all()
 
 

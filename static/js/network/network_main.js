@@ -44,8 +44,9 @@ function bindNetworkEvents(cy) {
   cy.on('dbltap', 'edge', evt => {
     const edge = evt.target;
     const relationId = edge.data('id');
+    const realtionTitle = edge.data('title');
     if (relationId) {
-      window.location.href = `/story/relation?story_id=${storyId}&rid=${relationId}`;
+      window.location.href = `/story/relation?story_id=${storyId}&rid=${relationId}&title=${realtionTitle}`;
     }
   });
 

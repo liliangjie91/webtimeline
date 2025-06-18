@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Loading...</title>
+</head>
+<body style="background:#bed6cc; margin:0;">
+<script>
+  const info = sessionStorage.getItem('template_entity');
+  if (info) {
+    const confirmed = window.confirm('当前项目不存在，是否新建？');
+    const storyId = JSON.parse(info).story_id || '1';
+    window.location.href = confirmed ? JSON.parse(info).hrefYes: JSON.parse(info).hrefNo;
+  }
+</script>
+</body>
+</html>
